@@ -1,0 +1,228 @@
+{
+  "nav": {
+    "about": "À propos",
+    "how_it_works": "Comment ça marche",
+    "features": "Fonctionnalités",
+    "cities": "Villes",
+    "cta": "Pré-inscription"
+  },
+  "hero": {
+    "pill": "Douala & Yaoundé · Lancement Bientôt",
+    "title_line1": "Réservez des Voitures",
+    "title_line2": "de Location",
+    "title_line3": "de Confiance",
+    "eyebrow": "Avant Votre Arrivée",
+    "description": "Zanix connecte les voyageurs, la diaspora et les locaux avec des prestataires de location vérifiés à Douala et Yaoundé. Sans stress, sans intermédiaires, sans surprises.",
+    "cta_primary": "Pré-inscription Maintenant",
+    "cta_secondary": "Lister Ma Voiture →"
+  },
+  "ticker": {
+    "phrase_1": "Prestataires Vérifiés",
+    "phrase_2": "Transferts Aéroport",
+    "phrase_3": "MTN Mobile Money",
+    "phrase_4": "Orange Money",
+    "phrase_5": "Douala",
+    "phrase_6": "Yaoundé",
+    "phrase_7": "Réservation Avant Arrivée",
+    "phrase_8": "Zéro Intermédiaires"
+  },
+  "stats": {
+    "vendors_value": "500+",
+    "vendors_label": "Prestataires pré-inscrits",
+    "cities_value": "2",
+    "cities_label": "Villes de lancement",
+    "verified_value": "100%",
+    "verified_label": "Prestataires vérifiés",
+    "support_value": "24/7",
+    "support_label": "Assistance disponible"
+  },
+  "about": {
+    "tag": "À Propos de Zanix",
+    "heading": "Conçu pour le Cameroun,",
+    "heading_italic": "dès le premier jour",
+    "paragraph1": "La location de voitures au Cameroun fonctionne sur WhatsApp, les contacts personnels et la chance. Aucune transparence, aucune garantie, aucune structure.",
+    "paragraph2": "Zanix organise tout cela en une seule plateforme de confiance. Prestataires vérifiés, tarification transparente et confirmation avant arrivée.",
+    "cta": "En Savoir Plus →",
+    "cards": [
+      {
+        "icon": "📍",
+        "title": "Lancement en Premier À",
+        "body": "Douala et Yaoundé — les deux plus grandes villes et centres économiques du Cameroun."
+      },
+      {
+        "icon": "🎯",
+        "title": "Axé Sur",
+        "body": "Les transferts aéroport, les voyageurs arrivants et les visiteurs de la diaspora."
+      },
+      {
+        "icon": "👥",
+        "title": "Pour Tous",
+        "body": "Touristes, voyageurs d'affaires et locaux qui veulent une expérience de location documentée."
+      },
+      {
+        "icon": "✅",
+        "title": "Notre Promesse",
+        "body": "Prestataires Vérifiés, Tarification Transparente, Confirmation Avant Arrivée."
+      },
+      {
+        "icon": "💬",
+        "title": "La Réalité",
+        "body": "La demande et l'offre sont réelles — la structure et la confiance manquent. Nous apportons les deux au Cameroun."
+      }
+    ]
+  },
+  "how_it_works": {
+    "tag": "Comment Ça Marche",
+    "heading": "De la recherche aux clés en main",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Rechercher",
+        "description": "Parcourez les véhicules vérifiés à Douala ou Yaoundé. Filtrez par type, prix et lieu de prise en charge."
+      },
+      {
+        "number": "02",
+        "title": "Demander",
+        "description": "Envoyez une demande de réservation avant d'atterrir. Choisissez vos dates et votre point de prise en charge."
+      },
+      {
+        "number": "03",
+        "title": "Confirmer",
+        "description": "Le prestataire approuve sous 24h. Payez via MTN MoMo ou Orange Money."
+      },
+      {
+        "number": "04",
+        "title": "Conduire",
+        "description": "Arrivez, récupérez votre voiture, conduisez. Entièrement confirmé — zéro surprise. Laissez un avis."
+      }
+    ]
+  },
+  "features": {
+    "tag": "Fonctionnalités",
+    "heading": "Tout ce dont vous avez besoin, rien de superflu",
+    "cards": [
+      {
+        "icon": "🛡️",
+        "label": "Prestataires Vérifiés",
+        "description": "Vérification d'identité et de documents avant la mise en ligne."
+      },
+      {
+        "icon": "📱",
+        "label": "Intégration WhatsApp",
+        "description": "Les clients peuvent toujours contacter les prestataires via WhatsApp, avec une couche de vérification."
+      },
+      {
+        "icon": "💳",
+        "label": "Paiements Mobile Money",
+        "description": "Payez avec MTN MoMo ou Orange Money. Aucune carte requise."
+      },
+      {
+        "icon": "✈️",
+        "label": "Réservation Avant Arrivée",
+        "description": "Réservez votre voiture depuis n'importe où avant d'atterrir."
+      },
+      {
+        "icon": "⭐",
+        "label": "Avis & Réputation",
+        "description": "Les avis bilatéraux créent une responsabilité pour les clients et les prestataires."
+      },
+      {
+        "icon": "🚗",
+        "label": "Services Chauffeur",
+        "description": "Phase 2 : services de chauffeur, locations longue durée, assurances, plus de villes."
+      }
+    ]
+  },
+  "cities": {
+    "tag": "Où Nous Lançons",
+    "heading": "En commençant là où ça compte le plus",
+    "douala": {
+      "name": "Douala",
+      "code": "DLA",
+      "coordinates": "3.8480° N · 11.5021° E",
+      "badge": "Lancement en Premier",
+      "description": "La capitale économique et le port le plus actif du Cameroun. Plus forte concentration de voyageurs d'affaires, de la diaspora et d'arrivées internationales."
+    },
+    "yaounde": {
+      "name": "Yaoundé",
+      "code": "YAO",
+      "coordinates": "3.8667° N · 11.5167° E",
+      "badge": "Lancement en Premier",
+      "description": "La capitale politique. Nsimalen International connecte les fonctionnaires, les travailleurs d'ONG et les visiteurs d'affaires."
+    },
+    "more_cities": "Plus de villes en Afrique Centrale & de l'Ouest — Phase 3"
+  },
+  "waitlist": {
+    "tag": "Accès Anticipé",
+    "heading": "Obtenez un Accès Anticipé",
+    "description": "Soyez le premier à savoir quand Zanix sera disponible. Les prestataires obtiennent une priorité. Les clients bénéficient des prix pionniers.",
+    "email_placeholder": "Entrez votre adresse e-mail",
+    "type_customer": "Je suis un Client",
+    "type_vendor": "Je suis un Prestataire",
+    "city_douala": "Douala",
+    "city_yaounde": "Yaoundé",
+    "city_other": "Autre Ville",
+    "submit_cta": "Rejoindre la Liste",
+    "no_spam": "Pas de spam · Nous vous notifierons au lancement dans votre ville",
+    "success_title": "Vous êtes sur la liste !",
+    "success_douala": "Nous vous notifierons quand Zanix lancera à Douala.",
+    "success_yaounde": "Nous vous notifierons quand Zanix lancera à Yaoundé.",
+    "success_other": "Nous vous notifierons quand Zanix arrivera dans votre ville.",
+    "error_generic": "Une erreur s'est produite. Veuillez réessayer.",
+    "error_rate_limit": "Trop de tentatives. Veuillez réessayer plus tard.",
+    "count_label": "Rejoignez {count} autres personnes déjà sur la liste"
+  },
+  "footer": {
+    "tagline": "Conçu pour le Cameroun.",
+    "links": {
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "contact": "Contact",
+      "instagram": "Instagram"
+    },
+    "copyright": "© {year} Zanix · Conçu pour le Cameroun"
+  },
+  "privacy": {
+    "back": "← Retour à Zanix",
+    "title": "Politique de Confidentialité",
+    "updated": "Dernière mise à jour : Avril 2026",
+    "s1_title": "1. Ce que nous collectons",
+    "s1_body": "Lorsque vous rejoignez la liste d'attente Zanix, nous collectons votre adresse e-mail, votre type d'utilisateur (client ou prestataire) et votre ville. Nous stockons également une version hachée (non réversible) de votre adresse IP à des fins de sécurité uniquement.",
+    "s2_title": "2. Comment nous l'utilisons",
+    "s2_body": "Nous utilisons votre e-mail uniquement pour vous notifier quand Zanix lance dans votre ville. Nous ne vendons, ne partageons ni n'utilisons vos données à des fins publicitaires. Nous n'utilisons pas de cookies ni de pixels de suivi.",
+    "s3_title": "3. Analytique",
+    "s3_body": "Nous utilisons Plausible Analytics — un outil d'analyse respectueux de la vie privée, sans cookies. Aucune donnée personnelle n'est collectée. Aucune bannière de consentement n'est requise.",
+    "s4_title": "4. Vos droits",
+    "s4_body": "Vous pouvez demander la suppression de vos données à tout moment en envoyant un e-mail à hello@zanix.cm. Nous supprimerons votre enregistrement dans les 72 heures.",
+    "s5_title": "5. Stockage des données",
+    "s5_body": "Vos données sont stockées en toute sécurité sur l'infrastructure Supabase dans la région EU West. Toutes les données sont chiffrées au repos et en transit.",
+    "s6_title": "6. Contact",
+    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@zanix.cm."
+  },
+  "terms": {
+    "back": "← Retour à Zanix",
+    "title": "Conditions d'Utilisation",
+    "updated": "Dernière mise à jour : Avril 2026",
+    "s1_title": "1. Liste d'attente pré-lancement",
+    "s1_body": "En rejoignant la liste d'attente Zanix, vous acceptez de recevoir un seul e-mail de notification lorsque Zanix lance dans votre ville. Vous pouvez vous désabonner à tout moment en répondant à n'importe quel e-mail ou en nous contactant à hello@zanix.cm.",
+    "s2_title": "2. Aucune garantie",
+    "s2_body": "Zanix est actuellement en pré-lancement. Rejoindre la liste d'attente ne garantit pas l'accès à la plateforme, une date de lancement spécifique ou des tarifs particuliers. Nous nous réservons le droit de modifier ou d'annuler le service à tout moment.",
+    "s3_title": "3. Utilisation acceptable",
+    "s3_body": "Vous acceptez de ne pas soumettre de fausses informations, d'abuser du système de liste d'attente ou de tenter d'interférer avec la plateforme de quelque manière que ce soit.",
+    "s4_title": "4. Propriété intellectuelle",
+    "s4_body": "Tout le contenu, la marque et le design de ce site sont la propriété de Zanix. Vous ne pouvez pas les reproduire ou les distribuer sans autorisation écrite.",
+    "s5_title": "5. Droit applicable",
+    "s5_body": "Ces conditions sont régies par les lois du Cameroun. Tout litige sera résolu devant les tribunaux de Douala, Cameroun.",
+    "s6_title": "6. Contact",
+    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@zanix.cm."
+  },
+  "contact": {
+    "back": "← Retour à Zanix",
+    "title": "Contact",
+    "description": "Nous sommes une petite équipe qui construit quelque chose de significatif pour le Cameroun. Contactez-nous — nous lisons chaque message.",
+    "general_label": "Renseignements généraux",
+    "vendor_label": "Partenariats prestataires",
+    "social_label": "Suivez-nous",
+    "instagram_handle": "@zanix.cm sur Instagram"
+  }
+}

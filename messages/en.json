@@ -1,0 +1,228 @@
+{
+  "nav": {
+    "about": "About",
+    "how_it_works": "How it works",
+    "features": "Features",
+    "cities": "Cities",
+    "cta": "Pre-Register"
+  },
+  "hero": {
+    "pill": "Douala & Yaoundé · Launching Soon",
+    "title_line1": "Book Trusted",
+    "title_line2": "Rental Cars",
+    "title_line3": "in Cameroon",
+    "eyebrow": "Before You Arrive",
+    "description": "Zanix connects travelers, diaspora, and locals with verified car rental providers in Douala and Yaoundé. No stress, no middlemen, no surprises.",
+    "cta_primary": "Pre-Register Now",
+    "cta_secondary": "List Your Car →"
+  },
+  "ticker": {
+    "phrase_1": "Verified Providers",
+    "phrase_2": "Airport Pickups",
+    "phrase_3": "MTN Mobile Money",
+    "phrase_4": "Orange Money",
+    "phrase_5": "Douala",
+    "phrase_6": "Yaoundé",
+    "phrase_7": "Pre-Arrival Booking",
+    "phrase_8": "Zero Middlemen"
+  },
+  "stats": {
+    "vendors_value": "500+",
+    "vendors_label": "Pre-registered vendors",
+    "cities_value": "2",
+    "cities_label": "Launch cities",
+    "verified_value": "100%",
+    "verified_label": "Verified providers",
+    "support_value": "24/7",
+    "support_label": "Support available"
+  },
+  "about": {
+    "tag": "About Zanix",
+    "heading": "Built for Cameroon,",
+    "heading_italic": "from day one",
+    "paragraph1": "Car rental in Cameroon runs on WhatsApp, personal contacts, and luck. No transparency, no guarantees, no structure. Travelers arrive hoping for the best.",
+    "paragraph2": "Zanix organises this into a single trusted platform. Verified providers, transparent pricing, and pre-arrival confirmation — so you can land with confidence.",
+    "cta": "Learn More →",
+    "cards": [
+      {
+        "icon": "📍",
+        "title": "Launching First In",
+        "body": "Douala and Yaoundé — Cameroon's two largest cities and economic hubs."
+      },
+      {
+        "icon": "🎯",
+        "title": "Focused On",
+        "body": "Airport pickups, arriving travelers, and diaspora visitors who need reliability."
+      },
+      {
+        "icon": "👥",
+        "title": "For Everyone",
+        "body": "Tourists, business travelers, and locals who want a documented rental experience."
+      },
+      {
+        "icon": "✅",
+        "title": "Core Promise",
+        "body": "Verified Providers, Transparent Pricing, Pre-Arrival Lock-in."
+      },
+      {
+        "icon": "💬",
+        "title": "The Reality",
+        "body": "The demand and supply is real — the structure and trust are missing. We bring both to Cameroon."
+      }
+    ]
+  },
+  "how_it_works": {
+    "tag": "How It Works",
+    "heading": "From search to keys in hand",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Search",
+        "description": "Browse verified vehicles in Douala or Yaoundé. Filter by type, price, and pickup location."
+      },
+      {
+        "number": "02",
+        "title": "Request",
+        "description": "Send a booking request before you land. Choose your dates and preferred pickup point."
+      },
+      {
+        "number": "03",
+        "title": "Confirm",
+        "description": "Vendor approves within 24 hrs. Pay securely via MTN MoMo or Orange Money."
+      },
+      {
+        "number": "04",
+        "title": "Drive",
+        "description": "Arrive, collect your car, drive. Fully confirmed — zero surprises. Leave a review when done."
+      }
+    ]
+  },
+  "features": {
+    "tag": "Platform Features",
+    "heading": "Everything you need, nothing you don't",
+    "cards": [
+      {
+        "icon": "🛡️",
+        "label": "Verified Vendors",
+        "description": "Identity-checked and document-verified before going live."
+      },
+      {
+        "icon": "📱",
+        "label": "WhatsApp Integration",
+        "description": "Customers can still contact vendors via WhatsApp, now with a verified layer."
+      },
+      {
+        "icon": "💳",
+        "label": "Mobile Money Payments",
+        "description": "Pay with MTN MoMo or Orange Money. No card required."
+      },
+      {
+        "icon": "✈️",
+        "label": "Pre-Arrival Booking",
+        "description": "Lock in your car from anywhere before you land."
+      },
+      {
+        "icon": "⭐",
+        "label": "Reviews & Reputation",
+        "description": "Two-sided reviews build accountability for both customers and vendors."
+      },
+      {
+        "icon": "🚗",
+        "label": "Driver Add-ons",
+        "description": "Phase 2: driver services, long-term rentals, insurance partnerships, more cities."
+      }
+    ]
+  },
+  "cities": {
+    "tag": "Where We Launch",
+    "heading": "Starting where it matters most",
+    "douala": {
+      "name": "Douala",
+      "code": "DLA",
+      "coordinates": "3.8480° N · 11.5021° E",
+      "badge": "Launching First",
+      "description": "Cameroon's economic capital and busiest port. Highest concentration of business travelers, diaspora returnees, and international arrivals."
+    },
+    "yaounde": {
+      "name": "Yaoundé",
+      "code": "YAO",
+      "coordinates": "3.8667° N · 11.5167° E",
+      "badge": "Launching First",
+      "description": "The political capital. Nsimalen International connects government officials, NGO workers, and business visitors."
+    },
+    "more_cities": "More cities across Central & West Africa — Phase 3"
+  },
+  "waitlist": {
+    "tag": "Early Access",
+    "heading": "Get Early Access",
+    "description": "Be the first to know when Zanix goes live. Vendors get priority placement. Customers get first-mover pricing.",
+    "email_placeholder": "Enter your email address",
+    "type_customer": "I'm a Customer",
+    "type_vendor": "I'm a Vendor",
+    "city_douala": "Douala",
+    "city_yaounde": "Yaoundé",
+    "city_other": "Other City",
+    "submit_cta": "Join Waitlist",
+    "no_spam": "No spam · We'll notify you when we launch in your city",
+    "success_title": "You're on the list!",
+    "success_douala": "We'll notify you when Zanix launches in Douala.",
+    "success_yaounde": "We'll notify you when Zanix launches in Yaoundé.",
+    "success_other": "We'll notify you when Zanix comes to your city.",
+    "error_generic": "Something went wrong. Please try again.",
+    "error_rate_limit": "Too many attempts. Please try again later.",
+    "count_label": "Join {count} others already on the waitlist"
+  },
+  "footer": {
+    "tagline": "Built for Cameroon.",
+    "links": {
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "contact": "Contact",
+      "instagram": "Instagram"
+    },
+    "copyright": "© {year} Zanix · Built for Cameroon"
+  },
+  "privacy": {
+    "back": "← Back to Zanix",
+    "title": "Privacy Policy",
+    "updated": "Last updated: April 2026",
+    "s1_title": "1. What we collect",
+    "s1_body": "When you join the Zanix waitlist, we collect your email address, user type (customer or vendor), and city. We also store a hashed (non-reversible) version of your IP address for security purposes only.",
+    "s2_title": "2. How we use it",
+    "s2_body": "We use your email solely to notify you when Zanix launches in your city. We do not sell, share, or use your data for advertising. We do not use cookies or tracking pixels.",
+    "s3_title": "3. Analytics",
+    "s3_body": "We use Plausible Analytics — a privacy-first, cookieless analytics tool. No personal data is collected. No consent banner is required.",
+    "s4_title": "4. Your rights",
+    "s4_body": "You may request deletion of your data at any time by emailing hello@zanix.cm. We will remove your record within 72 hours.",
+    "s5_title": "5. Data storage",
+    "s5_body": "Your data is stored securely on Supabase infrastructure in the EU West region. All data is encrypted at rest and in transit.",
+    "s6_title": "6. Contact",
+    "s6_body": "Questions? Email us at hello@zanix.cm."
+  },
+  "terms": {
+    "back": "← Back to Zanix",
+    "title": "Terms of Service",
+    "updated": "Last updated: April 2026",
+    "s1_title": "1. Pre-launch waitlist",
+    "s1_body": "By joining the Zanix waitlist, you agree to receive a single notification email when Zanix launches in your city. You may unsubscribe at any time by replying to any email or contacting us at hello@zanix.cm.",
+    "s2_title": "2. No guarantees",
+    "s2_body": "Zanix is currently in pre-launch. Joining the waitlist does not guarantee access to the platform, a specific launch date, or any pricing. We reserve the right to modify or cancel the service at any time.",
+    "s3_title": "3. Acceptable use",
+    "s3_body": "You agree not to submit false information, abuse the waitlist system, or attempt to interfere with the platform in any way.",
+    "s4_title": "4. Intellectual property",
+    "s4_body": "All content, branding, and design on this site is the property of Zanix. You may not reproduce or distribute it without written permission.",
+    "s5_title": "5. Governing law",
+    "s5_body": "These terms are governed by the laws of Cameroon. Any disputes shall be resolved in the courts of Douala, Cameroon.",
+    "s6_title": "6. Contact",
+    "s6_body": "Questions? Email us at hello@zanix.cm."
+  },
+  "contact": {
+    "back": "← Back to Zanix",
+    "title": "Contact",
+    "description": "We're a small team building something meaningful for Cameroon. Reach out — we read every message.",
+    "general_label": "General enquiries",
+    "vendor_label": "Vendor partnerships",
+    "social_label": "Follow us",
+    "instagram_handle": "@zanix.cm on Instagram"
+  }
+}

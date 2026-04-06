@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ─────────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --color-espresso:    #1C1208;
+  --color-brown-dark:  #2A1A0A;
+  --color-brown-mid:   #3D2510;
+  --color-brown-warm:  #5C3A1E;
+  --color-surface:     #231508;
+  --color-card-bg:     #2E1C0D;
+  --color-card-border: rgba(255, 195, 90, 0.10);
+
+  /* Accent */
+  --color-amber:       #E8A020;
+  --color-amber-light: #F5BF45;
+  --color-amber-pale:  rgba(232, 160, 32, 0.12);
+  --color-amber-glow:  rgba(232, 160, 32, 0.30);
+
+  /* Text */
+  --color-cream:       #F5EFE4;
+  --color-cream-dim:   rgba(245, 239, 228, 0.50);
+  --color-cream-faint: rgba(245, 239, 228, 0.20);
+  --color-cream-ghost: rgba(245, 239, 228, 0.07);
+  --color-white:       #FEFCF8;
+
+  /* Typography */
+  --font-serif:  var(--font-dm-serif), Georgia, serif;
+  --font-serif2: var(--font-playfair), Georgia, serif;
+  --font-sans:   var(--font-dm-sans), sans-serif;
+}
+
+/* ─── Base Styles ────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-espresso);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: var(--color-amber);
+    color: var(--color-espresso);
+  }
+
+  /* Focus-visible: amber ring on all interactive elements */
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 2px;
+  }
+}
+
+/* ─── Custom Cursor ──────────────────────────────────────────────────────── */
+body.custom-cursor-active {
+  cursor: none;
+}
+
+body.custom-cursor-active * {
+  cursor: none;
+}
+
+.cursor-dot {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-amber);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+}
+
+.cursor-circle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--color-amber);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+  opacity: 0.6;
+}
+
+body.hovering .cursor-circle {
+  width: 64px;
+  height: 64px;
+  opacity: 0.4;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-espresso);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-amber);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-amber-light);
+}
+
+/* ─── Ticker Animation ───────────────────────────────────────────────────── */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── Hero Streak Animations ─────────────────────────────────────────────── */
+@keyframes streak1 {
+  0%   { transform: translateX(-120%) translateY(60%) rotate(-35deg); opacity: 0; }
+  10%  { opacity: 0.18; }
+  90%  { opacity: 0.18; }
+  100% { transform: translateX(120%) translateY(-60%) rotate(-35deg); opacity: 0; }
+}
+
+@keyframes streak2 {
+  0%   { transform: translateX(-120%) translateY(40%) rotate(-28deg); opacity: 0; }
+  10%  { opacity: 0.12; }
+  90%  { opacity: 0.12; }
+  100% { transform: translateX(120%) translateY(-40%) rotate(-28deg); opacity: 0; }
+}
+
+@keyframes streak3 {
+  0%   { transform: translateX(-120%) translateY(80%) rotate(-42deg); opacity: 0; }
+  10%  { opacity: 0.09; }
+  90%  { opacity: 0.09; }
+  100% { transform: translateX(120%) translateY(-80%) rotate(-42deg); opacity: 0; }
+}
+
+@keyframes streak4 {
+  0%   { transform: translateX(-120%) translateY(20%) rotate(-20deg); opacity: 0; }
+  10%  { opacity: 0.07; }
+  90%  { opacity: 0.07; }
+  100% { transform: translateX(120%) translateY(-20%) rotate(-20deg); opacity: 0; }
+}
+
+@keyframes carFloat {
+  0%, 100% { transform: translateY(0px) rotate(-2deg); }
+  50%       { transform: translateY(-18px) rotate(2deg); }
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cursor-dot,
+  .cursor-circle {
+    display: none;
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "ci": {
+    "collect": {
+      "url": ["http://localhost:3000/en"],
+      "startServerCommand": "npm run start",
+      "startServerReadyPattern": "ready on",
+      "numberOfRuns": 3
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", { "minScore": 0.88 }],
+        "categories:accessibility": ["warn", { "minScore": 0.90 }],
+        "categories:best-practices": ["warn", { "minScore": 0.90 }],
+        "categories:seo": ["warn", { "minScore": 0.90 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
