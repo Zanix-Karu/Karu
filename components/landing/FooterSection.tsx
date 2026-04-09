@@ -26,7 +26,7 @@ export function FooterSection() {
 
   return (
     <footer className="bg-brown-dark border-t border-cream/10">
-      <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+      <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
 
         {/* ── Left: logo + tagline ── */}
         <div className="flex flex-col gap-2">
@@ -41,7 +41,7 @@ export function FooterSection() {
         {/* ── Right: nav links + copyright ── */}
         <div className="flex flex-col items-start md:items-end gap-4">
           <nav aria-label="Footer navigation">
-            <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            <ul className="flex flex-wrap gap-x-5 gap-y-3">
               {links.map(({ label, href }) => {
                 const isExternal = href.startsWith('http') || href.startsWith('mailto')
                 return (

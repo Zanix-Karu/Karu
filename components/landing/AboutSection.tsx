@@ -1,11 +1,14 @@
 import { useTranslations } from 'next-intl'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
+import { IconMapPin, IconTarget, IconUsers, IconCheckCircle, IconQuote } from '@/components/ui/Icon'
 
 interface AboutCard {
   icon: string
   title: string
   body: string
 }
+
+const CARD_ICONS = [IconMapPin, IconTarget, IconUsers, IconCheckCircle, IconQuote]
 
 export function AboutSection() {
   const t = useTranslations('about')
@@ -16,8 +19,8 @@ export function AboutSection() {
 
   return (
     <section id="about" className="bg-espresso min-h-screen flex items-center">
-      <div className="max-w-7xl mx-auto px-6 py-20 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
 
           {/* ── Left column ── */}
           <ScrollReveal direction="left">
@@ -59,20 +62,25 @@ export function AboutSection() {
           <div className="flex flex-col gap-4">
 
             {/* 2×2 grid of small cards */}
-            <div className="grid grid-cols-2 gap-4">
-              {gridCards.map((card, i) => (
-                <ScrollReveal key={card.title} direction="right" delay={i * 0.1}>
-                  <div className="bg-card-bg border border-card-border rounded-lg p-5 h-full">
-                    <div className="text-2xl mb-3" aria-hidden="true">{card.icon}</div>
-                    <h3 className="font-sans font-semibold text-[0.85rem] tracking-[0.04em] uppercase text-cream mb-2">
-                      {card.title}
-                    </h3>
-                    <p className="font-sans font-light text-[0.875rem] leading-[1.7] text-cream/60">
-                      {card.body}
-                    </p>
-                  </div>
-                </ScrollReveal>
-              ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {gridCards.map((card, i) => {
+                const CardIcon = CARD_ICONS[i]
+                return (
+                  <ScrollReveal key={card.title} direction="right" delay={i * 0.1}>
+                    <div className="bg-card-bg border border-card-border rounded-lg p-5 h-full">
+                      <div className="w-9 h-9 rounded-md bg-amber/10 flex items-center justify-center mb-3">
+                        <CardIcon size={18} className="text-amber" />
+                      </div>
+                      <h3 className="font-sans font-semibold text-[0.85rem] tracking-[0.04em] uppercase text-cream mb-2">
+                        {card.title}
+                      </h3>
+                      <p className="font-sans font-light text-[0.875rem] leading-[1.7] text-cream/60">
+                        {card.body}
+                      </p>
+                    </div>
+                  </ScrollReveal>
+                )
+              })}
             </div>
 
             {/* Full-width card */}
@@ -80,7 +88,9 @@ export function AboutSection() {
               <ScrollReveal direction="right" delay={0.4}>
                 <div className="bg-card-bg border border-amber/20 rounded-lg p-5">
                   <div className="flex items-start gap-4">
-                    <div className="text-2xl shrink-0" aria-hidden="true">{fullWidthCard.icon}</div>
+                    <div className="w-9 h-9 rounded-md bg-amber/10 flex items-center justify-center shrink-0">
+                      <IconQuote size={18} className="text-amber" />
+                    </div>
                     <div>
                       <h3 className="font-sans font-semibold text-[0.85rem] tracking-[0.04em] uppercase text-amber mb-2">
                         {fullWidthCard.title}

@@ -1,6 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import {
+  IconShield, IconWhatsApp, IconCreditCard,
+  IconPlane, IconStar, IconCar,
+} from '@/components/ui/Icon'
 
 interface FeatureCardProps {
   icon: string
@@ -9,12 +13,15 @@ interface FeatureCardProps {
   index: number
 }
 
-export function FeatureCard({ icon, label, description, index }: FeatureCardProps) {
+const ICONS = [IconShield, IconWhatsApp, IconCreditCard, IconPlane, IconStar, IconCar]
+
+export function FeatureCard({ label, description, index }: FeatureCardProps) {
   const ghostNumber = String(index + 1).padStart(2, '0')
+  const IconComponent = ICONS[index % ICONS.length]
 
   return (
     <motion.div
-      className="relative overflow-hidden bg-card-bg border border-card-border px-10 py-[52px]"
+      className="relative overflow-hidden bg-card-bg border border-card-border px-6 py-10 md:px-10 md:py-[52px]"
       whileHover={{ y: -4 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
     >
@@ -36,7 +43,11 @@ export function FeatureCard({ icon, label, description, index }: FeatureCardProp
       </span>
 
       {/* Icon */}
-      <div className="text-3xl mb-4">{icon}</div>
+      <div className="mb-5">
+        <div className="w-11 h-11 rounded-lg bg-amber/10 flex items-center justify-center">
+          <IconComponent size={22} className="text-amber" />
+        </div>
+      </div>
 
       {/* Label */}
       <p className="font-sans font-semibold text-[0.72rem] tracking-[0.2em] uppercase text-amber mb-3">

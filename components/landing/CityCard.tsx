@@ -14,7 +14,7 @@ interface CityCardProps {
 export function CityCard({ name, code, coordinates, badge, description }: CityCardProps) {
   return (
     <motion.div
-      className="relative overflow-hidden bg-card-bg border border-card-border p-10 min-h-[320px] flex flex-col justify-between"
+      className="relative overflow-hidden bg-card-bg border border-card-border p-6 md:p-10 min-h-[280px] flex flex-col justify-between"
       whileHover={{ y: -8 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
     >
@@ -32,7 +32,7 @@ export function CityCard({ name, code, coordinates, badge, description }: CityCa
 
       {/* Ghost city code */}
       <span
-        className="absolute right-0 top-1/2 -translate-y-1/2 font-serif2 font-black text-[10rem] leading-none opacity-[0.025] text-cream select-none pointer-events-none"
+        className="absolute right-0 top-1/2 -translate-y-1/2 font-serif2 font-black text-[6rem] md:text-[10rem] leading-none opacity-[0.025] text-cream select-none pointer-events-none"
         aria-hidden="true"
       >
         {code}
@@ -49,7 +49,7 @@ export function CityCard({ name, code, coordinates, badge, description }: CityCa
         </div>
 
         {/* City name */}
-        <h3 className="font-serif2 font-black text-[4rem] leading-none text-cream">
+        <h3 className="font-serif2 font-black text-[2.8rem] md:text-[4rem] leading-none text-cream">
           {name}
         </h3>
 

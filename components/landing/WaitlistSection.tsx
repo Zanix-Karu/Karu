@@ -156,7 +156,7 @@ export function WaitlistSection() {
   return (
     <section
       id="waitlist"
-      className="relative min-h-screen flex items-center py-20 px-6 bg-brown-mid overflow-hidden"
+      className="relative min-h-screen flex items-center py-20 px-4 sm:px-6 bg-brown-mid overflow-hidden"
       aria-labelledby="waitlist-heading"
     >
       {/* Subtle radial glow */}
@@ -169,7 +169,7 @@ export function WaitlistSection() {
         }}
       />
 
-      <div className="relative z-10 max-w-lg mx-auto text-center">
+      <div className="relative z-10 w-full max-w-lg mx-auto text-center px-2 sm:px-0">
         {/* Section tag */}
         <div className="inline-flex items-center gap-[10px] text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-amber mb-6">
           <span className="block w-7 h-px bg-amber" aria-hidden="true" />

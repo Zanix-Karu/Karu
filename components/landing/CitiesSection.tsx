@@ -17,7 +17,7 @@ export function CitiesSection() {
 
   return (
     <section id="cities" className="bg-espresso min-h-screen flex items-center">
-      <div className="max-w-7xl mx-auto px-6 py-20 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 w-full">
 
         {/* Section tag + heading */}
         <ScrollReveal>

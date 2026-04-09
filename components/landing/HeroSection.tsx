@@ -64,10 +64,10 @@ export function HeroSection() {
         />
       </div>
 
-      {/* ── Floating SVG car silhouette ── */}
+      {/* ── Floating SVG car silhouette — hidden on mobile ── */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[6%] bottom-[14%] opacity-[0.07]"
+        className="pointer-events-none absolute right-[6%] bottom-[14%] opacity-[0.07] hidden md:block"
         style={{ animation: 'carFloat 6s ease-in-out infinite' }}
       >
         <svg

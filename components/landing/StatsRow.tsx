@@ -32,10 +32,8 @@ export function StatsRow() {
             key={stat.labelKey}
             delay={i * 0.1}
             className={[
-              'flex flex-col items-center justify-center gap-3 px-8 py-14 text-center',
-              // Desktop: right border on first 3 cells
+              'flex flex-col items-center justify-center gap-3 px-4 py-10 md:px-8 md:py-14 text-center',
               i < 3 ? 'md:border-r md:border-cream/10' : '',
-              // Mobile (2-col): right border on odd-indexed cells (0, 2), bottom border on top row (0, 1)
               i % 2 === 0 && i < 3 ? 'border-r border-cream/10' : '',
               i < 2 ? 'border-b border-cream/10 md:border-b-0' : '',
             ]
@@ -43,7 +41,7 @@ export function StatsRow() {
               .join(' ')}
           >
             {/* Number */}
-            <div className="font-serif2 font-black text-[3.2rem] leading-none text-cream">
+            <div className="font-serif2 font-black text-[2.4rem] md:text-[3.2rem] leading-none text-cream">
               {stat.isStatic ? (
                 <span>{t(stat.valueKey)}</span>
               ) : (

@@ -14,7 +14,7 @@ export function HowItWorksSection() {
 
   return (
     <section id="how-it-works" className="bg-surface min-h-screen flex items-center">
-      <div className="max-w-7xl mx-auto px-6 py-20 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 w-full">
 
         {/* Section tag */}
         <ScrollReveal>
