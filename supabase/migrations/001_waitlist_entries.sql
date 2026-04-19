@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS waitlist_entries (
   email       TEXT NOT NULL,
   type        TEXT NOT NULL CHECK (type IN ('customer', 'vendor')),
   city        TEXT NOT NULL CHECK (city IN ('douala', 'yaounde', 'other')),
-  ip_hash     TEXT,
+   
   created_at  TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(email)
 );

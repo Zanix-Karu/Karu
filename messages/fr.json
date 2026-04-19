@@ -1,18 +1,16 @@
 {
   "nav": {
-    "about": "À propos",
     "how_it_works": "Comment ça marche",
-    "features": "Fonctionnalités",
+    "trust": "Vérifiés",
     "cities": "Villes",
-    "cta": "Pré-inscription"
+    "faq": "FAQ",
+    "cta": "Pré-inscription →"
   },
   "hero": {
-    "pill": "Douala & Yaoundé · Lancement Bientôt",
-    "title_line1": "Réservez des Voitures",
-    "title_line2": "de Location",
-    "title_line3": "de Confiance",
-    "eyebrow": "Avant Votre Arrivée",
-    "description": "Zanix connecte les voyageurs, la diaspora et les locaux avec des prestataires de location vérifiés à Douala et Yaoundé. Sans stress, sans intermédiaires, sans surprises.",
+    "badge": "Douala & Yaoundé — Lancement Bientôt",
+    "title_line1": "Arrivez",
+    "title_line2": "en confort.",
+    "sub": "Voitures de location vérifiées, réservées avant votre atterrissage.",
     "cta_primary": "Pré-inscription Maintenant",
     "cta_secondary": "Lister Ma Voiture →"
   },
@@ -26,203 +24,146 @@
     "phrase_7": "Réservation Avant Arrivée",
     "phrase_8": "Zéro Intermédiaires"
   },
-  "stats": {
-    "vendors_value": "500+",
-    "vendors_label": "Prestataires pré-inscrits",
-    "cities_value": "2",
-    "cities_label": "Villes de lancement",
-    "verified_value": "100%",
-    "verified_label": "Prestataires vérifiés",
-    "support_value": "24/7",
-    "support_label": "Assistance disponible"
-  },
-  "about": {
-    "tag": "À Propos de Zanix",
-    "heading": "Conçu pour le Cameroun,",
-    "heading_italic": "dès le premier jour",
-    "paragraph1": "La location de voitures au Cameroun fonctionne sur WhatsApp, les contacts personnels et la chance. Aucune transparence, aucune garantie, aucune structure.",
-    "paragraph2": "Zanix organise tout cela en une seule plateforme de confiance. Prestataires vérifiés, tarification transparente et confirmation avant arrivée.",
-    "cta": "En Savoir Plus →",
-    "cards": [
-      {
-        "icon": "📍",
-        "title": "Lancement en Premier À",
-        "body": "Douala et Yaoundé — les deux plus grandes villes et centres économiques du Cameroun."
-      },
-      {
-        "icon": "🎯",
-        "title": "Axé Sur",
-        "body": "Les transferts aéroport, les voyageurs arrivants et les visiteurs de la diaspora."
-      },
-      {
-        "icon": "👥",
-        "title": "Pour Tous",
-        "body": "Touristes, voyageurs d'affaires et locaux qui veulent une expérience de location documentée."
-      },
-      {
-        "icon": "✅",
-        "title": "Notre Promesse",
-        "body": "Prestataires Vérifiés, Tarification Transparente, Confirmation Avant Arrivée."
-      },
-      {
-        "icon": "💬",
-        "title": "La Réalité",
-        "body": "La demande et l'offre sont réelles — la structure et la confiance manquent. Nous apportons les deux au Cameroun."
-      }
-    ]
-  },
-  "how_it_works": {
+  "how": {
     "tag": "Comment Ça Marche",
-    "heading": "De la recherche aux clés en main",
-    "steps": [
-      {
-        "number": "01",
-        "title": "Rechercher",
-        "description": "Parcourez les véhicules vérifiés à Douala ou Yaoundé. Filtrez par type, prix et lieu de prise en charge."
-      },
-      {
-        "number": "02",
-        "title": "Demander",
-        "description": "Envoyez une demande de réservation avant d'atterrir. Choisissez vos dates et votre point de prise en charge."
-      },
-      {
-        "number": "03",
-        "title": "Confirmer",
-        "description": "Le prestataire approuve sous 24h. Payez via MTN MoMo ou Orange Money."
-      },
-      {
-        "number": "04",
-        "title": "Conduire",
-        "description": "Arrivez, récupérez votre voiture, conduisez. Entièrement confirmé — zéro surprise. Laissez un avis."
-      }
-    ]
+    "s1_num": "01 — Rechercher",
+    "s1_title": "Parcourez les voitures vérifiées à Douala.",
+    "s1_title_em": "vérifiées",
+    "s1_desc": "Filtrez par type, prix et lieu de prise en charge. Chaque annonce est vérifiée avant d'être publiée. Aucune surprise.",
+    "s2_num": "02 — Réserver",
+    "s2_title": "Demandez avant d'atterrir.",
+    "s2_title_em": "atterrir.",
+    "s2_desc": "Envoyez une réservation depuis n'importe où dans le monde. Le prestataire confirme sous 24 heures. Votre voiture attend — pas vous.",
+    "s3_num": "03 — Payer",
+    "s3_title": "Payez avec Mobile Money.",
+    "s3_title_em": "Mobile Money.",
+    "s3_desc": "MTN MoMo ou Orange Money — aucune carte requise. Les fonds sont conservés en séquestre et libérés uniquement après votre trajet.",
+    "s4_num": "04 — Conduire",
+    "s4_title": "Arrivez. Récupérez. Conduisez.",
+    "s4_title_em": "Conduisez.",
+    "s4_desc": "Votre voiture est confirmée, votre prestataire vous attend. Aucune incertitude. Laissez un avis quand vous avez terminé."
   },
-  "features": {
-    "tag": "Fonctionnalités",
-    "heading": "Tout ce dont vous avez besoin, rien de superflu",
-    "cards": [
-      {
-        "icon": "🛡️",
-        "label": "Prestataires Vérifiés",
-        "description": "Vérification d'identité et de documents avant la mise en ligne."
-      },
-      {
-        "icon": "📱",
-        "label": "Intégration WhatsApp",
-        "description": "Les clients peuvent toujours contacter les prestataires via WhatsApp, avec une couche de vérification."
-      },
-      {
-        "icon": "💳",
-        "label": "Paiements Mobile Money",
-        "description": "Payez avec MTN MoMo ou Orange Money. Aucune carte requise."
-      },
-      {
-        "icon": "✈️",
-        "label": "Réservation Avant Arrivée",
-        "description": "Réservez votre voiture depuis n'importe où avant d'atterrir."
-      },
-      {
-        "icon": "⭐",
-        "label": "Avis & Réputation",
-        "description": "Les avis bilatéraux créent une responsabilité pour les clients et les prestataires."
-      },
-      {
-        "icon": "🚗",
-        "label": "Services Chauffeur",
-        "description": "Phase 2 : services de chauffeur, locations longue durée, assurances, plus de villes."
-      }
-    ]
+  "stats": {
+    "n1": "500+",
+    "l1": "Prestataires pré-inscrits",
+    "d1": "Le marché de la location à Douala, enfin organisé.",
+    "n2": "100%",
+    "l2": "Prestataires vérifiés",
+    "d2": "RCCM, assurance et contrôle technique vérifiés.",
+    "n3": "24h",
+    "l3": "Confirmation de réservation",
+    "d3": "Le prestataire répond ou votre réservation est annulée automatiquement."
   },
-  "cities": {
-    "tag": "Où Nous Lançons",
-    "heading": "En commençant là où ça compte le plus",
-    "douala": {
-      "name": "Douala",
-      "code": "DLA",
-      "coordinates": "3.8480° N · 11.5021° E",
-      "badge": "Lancement en Premier",
-      "description": "La capitale économique et le port le plus actif du Cameroun. Plus forte concentration de voyageurs d'affaires, de la diaspora et d'arrivées internationales."
-    },
-    "yaounde": {
-      "name": "Yaoundé",
-      "code": "YAO",
-      "coordinates": "3.8667° N · 11.5167° E",
-      "badge": "Lancement en Premier",
-      "description": "La capitale politique. Nsimalen International connecte les fonctionnaires, les travailleurs d'ONG et les visiteurs d'affaires."
-    },
-    "more_cities": "Plus de villes en Afrique Centrale & de l'Ouest — Phase 3"
+  "trust": {
+    "tag": "Couche de Confiance",
+    "heading": "Vérifié à tous les niveaux",
+    "heading_em": "tous les niveaux",
+    "c1_title": "Documents vérifiés",
+    "c1_body": "Chaque prestataire soumet son RCCM, sa carte grise, son assurance CIMA et sa visite technique avant de publier un véhicule.",
+    "c2_title": "Paiements en séquestre",
+    "c2_body": "Votre argent est conservé en sécurité. Les prestataires reçoivent le paiement uniquement après la fin de votre trajet. Les litiges sont gérés par Karu.",
+    "c3_title": "Avis bilatéraux",
+    "c3_body": "Les clients évaluent les prestataires. Les prestataires évaluent les clients. La responsabilité va dans les deux sens.",
+    "c4_title": "Couche WhatsApp",
+    "c4_body": "Habitudes locales respectées. Chaque réservation inclut un contact WhatsApp vérifié — communication familière, prestataire de confiance.",
+    "c5_title": "Confirmation avant arrivée",
+    "c5_body": "Réservez depuis Londres, Paris ou New York. Votre voiture est confirmée et vous attend avant même que votre vol atterrisse.",
+    "c6_title": "Conforme CIMA",
+    "c6_body": "Tous les véhicules listés portent l'assurance responsabilité civile obligatoire selon le Code CIMA — la loi, appliquée."
+  },
+  "faq": {
+    "tag": "Questions",
+    "heading": "Foire aux questions",
+    "heading_em": "questions",
+    "q1": "Pourquoi Karu plutôt que les groupes WhatsApp ?",
+    "a1": "Les groupes WhatsApp ne vous offrent aucune vérification, aucune sécurité de paiement et aucun recours en cas de problème. Karu vous offre les trois — plus les documents du prestataire et les paiements en séquestre.",
+    "q2": "Comment puis-je payer ?",
+    "a2": "MTN Mobile Money et Orange Money sont tous deux pris en charge. Aucune carte requise. Les fonds sont conservés en séquestre par Karu et libérés au prestataire uniquement après la fin de votre trajet.",
+    "q3": "Que se passe-t-il si quelque chose ne va pas avec la voiture ?",
+    "a3": "Tous les véhicules listés portent l'assurance moteur obligatoire conforme CIMA. Pour les litiges, Karu intervient et peut retenir ou ajuster les paiements des prestataires selon les preuves soumises.",
+    "q4": "Comment les prestataires sont-ils vérifiés ?",
+    "a4": "Les prestataires soumettent leur RCCM, leur carte grise, leur certificat d'assurance CIMA et leur visite technique pour chaque véhicule. Les documents sont examinés avant toute publication.",
+    "q5": "Quelles villes Karu couvre-t-il ?",
+    "a5": "Douala lance en premier — c'est la capitale économique du Cameroun et le point d'arrivée le plus fréquenté. Yaoundé suit en Phase 1. L'expansion en Afrique centrale et de l'Ouest est prévue pour la Phase 3.",
+    "q6": "L'inscription sur Karu est-elle gratuite ?",
+    "a6": "L'inscription est gratuite. Karu prend une commission de 15% sur les paiements des prestataires par réservation complétée. Les clients paient des frais de service modestes. Aucun abonnement — vous ne payez que lorsque vous gagnez."
   },
   "waitlist": {
     "tag": "Accès Anticipé",
     "heading": "Obtenez un Accès Anticipé",
-    "description": "Soyez le premier à savoir quand Zanix sera disponible. Les prestataires obtiennent une priorité. Les clients bénéficient des prix pionniers.",
-    "email_placeholder": "Entrez votre adresse e-mail",
+    "heading_em": "Anticipé",
+    "description": "Les premiers inscrits obtiennent une priorité si vous êtes prestataire — et des tarifs pionniers en tant que client.",
+    "email_placeholder": "votre@email.com",
     "type_customer": "Je suis un Client",
     "type_vendor": "Je suis un Prestataire",
     "city_douala": "Douala",
     "city_yaounde": "Yaoundé",
     "city_other": "Autre Ville",
     "submit_cta": "Rejoindre la Liste",
-    "no_spam": "Pas de spam · Nous vous notifierons au lancement dans votre ville",
+    "no_spam": "Pas de spam · Notifié au lancement dans votre ville",
     "success_title": "Vous êtes sur la liste !",
-    "success_douala": "Nous vous notifierons quand Zanix lancera à Douala.",
-    "success_yaounde": "Nous vous notifierons quand Zanix lancera à Yaoundé.",
-    "success_other": "Nous vous notifierons quand Zanix arrivera dans votre ville.",
+    "success_douala": "Nous vous notifierons quand Karu lancera à Douala.",
+    "success_yaounde": "Nous vous notifierons quand Karu lancera à Yaoundé.",
+    "success_other": "Nous vous notifierons quand Karu arrivera dans votre ville.",
     "error_generic": "Une erreur s'est produite. Veuillez réessayer.",
     "error_rate_limit": "Trop de tentatives. Veuillez réessayer plus tard.",
     "count_label": "Rejoignez {count} autres personnes déjà sur la liste"
   },
   "footer": {
-    "tagline": "Conçu pour le Cameroun.",
+    "tagline": "Location de voitures vérifiées au Cameroun. Construit par Zanix — infrastructure pour le commerce africain.",
+    "col_product": "Produit",
+    "col_company": "Entreprise",
+    "col_legal": "Légal",
     "links": {
-      "privacy": "Confidentialité",
-      "terms": "Conditions",
+      "privacy": "Politique de Confidentialité",
+      "terms": "Conditions d'Utilisation",
       "contact": "Contact",
       "instagram": "Instagram"
     },
-    "copyright": "© {year} Zanix · Conçu pour le Cameroun"
+    "copyright": "© {year} Karu · karu.rentals",
+    "zanix": "Un produit Zanix · Conçu pour le Cameroun"
   },
   "privacy": {
-    "back": "← Retour à Zanix",
+    "back": "← Retour à Karu",
     "title": "Politique de Confidentialité",
     "updated": "Dernière mise à jour : Avril 2026",
     "s1_title": "1. Ce que nous collectons",
-    "s1_body": "Lorsque vous rejoignez la liste d'attente Zanix, nous collectons votre adresse e-mail, votre type d'utilisateur (client ou prestataire) et votre ville. Nous stockons également une version hachée (non réversible) de votre adresse IP à des fins de sécurité uniquement.",
+    "s1_body": "Lorsque vous rejoignez la liste d'attente Karu, nous collectons votre adresse e-mail, votre type d'utilisateur et votre ville. Nous stockons également une version hachée de votre adresse IP à des fins de sécurité uniquement.",
     "s2_title": "2. Comment nous l'utilisons",
-    "s2_body": "Nous utilisons votre e-mail uniquement pour vous notifier quand Zanix lance dans votre ville. Nous ne vendons, ne partageons ni n'utilisons vos données à des fins publicitaires. Nous n'utilisons pas de cookies ni de pixels de suivi.",
+    "s2_body": "Nous utilisons votre e-mail uniquement pour vous notifier quand Karu lance dans votre ville. Nous ne vendons ni ne partageons vos données.",
     "s3_title": "3. Analytique",
-    "s3_body": "Nous utilisons Plausible Analytics — un outil d'analyse respectueux de la vie privée, sans cookies. Aucune donnée personnelle n'est collectée. Aucune bannière de consentement n'est requise.",
+    "s3_body": "Nous utilisons Plausible Analytics — sans cookies. Aucune donnée personnelle n'est collectée.",
     "s4_title": "4. Vos droits",
-    "s4_body": "Vous pouvez demander la suppression de vos données à tout moment en envoyant un e-mail à hello@zanix.cm. Nous supprimerons votre enregistrement dans les 72 heures.",
+    "s4_body": "Vous pouvez demander la suppression de vos données à tout moment en envoyant un e-mail à hello@karu.rentals.",
     "s5_title": "5. Stockage des données",
-    "s5_body": "Vos données sont stockées en toute sécurité sur l'infrastructure Supabase dans la région EU West. Toutes les données sont chiffrées au repos et en transit.",
+    "s5_body": "Vos données sont stockées sur l'infrastructure Supabase dans la région EU West. Toutes les données sont chiffrées.",
     "s6_title": "6. Contact",
-    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@zanix.cm."
+    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@karu.rentals."
   },
   "terms": {
-    "back": "← Retour à Zanix",
+    "back": "← Retour à Karu",
     "title": "Conditions d'Utilisation",
     "updated": "Dernière mise à jour : Avril 2026",
     "s1_title": "1. Liste d'attente pré-lancement",
-    "s1_body": "En rejoignant la liste d'attente Zanix, vous acceptez de recevoir un seul e-mail de notification lorsque Zanix lance dans votre ville. Vous pouvez vous désabonner à tout moment en répondant à n'importe quel e-mail ou en nous contactant à hello@zanix.cm.",
+    "s1_body": "En rejoignant la liste d'attente Karu, vous acceptez de recevoir un e-mail de notification au lancement. Vous pouvez vous désabonner à tout moment.",
     "s2_title": "2. Aucune garantie",
-    "s2_body": "Zanix est actuellement en pré-lancement. Rejoindre la liste d'attente ne garantit pas l'accès à la plateforme, une date de lancement spécifique ou des tarifs particuliers. Nous nous réservons le droit de modifier ou d'annuler le service à tout moment.",
+    "s2_body": "Karu est en pré-lancement. Rejoindre la liste ne garantit pas l'accès à la plateforme ni une date de lancement spécifique.",
     "s3_title": "3. Utilisation acceptable",
-    "s3_body": "Vous acceptez de ne pas soumettre de fausses informations, d'abuser du système de liste d'attente ou de tenter d'interférer avec la plateforme de quelque manière que ce soit.",
+    "s3_body": "Vous acceptez de ne pas soumettre de fausses informations ou d'abuser du système.",
     "s4_title": "4. Propriété intellectuelle",
-    "s4_body": "Tout le contenu, la marque et le design de ce site sont la propriété de Zanix. Vous ne pouvez pas les reproduire ou les distribuer sans autorisation écrite.",
+    "s4_body": "Tout le contenu et la marque sont la propriété de Karu / Zanix.",
     "s5_title": "5. Droit applicable",
-    "s5_body": "Ces conditions sont régies par les lois du Cameroun. Tout litige sera résolu devant les tribunaux de Douala, Cameroun.",
+    "s5_body": "Ces conditions sont régies par les lois du Cameroun.",
     "s6_title": "6. Contact",
-    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@zanix.cm."
+    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@karu.rentals."
   },
   "contact": {
-    "back": "← Retour à Zanix",
+    "back": "← Retour à Karu",
     "title": "Contact",
-    "description": "Nous sommes une petite équipe qui construit quelque chose de significatif pour le Cameroun. Contactez-nous — nous lisons chaque message.",
+    "description": "Nous sommes une petite équipe qui construit quelque chose de significatif pour le Cameroun.",
     "general_label": "Renseignements généraux",
     "vendor_label": "Partenariats prestataires",
     "social_label": "Suivez-nous",
-    "instagram_handle": "@zanix.cm sur Instagram"
+    "instagram_handle": "@karu.rentals sur Instagram"
   }
 }

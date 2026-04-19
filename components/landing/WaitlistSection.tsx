@@ -156,33 +156,41 @@ export function WaitlistSection() {
   return (
     <section
       id="waitlist"
-      className="relative min-h-screen flex items-center py-20 px-4 sm:px-6 bg-brown-mid overflow-hidden"
+      className="relative min-h-screen flex items-center py-20 px-4 sm:px-6 overflow-hidden"
+      style={{ background: 'var(--deep)', borderTop: '1px solid var(--gold-line)' }}
       aria-labelledby="waitlist-heading"
     >
-      {/* Subtle radial glow */}
+      {/* Background grid */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
-          background:
-            'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(232,160,32,0.06) 0%, transparent 70%)',
+          backgroundImage: 'linear-gradient(rgba(200,132,26,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(200,132,26,0.02) 1px, transparent 1px)',
+          backgroundSize: '56px 56px',
+          maskImage: 'radial-gradient(ellipse 60% 65% at 50% 50%, black 25%, transparent 100%)',
         }}
+      />
+      {/* Radial glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{ background: 'radial-gradient(ellipse 60% 70% at 50% 50%, rgba(46,24,8,0.4) 0%, transparent 70%)' }}
       />
 
       <div className="relative z-10 w-full max-w-lg mx-auto text-center px-2 sm:px-0">
         {/* Section tag */}
-        <div className="inline-flex items-center gap-[10px] text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-amber mb-6">
-          <span className="block w-7 h-px bg-amber" aria-hidden="true" />
+        <div className="inline-flex items-center gap-[10px] font-sans text-[0.62rem] font-bold tracking-[0.22em] uppercase mb-6" style={{ color: 'var(--amber)' }}>
+          <span className="block w-7 h-px" style={{ background: 'var(--amber)' }} aria-hidden="true" />
           {t('tag')}
         </div>
 
         {/* Heading */}
         <h2
           id="waitlist-heading"
-          className="font-serif font-normal text-white mb-5"
-          style={{ fontSize: 'clamp(2.5rem, 5.5vw, 5rem)' }}
+          className="font-serif font-light mb-5"
+          style={{ fontSize: 'clamp(3.8rem, 10vw, 10.5rem)', lineHeight: '0.86', letterSpacing: '-0.025em', color: 'var(--cream)' }}
         >
-          {t('heading')}
+          {t('heading').replace(t('heading_em'), '')}<em style={{ fontStyle: 'italic', color: 'var(--amber)' }}>{t('heading_em')}</em>
         </h2>
 
         {/* Description */}

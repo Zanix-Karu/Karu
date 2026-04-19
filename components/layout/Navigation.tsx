@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 
 const NAV_LINKS = [
-  { key: 'about', href: '#about' },
-  { key: 'how_it_works', href: '#how-it-works' },
-  { key: 'features', href: '#features' },
-  { key: 'cities', href: '#cities' },
+  { key: 'how_it_works', href: '#how' },
+  { key: 'trust',        href: '#trust' },
+  { key: 'cities',       href: '#cities' },
+  { key: 'faq',          href: '#faq' },
 ] as const
 
 export function Navigation() {
@@ -23,47 +23,44 @@ export function Navigation() {
   return (
     <header
       className={[
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        'flex items-center justify-between px-6 md:px-16',
         stuck
-          ? 'bg-espresso/90 backdrop-blur-md border-b border-cream/[0.06] py-3'
-          : 'bg-transparent py-5',
+          ? 'bg-ink/88 backdrop-blur-xl border-b py-[18px]'
+          : 'bg-transparent border-b border-transparent py-7',
       ].join(' ')}
+      style={{ borderColor: stuck ? 'var(--gold-line)' : 'transparent' }}
     >
-      <nav
-        className="max-w-7xl mx-auto px-6 flex items-center justify-between"
-        aria-label="Main navigation"
+      {/* Logo */}
+      <a
+        href="#"
+        className="font-serif text-[1.55rem] font-medium text-cream tracking-[0.02em] hover:opacity-80 transition-opacity"
+        aria-label="Karu — back to top"
       >
-        {/* Logo */}
-        <a
-          href="#hero"
-          className="font-serif2 text-[1.35rem] font-bold text-amber tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
-          aria-label="Zanix — back to top"
-        >
-          Zanix
-        </a>
+        <em className="not-italic text-amber">K</em>aru
+      </a>
 
-        {/* Nav links — hidden below 900px */}
-        <ul className="hidden min-[900px]:flex items-center gap-8" role="list">
-          {NAV_LINKS.map(({ key, href }) => (
-            <li key={key}>
-              <a
-                href={href}
-                className="font-sans text-[0.78rem] font-medium tracking-[0.1em] uppercase text-cream/60 hover:text-cream transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
-              >
-                {t(key)}
-              </a>
-            </li>
-          ))}
-        </ul>
+      {/* Nav links — hidden on mobile */}
+      <ul className="hidden md:flex items-center gap-10" role="list">
+        {NAV_LINKS.map(({ key, href }) => (
+          <li key={key}>
+            <a
+              href={href}
+              className="font-sans text-[0.68rem] font-semibold tracking-[0.18em] uppercase text-cream/55 hover:text-amber transition-colors duration-200"
+            >
+              {t(key)}
+            </a>
+          </li>
+        ))}
+      </ul>
 
-        {/* CTA */}
-        <a
-          href="#waitlist"
-          className="relative overflow-hidden inline-flex items-center justify-center font-sans text-[0.85rem] font-semibold tracking-[0.07em] uppercase transition-all duration-250 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-espresso bg-amber text-espresso px-7 py-[11px] hover:-translate-y-[2px] hover:shadow-[0_12px_35px_rgba(232,160,32,0.35)] active:scale-[0.98] text-[0.75rem]"
-        >
-          {t('cta')}
-        </a>
-      </nav>
+      {/* CTA */}
+      <a
+        href="#waitlist"
+        className="font-sans text-[0.68rem] font-bold tracking-[0.14em] uppercase bg-amber text-ink px-[26px] py-[11px] hover:bg-amber-light transition-colors duration-200 hover:-translate-y-px active:translate-y-0"
+      >
+        {t('cta')}
+      </a>
     </header>
   )
 }

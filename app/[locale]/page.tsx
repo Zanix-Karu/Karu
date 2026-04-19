@@ -4,13 +4,13 @@ import { Navigation } from '@/components/layout/Navigation'
 import { CustomCursor } from '@/components/ui/CustomCursor'
 import { HeroSection } from '@/components/landing/HeroSection'
 import { TickerBand } from '@/components/landing/TickerBand'
-import { StatsRow } from '@/components/landing/StatsRow'
-import { AboutSection } from '@/components/landing/AboutSection'
-import { HowItWorksSection } from '@/components/landing/HowItWorksSection'
-import { FeaturesGrid } from '@/components/landing/FeaturesGrid'
-import { CitiesSection } from '@/components/landing/CitiesSection'
+import { HowSection } from '@/components/landing/HowSection'
+import { StatsSection } from '@/components/landing/StatsSection'
+import { TrustSection } from '@/components/landing/TrustSection'
+import { FaqSection } from '@/components/landing/FaqSection'
 import { WaitlistSection } from '@/components/landing/WaitlistSection'
 import { FooterSection } from '@/components/landing/FooterSection'
+import { ScrollRevealInit } from '@/components/ui/ScrollRevealInit'
 
 export default async function Page({ params: { locale } }: { params: { locale: string } }) {
   const messages = await getMessages()
@@ -19,14 +19,14 @@ export default async function Page({ params: { locale } }: { params: { locale: s
     <NextIntlClientProvider messages={messages}>
       <CustomCursor />
       <Navigation />
+      <ScrollRevealInit />
       <main>
         <HeroSection />
         <TickerBand />
-        <StatsRow />
-        <AboutSection />
-        <HowItWorksSection />
-        <FeaturesGrid />
-        <CitiesSection />
+        <HowSection />
+        <StatsSection />
+        <TrustSection />
+        <FaqSection />
         <WaitlistSection />
       </main>
       <FooterSection />

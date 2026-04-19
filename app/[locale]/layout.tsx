@@ -1,50 +1,43 @@
 import type { Metadata } from 'next'
-import { DM_Serif_Display, Playfair_Display, DM_Sans } from 'next/font/google'
+import { Cormorant_Garamond, Syne } from 'next/font/google'
 import Script from 'next/script'
 import '../globals.css'
 
-const dmSerif = DM_Serif_Display({
-  weight: ['400'],
+const cormorant = Cormorant_Garamond({
+  weight: ['300', '400', '500', '600'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
-  variable: '--font-dm-serif',
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({
-  weight: ['700', '900'],
+const syne = Syne({
+  weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
-  variable: '--font-playfair',
-  display: 'swap',
-})
-
-const dmSans = DM_Sans({
-  weight: ['300', '400', '500', '600'],
-  subsets: ['latin'],
-  variable: '--font-dm-sans',
+  variable: '--font-syne',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Zanix — Book Trusted Rental Cars in Cameroon',
-  description: 'Zanix connects travelers and locals with verified car rental providers in Douala and Yaoundé. No stress, no middlemen, no surprises.',
+  title: 'Karu — Verified Car Rentals in Cameroon',
+  description: 'Verified rental cars booked before you land. Douala & Yaoundé. MTN MoMo & Orange Money. No middlemen.',
   openGraph: {
-    title: 'Zanix — Book Trusted Rental Cars in Cameroon',
-    description: 'No stress, no middlemen. Verified providers, mobile money payments.',
+    title: 'Karu — Verified Car Rentals in Cameroon',
+    description: 'Arrive in comfort. Verified rental cars, booked before you land.',
     images: [{ url: '/opengraph-image', width: 1200, height: 630 }],
     locale: 'en_CM',
     alternateLocale: ['fr_CM'],
     type: 'website',
-    siteName: 'Zanix',
+    siteName: 'Karu',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Zanix — Cameroon Car Rental Marketplace',
+    title: 'Karu — Cameroon Car Rental Marketplace',
     description: 'Verified providers, mobile money payments, pre-arrival booking.',
     images: ['/opengraph-image'],
   },
   robots: { index: true, follow: true },
-  metadataBase: new URL('https://zanix.cm'),
+  metadataBase: new URL('https://karu.rentals'),
 }
 
 interface RootLayoutProps {
@@ -56,7 +49,7 @@ export default function RootLayout({ children, params: { locale } }: RootLayoutP
   return (
     <html
       lang={locale}
-      className={`${dmSerif.variable} ${playfair.variable} ${dmSans.variable}`}
+      className={`${cormorant.variable} ${syne.variable}`}
     >
       <body>
         {children}

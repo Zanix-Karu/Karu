@@ -49,8 +49,8 @@ export function CustomCursor() {
     rafId = requestAnimationFrame(animate)
 
     // Expand circle on interactive elements
-    const onEnter = () => document.body.classList.add('cursor-hovering')
-    const onLeave = () => document.body.classList.remove('cursor-hovering')
+    const onEnter = () => document.body.classList.add('hovering')
+    const onLeave = () => document.body.classList.remove('hovering')
 
     const interactives = document.querySelectorAll('a, button, [role="button"], input, select, textarea, label')
     interactives.forEach((el) => {
@@ -75,16 +75,8 @@ export function CustomCursor() {
 
   return (
     <>
-      <div
-        ref={dotRef}
-        className="cursor-dot"
-        aria-hidden="true"
-      />
-      <div
-        ref={circleRef}
-        className="cursor-circle [body.cursor-hovering_&]:w-16 [body.cursor-hovering_&]:h-16"
-        aria-hidden="true"
-      />
+      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
+      <div ref={circleRef} className="cursor-ring" aria-hidden="true" />
     </>
   )
 }

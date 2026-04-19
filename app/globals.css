@@ -2,65 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Design Tokens ─────────────────────────────────────────────────────── */
+/* ─── Karu Design Tokens ─────────────────────────────────────────────────── */
 :root {
-  /* Backgrounds */
-  --color-espresso:    #1C1208;
-  --color-brown-dark:  #2A1A0A;
-  --color-brown-mid:   #3D2510;
-  --color-brown-warm:  #5C3A1E;
-  --color-surface:     #231508;
-  --color-card-bg:     #2E1C0D;
-  --color-card-border: rgba(255, 195, 90, 0.10);
+  --ink:           #0D0905;
+  --deep:          #120C06;
+  --mahogany:      #1A0E07;
+  --cognac:        #2E1808;
+  --leather:       #3D2008;
+  --amber:         #C8841A;
+  --amber-light:   #E8A832;
+  --amber-pale:    #F5C96A;
+  --amber-ghost:   rgba(200,132,26,0.10);
+  --amber-trace:   rgba(200,132,26,0.05);
+  --cream:         #F0E8D8;
+  --cream-dim:     rgba(240,232,216,0.55);
+  --cream-faint:   rgba(240,232,216,0.18);
+  --cream-ghost:   rgba(240,232,216,0.07);
+  --gold-line:     rgba(200,132,26,0.14);
+  --glass-warm:    rgba(200,132,26,0.06);
+  --glass-warm-border: rgba(200,132,26,0.18);
+  --shadow-float:  0 4px 6px rgba(0,0,0,0.15), 0 20px 60px rgba(0,0,0,0.35);
 
-  /* Accent */
-  --color-amber:       #E8A020;
-  --color-amber-light: #F5BF45;
-  --color-amber-pale:  rgba(232, 160, 32, 0.12);
-  --color-amber-glow:  rgba(232, 160, 32, 0.30);
-
-  /* Text */
-  --color-cream:       #F5EFE4;
-  --color-cream-dim:   rgba(245, 239, 228, 0.50);
-  --color-cream-faint: rgba(245, 239, 228, 0.20);
-  --color-cream-ghost: rgba(245, 239, 228, 0.07);
-  --color-white:       #FEFCF8;
-
-  /* Typography */
-  --font-serif:  var(--font-dm-serif), Georgia, serif;
-  --font-serif2: var(--font-playfair), Georgia, serif;
-  --font-sans:   var(--font-dm-sans), sans-serif;
+  --font-serif:  var(--font-cormorant), Georgia, serif;
+  --font-sans:   var(--font-syne), system-ui, sans-serif;
 }
 
-/* ─── Base Styles ────────────────────────────────────────────────────────── */
+/* ─── Base ───────────────────────────────────────────────────────────────── */
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
-    background-color: var(--color-espresso);
-    color: var(--color-cream);
+    background-color: var(--ink);
+    color: var(--cream);
     font-family: var(--font-sans);
+    overflow-x: hidden;
   }
 
   ::selection {
-    background-color: var(--color-amber);
-    color: var(--color-espresso);
+    background-color: var(--amber);
+    color: var(--ink);
   }
 
-  /* Focus-visible: amber ring on all interactive elements */
   :focus-visible {
-    outline: 2px solid var(--color-amber);
+    outline: 2px solid var(--amber);
     outline-offset: 2px;
   }
+}
+
+/* ─── Grain overlay ──────────────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 400px;
 }
 
 /* ─── Custom Cursor ──────────────────────────────────────────────────────── */
 body.custom-cursor-active {
   cursor: none;
 }
-
 body.custom-cursor-active * {
   cursor: none;
 }
@@ -69,104 +76,95 @@ body.custom-cursor-active * {
   position: fixed;
   pointer-events: none;
   z-index: 9999;
-  width: 8px;
-  height: 8px;
-  background-color: var(--color-amber);
+  width: 6px;
+  height: 6px;
+  background-color: var(--amber);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
 }
 
-.cursor-circle {
+.cursor-ring {
   position: fixed;
   pointer-events: none;
-  z-index: 9999;
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid var(--color-amber);
+  z-index: 9998;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(200,132,26,0.5);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: transform 0.15s ease, width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
-  opacity: 0.6;
+  transition: width 0.35s, height 0.35s, border-color 0.3s;
 }
 
-body.hovering .cursor-circle {
-  width: 64px;
-  height: 64px;
-  opacity: 0.4;
+body.hovering .cursor-ring {
+  width: 50px;
+  height: 50px;
+  border-color: var(--amber-light);
 }
 
-/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-espresso);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-amber);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-amber-light);
-}
-
-/* ─── Ticker Animation ───────────────────────────────────────────────────── */
+/* ─── Ticker ─────────────────────────────────────────────────────────────── */
 @keyframes ticker {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-/* ─── Hero Streak Animations ─────────────────────────────────────────────── */
-@keyframes streak1 {
-  0%   { transform: translateX(-120%) translateY(60%) rotate(-35deg); opacity: 0; }
-  10%  { opacity: 0.18; }
-  90%  { opacity: 0.18; }
-  100% { transform: translateX(120%) translateY(-60%) rotate(-35deg); opacity: 0; }
+/* ─── Hero animations ────────────────────────────────────────────────────── */
+@keyframes riseUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes streak2 {
-  0%   { transform: translateX(-120%) translateY(40%) rotate(-28deg); opacity: 0; }
-  10%  { opacity: 0.12; }
-  90%  { opacity: 0.12; }
-  100% { transform: translateX(120%) translateY(-40%) rotate(-28deg); opacity: 0; }
-}
-
-@keyframes streak3 {
-  0%   { transform: translateX(-120%) translateY(80%) rotate(-42deg); opacity: 0; }
-  10%  { opacity: 0.09; }
-  90%  { opacity: 0.09; }
-  100% { transform: translateX(120%) translateY(-80%) rotate(-42deg); opacity: 0; }
-}
-
-@keyframes streak4 {
-  0%   { transform: translateX(-120%) translateY(20%) rotate(-20deg); opacity: 0; }
-  10%  { opacity: 0.07; }
-  90%  { opacity: 0.07; }
-  100% { transform: translateX(120%) translateY(-20%) rotate(-20deg); opacity: 0; }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
 }
 
 @keyframes carFloat {
-  0%, 100% { transform: translateY(0px) rotate(-2deg); }
-  50%       { transform: translateY(-18px) rotate(2deg); }
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
 }
 
-/* ─── Reduced Motion ─────────────────────────────────────────────────────── */
+/* ─── Scroll reveal ──────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-l {
+  opacity: 0;
+  transform: translateX(-28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal-l.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-r {
+  opacity: 0;
+  transform: translateX(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal-r.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--amber-light); }
+
+/* ─── Reduced motion ─────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-
-  .cursor-dot,
-  .cursor-circle {
-    display: none;
-  }
+  .cursor-dot, .cursor-ring { display: none; }
 }
