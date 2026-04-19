@@ -96,7 +96,7 @@ export function AnimatedHeroContent() {
             <div className="w-[10px] h-[10px] rounded-full" style={{ background: '#FEBC2E' }} />
             <div className="w-[10px] h-[10px] rounded-full" style={{ background: '#28C840' }} />
             <div className="flex-1 mx-3 rounded-md px-3 py-1 text-center font-sans text-[0.62rem] tracking-[0.04em]" style={{ background: 'rgba(240,232,216,0.06)', border: '1px solid var(--gold-line)', color: 'var(--cream-dim)' }}>
-              app.karu.rentals · Douala
+              app.getkaru.io · Douala
             </div>
           </div>
           {/* Mock app content */}

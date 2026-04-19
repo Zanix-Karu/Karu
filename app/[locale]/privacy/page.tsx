@@ -24,9 +24,9 @@ export default function PrivacyPage() {
             <section key={s}>
               <h2 className="font-sans font-semibold text-cream text-lg mb-3">{t(`${s}_title`)}</h2>
               <p>
-                {t(`${s}_body`).split('hello@zanix.cm').map((part, i, arr) =>
+                {t(`${s}_body`).split('hello@getkaru.io').map((part, i, arr) =>
                   i < arr.length - 1 ? (
-                    <span key={i}>{part}<a href="mailto:hello@zanix.cm" className="text-amber hover:underline">hello@zanix.cm</a></span>
+                    <span key={i}>{part}<a href="mailto:hello@getkaru.io" className="text-amber hover:underline">hello@getkaru.io</a></span>
                   ) : part
                 )}
               </p>

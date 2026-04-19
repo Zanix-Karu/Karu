@@ -79,8 +79,8 @@ export function WaitlistConfirmEmail({ type, city }: WaitlistConfirmEmailProps) 
                     {/* CTA button */}
                     <tr>
                       <td style={styles.ctaCell}>
-                        <a href="https://zanix.cm" style={styles.ctaButton}>
-                          Visit zanix.cm
+                        <a href="https://getkaru.io" style={styles.ctaButton}>
+                          Visit getkaru.io
                         </a>
                       </td>
                     </tr>

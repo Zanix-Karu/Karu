@@ -24,22 +24,22 @@ export default function ContactPage() {
         <div className="space-y-6">
           <div className="bg-card-bg border border-card-border rounded-lg p-6">
             <p className="text-[0.72rem] font-semibold tracking-[0.2em] uppercase text-amber mb-2">{t('general_label')}</p>
-            <a href="mailto:hello@zanix.cm" className="font-sans text-cream hover:text-amber transition-colors text-lg">
-              hello@zanix.cm
+            <a href="mailto:hello@getkaru.io" className="font-sans text-cream hover:text-amber transition-colors text-lg">
+              hello@getkaru.io
             </a>
           </div>
 
           <div className="bg-card-bg border border-card-border rounded-lg p-6">
             <p className="text-[0.72rem] font-semibold tracking-[0.2em] uppercase text-amber mb-2">{t('vendor_label')}</p>
-            <a href="mailto:vendors@zanix.cm" className="font-sans text-cream hover:text-amber transition-colors text-lg">
-              vendors@zanix.cm
+            <a href="mailto:vendors@getkaru.io" className="font-sans text-cream hover:text-amber transition-colors text-lg">
+              vendors@getkaru.io
             </a>
           </div>
 
           <div className="bg-card-bg border border-card-border rounded-lg p-6">
             <p className="text-[0.72rem] font-semibold tracking-[0.2em] uppercase text-amber mb-2">{t('social_label')}</p>
             <a
-              href="https://instagram.com/zanix.cm"
+              href="https://instagram.com/getkaru.io"
               target="_blank"
               rel="noopener noreferrer"
               className="font-sans text-cream hover:text-amber transition-colors text-lg"

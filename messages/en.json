@@ -120,7 +120,7 @@
       "contact": "Contact",
       "instagram": "Instagram"
     },
-    "copyright": "© {year} Karu · karu.rentals",
+    "copyright": "© {year} Karu · getkaru.io",
     "zanix": "A Zanix product · Built for Cameroon"
   },
   "privacy": {
@@ -134,18 +134,18 @@
     "s3_title": "3. Analytics",
     "s3_body": "We use Plausible Analytics — a privacy-first, cookieless analytics tool. No personal data is collected. No consent banner is required.",
     "s4_title": "4. Your rights",
-    "s4_body": "You may request deletion of your data at any time by emailing hello@karu.rentals. We will remove your record within 72 hours.",
+    "s4_body": "You may request deletion of your data at any time by emailing hello@getkaru.io. We will remove your record within 72 hours.",
     "s5_title": "5. Data storage",
     "s5_body": "Your data is stored securely on Supabase infrastructure in the EU West region. All data is encrypted at rest and in transit.",
     "s6_title": "6. Contact",
-    "s6_body": "Questions? Email us at hello@karu.rentals."
+    "s6_body": "Questions? Email us at hello@getkaru.io."
   },
   "terms": {
     "back": "← Back to Karu",
     "title": "Terms of Service",
     "updated": "Last updated: April 2026",
     "s1_title": "1. Pre-launch waitlist",
-    "s1_body": "By joining the Karu waitlist, you agree to receive a single notification email when Karu launches in your city. You may unsubscribe at any time by replying to any email or contacting us at hello@karu.rentals.",
+    "s1_body": "By joining the Karu waitlist, you agree to receive a single notification email when Karu launches in your city. You may unsubscribe at any time by replying to any email or contacting us at hello@getkaru.io.",
     "s2_title": "2. No guarantees",
     "s2_body": "Karu is currently in pre-launch. Joining the waitlist does not guarantee access to the platform, a specific launch date, or any pricing. We reserve the right to modify or cancel the service at any time.",
     "s3_title": "3. Acceptable use",
@@ -155,7 +155,7 @@
     "s5_title": "5. Governing law",
     "s5_body": "These terms are governed by the laws of Cameroon. Any disputes shall be resolved in the courts of Douala, Cameroon.",
     "s6_title": "6. Contact",
-    "s6_body": "Questions? Email us at hello@karu.rentals."
+    "s6_body": "Questions? Email us at hello@getkaru.io."
   },
   "contact": {
     "back": "← Back to Karu",
@@ -164,6 +164,6 @@
     "general_label": "General enquiries",
     "vendor_label": "Vendor partnerships",
     "social_label": "Follow us",
-    "instagram_handle": "@karu.rentals on Instagram"
+    "instagram_handle": "@getkaru.io on Instagram"
   }
 }

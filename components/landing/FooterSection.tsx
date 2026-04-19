@@ -48,7 +48,7 @@ export function FooterSection() {
             <ul className="space-y-2.5">
               <li><Link href="/privacy" className="font-sans text-[0.8rem] transition-colors duration-200 hover:text-amber" style={{ color: 'var(--cream-dim)', textDecoration: 'none' }}>{t('links.privacy')}</Link></li>
               <li><Link href="/terms" className="font-sans text-[0.8rem] transition-colors duration-200 hover:text-amber" style={{ color: 'var(--cream-dim)', textDecoration: 'none' }}>{t('links.terms')}</Link></li>
-              <li><a href="https://instagram.com/karu.rentals" target="_blank" rel="noopener noreferrer" className="font-sans text-[0.8rem] transition-colors duration-200 hover:text-amber" style={{ color: 'var(--cream-dim)', textDecoration: 'none' }}>Instagram</a></li>
+              <li><a href="https://instagram.com/getkaru.io" target="_blank" rel="noopener noreferrer" className="font-sans text-[0.8rem] transition-colors duration-200 hover:text-amber" style={{ color: 'var(--cream-dim)', textDecoration: 'none' }}>Instagram</a></li>
             </ul>
           </div>
         </div>

@@ -120,7 +120,7 @@
       "contact": "Contact",
       "instagram": "Instagram"
     },
-    "copyright": "© {year} Karu · karu.rentals",
+    "copyright": "© {year} Karu · getkaru.io",
     "zanix": "Un produit Zanix · Conçu pour le Cameroun"
   },
   "privacy": {
@@ -134,11 +134,11 @@
     "s3_title": "3. Analytique",
     "s3_body": "Nous utilisons Plausible Analytics — sans cookies. Aucune donnée personnelle n'est collectée.",
     "s4_title": "4. Vos droits",
-    "s4_body": "Vous pouvez demander la suppression de vos données à tout moment en envoyant un e-mail à hello@karu.rentals.",
+    "s4_body": "Vous pouvez demander la suppression de vos données à tout moment en envoyant un e-mail à hello@getkaru.io.",
     "s5_title": "5. Stockage des données",
     "s5_body": "Vos données sont stockées sur l'infrastructure Supabase dans la région EU West. Toutes les données sont chiffrées.",
     "s6_title": "6. Contact",
-    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@karu.rentals."
+    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@getkaru.io."
   },
   "terms": {
     "back": "← Retour à Karu",
@@ -155,7 +155,7 @@
     "s5_title": "5. Droit applicable",
     "s5_body": "Ces conditions sont régies par les lois du Cameroun.",
     "s6_title": "6. Contact",
-    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@karu.rentals."
+    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@getkaru.io."
   },
   "contact": {
     "back": "← Retour à Karu",
@@ -164,6 +164,6 @@
     "general_label": "Renseignements généraux",
     "vendor_label": "Partenariats prestataires",
     "social_label": "Suivez-nous",
-    "instagram_handle": "@karu.rentals sur Instagram"
+    "instagram_handle": "@getkaru.io sur Instagram"
   }
 }

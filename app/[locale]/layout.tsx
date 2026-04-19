@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     images: ['/opengraph-image'],
   },
   robots: { index: true, follow: true },
-  metadataBase: new URL('https://karu.rentals'),
+  metadataBase: new URL('https://getkaru.io'),
 }
 
 interface RootLayoutProps {
