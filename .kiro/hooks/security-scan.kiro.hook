@@ -4,10 +4,10 @@
   "version": "1",
   "when": {
     "type": "fileEdited",
-    "patterns": ["package.json", "package-lock.json"]
+    "patterns": ["package.json", "package-lock.json", "yarn.lock"]
   },
   "then": {
     "type": "runCommand",
-    "command": "npm audit --audit-level=moderate && echo 'Security audit passed ✓'"
+    "command": "npm audit --audit-level=moderate"
   }
 }

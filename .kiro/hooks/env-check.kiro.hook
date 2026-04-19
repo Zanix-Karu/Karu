@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Block .env file commits",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [".env", ".env.local", ".env.production"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "STOP: A .env file was just created or modified. Remind the developer that .env files must NEVER be committed to git. Check that .gitignore includes .env, .env.local, and .env.production. Only .env.example should be committed."
+  }
+}

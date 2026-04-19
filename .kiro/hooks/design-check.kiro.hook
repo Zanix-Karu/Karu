@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Karu design token check on CSS edit",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["**/*.css", "**/*.scss", "**/*.tsx", "**/*.jsx"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A frontend file was just edited. Quickly check: (1) Are any colours hardcoded as hex values instead of using --karu-* CSS variables? (2) Are Inter, Roboto, or Arial used anywhere for display text instead of Cormorant Garamond? (3) Are any email addresses hardcoded instead of using environment variables? If any violations found, flag them and suggest the correct token or variable."
+  }
+}

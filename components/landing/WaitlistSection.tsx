@@ -55,11 +55,11 @@ function AmberCheckmark() {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <circle cx="28" cy="28" r="28" fill="#E8A020" fillOpacity="0.15" />
-      <circle cx="28" cy="28" r="20" fill="#E8A020" fillOpacity="0.25" />
+      <circle cx="28" cy="28" r="28" fill="var(--amber)" fillOpacity="0.15" />
+      <circle cx="28" cy="28" r="20" fill="var(--amber)" fillOpacity="0.25" />
       <path
         d="M18 28.5L24.5 35L38 21"
-        stroke="#E8A020"
+        stroke="var(--amber)"
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"

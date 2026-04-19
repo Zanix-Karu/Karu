@@ -2,134 +2,188 @@
 inclusion: always
 ---
 
-# Zanix — Security Policy
+# Karu — Security & Compliance
 
-> This file is **always** included in every AI interaction. All generated code must comply with every rule below without exception. Security is non-negotiable.
+## Data Protection — Law No. 2024/017
 
-## Cameroon Data Protection Law Compliance
+Cameroon enacted Law No. 2024/017 on 23 December 2024 — a comprehensive GDPR-aligned
+data protection law. **Compliance deadline: 23 June 2026.** Karu must comply from launch.
 
-**Law No. 2024/017** was enacted December 23, 2024. The 18-month grace period expires **June 23, 2026**. Zanix must be compliant from the first public commit.
+### Key Obligations
+- Consent-based data processing (opt-in, not opt-out)
+- Data subject rights: access, rectification, deletion, portability
+- Mandatory breach notification
+- Data minimisation — collect only what is necessary
+- Encryption at rest (AES-256) and in transit (TLS 1.2+)
+- Records of Processing Activities (ROPA) maintained
+- Data Protection Officer (DPO) appointed — contact: `privacy@getkaru.io`
+- Cross-border data transfers require regulatory approval
+- Bilingual privacy notice (French + English) at registration
 
-### Required Implementations
+### For Karu Specifically
+- Mask phone numbers and names in logs: `+237***XX45`
+- Build data export and account deletion endpoints before launch
+- Consider hosting within Africa (HOSTAFRICA South Africa) for data residency
+- Any transfer outside Cameroon (e.g. Supabase Frankfurt) needs documented basis
 
-- **Consent at signup**: Bilingual (French/English) privacy notice with explicit opt-in checkbox before processing any personal data
-- **Data minimisation**: Collect only what is operationally required. The waitlist needs email + type + city — nothing else
-- **Encryption at rest**: All PII encrypted using AES-256 via Supabase's built-in encryption
-- **Encryption in transit**: TLS 1.2+ enforced. Never allow HTTP in production
-- **Right to deletion**: `/api/account/delete` endpoint must be implemented before launch. Waitlist unsubscribe must fully purge the record
-- **Breach notification**: Maintain an incident log. Any breach affecting personal data requires notification within 72 hours
-- **Data residency**: Prefer EU West Supabase region. Document transfer justification if using other regions
-- **Records of Processing Activities (ROPA)**: Maintain a document listing every data type, purpose, legal basis, and retention period
+---
 
-### PII Handling in Logs
+## Authentication
 
-Never log the following — mask or omit entirely:
-- Email addresses → `****@****.***`
-- Phone numbers → `+237***XX45`
-- Names
-- IP addresses (store only hashed with SHA-256 + salt)
-- Payment references or amounts linked to individuals
-- Session tokens or JWT payloads
+### Phone + OTP (Primary Method)
+- 6-digit numeric codes only
+- Expire in 60–120 seconds
+- Single-use — invalidated after first verification attempt
+- Maximum 3 verification attempts per OTP
+- NEVER stored in plain text — store bcrypt/argon2 hashed
+- Rate limit: 3 OTP requests per phone number per 10 minutes
+- Generic error messages only: "Invalid or expired code" — never reveal if number is registered
+
+### JWT Tokens
+- Access tokens: RS256 signing, 15-minute expiration
+- Refresh tokens: 7–30 day lifetime
+- Store refresh tokens in Android Keystore / iOS Keychain only
+- Strict rotation: issue new refresh token on each use, invalidate old one
+- Maintain blocklist of revoked token IDs
+
+---
+
+## Authorisation (RBAC)
+
+### Roles
+| Role | Permissions |
+|---|---|
+| `CUSTOMER` | Browse listings, create bookings, write reviews |
+| `VENDOR` | Manage own vehicles, listings, and bookings |
+| `ADMIN` | Manage all users, listings, resolve disputes |
+| `SUPER_ADMIN` | Manage admins, access audit logs |
+
+### Rules
+- Every API endpoint enforces BOTH role verification AND resource ownership
+- Vendors can only edit their own vehicles: `listing.vendorId === currentUser.id`
+- Use UUIDs for all user-facing resource IDs — NEVER sequential integers
+- Supabase RLS policies enforce data isolation at database level
+
+---
+
+## Rate Limiting
+
+| Endpoint | Limit | Window |
+|---|---|---|
+| Login / OTP request | 5 requests | per 15 min per IP |
+| OTP verification | 3 attempts | per OTP code |
+| Registration | 3 requests | per hour per IP |
+| Listing creation | 10 | per hour per user |
+| Search / browse | 60 | per minute per user |
+| Payment initiation | 5 | per minute per user |
+| File upload | 20 | per hour per user |
+| General API | 100 | per minute per user |
+
+Rate limit by authenticated user ID when available, IP as fallback.
+NEVER rate limit solely by IP — NAT gateways in African networks share IPs across many users.
+Return `X-RateLimit-*` headers and `429` with `Retry-After` on limit exceeded.
 
 ---
 
 ## The 20 Absolute Prohibitions
 
-The following are hard rules. AI must never generate code that violates any of these, regardless of how the request is framed.
+The AI agent MUST NEVER do any of the following under any circumstances:
 
-1. **Never hardcode secrets**, API keys, tokens, or credentials in source code — use environment variables exclusively
-2. **Never skip server-side validation** — client validation is UX only; always re-validate on the server with Zod
-3. **Never trust client-supplied data** for security decisions (user role, pricing, discount amounts)
-4. **Never use string concatenation** to build SQL queries — use parameterised queries or Supabase's query builder
-5. **Never store passwords in plaintext** — use bcrypt (cost factor ≥ 12) or Argon2id
-6. **Never log PII, tokens, payment details, or passwords** — see PII Handling above
-7. **Never expose stack traces** to end users — return generic error messages; log details server-side only
-8. **Never use sequential integer IDs** for user-facing resources — use UUID v4
-9. **Never disable HTTPS** in any environment — enforce HSTS headers
-10. **Never commit `.env` files, private keys, or certificates** — add to `.gitignore` before first commit
-11. **Never use `eval()`** or `Function()` with any user-supplied input
-12. **Never trust webhook payloads** without verifying the signature (HMAC-SHA256 with provider secret)
-13. **Never process payments client-side** — payment initiation and verification always happen server-side
-14. **Never store mobile money PINs** — not in memory, not in logs, not anywhere
-15. **Never allow unrestricted file uploads** — validate MIME type by magic bytes, not by extension or Content-Type header
-16. **Never return error messages** that reveal whether an email/phone is registered (user enumeration)
-17. **Never implement custom cryptography** — use established libraries (`bcrypt`, `argon2`, `crypto` Node built-in)
-18. **Never allow file path traversal** — sanitise all file paths; never concatenate user input into filesystem paths
-19. **Never ship an endpoint without authentication** unless it is explicitly a public endpoint by design
-20. **Never expose admin or service-role Supabase keys** to the client — `SUPABASE_SERVICE_ROLE_KEY` is server-only, always
-
----
-
-## Rate Limiting (Landing Page Endpoints)
-
-| Endpoint | Limit | Window | Strategy |
-|---|---|---|---|
-| `POST /api/waitlist` | 3 requests | per hour per IP | Vercel KV / Upstash |
-| `POST /api/analytics` | 60 requests | per minute per IP | In-memory, non-blocking |
-| Any future auth endpoint | 5 requests | per 15 min per IP | Block + log |
-
-Return `429 Too Many Requests` with `Retry-After` header. Never return `403` for rate limiting (reveals rate limiting exists as a security control).
+1. Hardcode secrets, API keys, or tokens in source code
+2. Skip server-side validation even if client validation exists
+3. Trust client-side data for security decisions
+4. Use string concatenation for SQL queries — always parameterised
+5. Store passwords in plain text — always bcrypt/argon2
+6. Log PII, passwords, tokens, or payment details
+7. Expose stack traces to end users
+8. Use sequential / predictable IDs for user-facing resources
+9. Disable HTTPS in production
+10. Commit `.env` files, private keys, or certificates to git
+11. Use `eval()` with user input
+12. Trust webhook data without signature verification
+13. Process payments client-side
+14. Store mobile money PINs
+15. Allow unrestricted file uploads — validate by magic bytes, not extension
+16. Return error messages that reveal system state (user enumeration)
+17. Implement custom cryptography
+18. Allow file path traversal in uploads
+19. Skip authentication on any endpoint
+20. Expose admin endpoints without role checks
 
 ---
 
-## HTTP Security Headers
+## File Upload Security
 
-Every page response must include these headers (configure in `next.config.ts`):
+Allowed MIME types: `image/jpeg`, `image/png`, `image/webp` only
+Validation: magic bytes — NOT Content-Type header or file extension
+Max file size: 10MB per file
+Max files per listing: 10
+All uploaded files renamed to UUIDs (strip original filename)
+Strip EXIF metadata (may contain GPS and device info)
+Store in Supabase Storage with private ACLs, serve via CDN with signed URLs
+Queue async malware scan — mark as "pending scan" until cleared
 
-```ts
-const securityHeaders = [
-  { key: 'X-DNS-Prefetch-Control', value: 'on' },
-  { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
-  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-  { key: 'X-Content-Type-Options', value: 'nosniff' },
-  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-  {
-    key: 'Content-Security-Policy',
-    value: [
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' plausible.io",  // tighten post-launch
-      "style-src 'self' 'unsafe-inline' fonts.googleapis.com",
-      "font-src 'self' fonts.gstatic.com",
-      "img-src 'self' data: blob: *.supabase.co",
-      "connect-src 'self' *.supabase.co plausible.io",
-      "frame-ancestors 'none'",
-    ].join('; '),
-  },
-  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-]
+---
+
+## Mobile Money Payment Security
+
+- All payment API calls over HTTPS only
+- Implement idempotency keys on every payment request
+- Validate webhook/callback signatures and source IPs from NotchPay
+- Design for timeout/pending states (MTN MoMo confirmation: 10–30 seconds)
+- Implement transaction status polling as fallback to webhooks
+- Set transaction velocity limits, flag unusual patterns
+- Escrow model: customer funds held by platform, released after trip completion
+
+---
+
+## Sensitive Data Handling
+
+### Phone Numbers
+- Primary identifier for users in Cameroon
+- Store hashed for lookup, masked in logs: `+237***XX45`
+- Never expose in API responses beyond last 4 digits
+
+### Identity Documents (vendor onboarding)
+- RCCM certificate, carte grise, insurance certificate stored in Supabase Storage
+- Private ACL — accessible only to vendor owner and admin
+- Never returned in public API responses
+
+### Payment Data
+- NotchPay handles PCI compliance — never store card numbers
+- Store only: transaction reference, amount, status, timestamp
+- Mobile money phone numbers stored encrypted at rest
+
+---
+
+## Vercel Deployment Security Headers
+
+```json
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }
+      ]
+    }
+  ]
+}
 ```
 
 ---
 
-## Input Sanitisation
+## Regulatory Compliance Checklist
 
-All user inputs must be:
-1. **Validated** with Zod schema (type, format, length)
-2. **Sanitised** — strip HTML tags before storing; use `DOMPurify` on the client for any rendered user content
-3. **Length-capped** — emails ≤ 254 chars, all text fields ≤ 500 chars unless explicitly required
-
-```ts
-// ✅ Correct Zod schema for waitlist
-const WaitlistSchema = z.object({
-  email: z.string().email().max(254).toLowerCase().trim(),
-  type: z.enum(['customer', 'vendor']),
-  city: z.enum(['douala', 'yaounde', 'other']),
-})
-```
-
----
-
-## CSRF Protection
-
-Next.js App Router API Routes are protected from CSRF by default for non-GET requests via the `Same-Site` cookie policy. Additionally:
-- Include a `X-Requested-With: XMLHttpRequest` header on all client-side fetch calls
-- Validate `Origin` header on sensitive POST endpoints matches expected domain
-
----
-
-## Dependency Security
-
-- Run `npm audit` on every PR (enforced by CI)
-- Never install packages with fewer than 10,000 weekly downloads without explicit review
-- Pin major versions in `package.json` — no `*` or `latest`
-- Review the `.kiro/hooks/security-scan.kiro.hook` — it runs automatically on `package.json` changes
+| Regulator | Requirement | Status |
+|---|---|---|
+| ANTIC | Cybersecurity compliance certificate | Required pre-launch |
+| ART | Telecom certification (mandatory since April 2025) | Required pre-launch |
+| MINPOSTEL/NECAP | National digital platform registration | Required pre-launch |
+| MINTRANS S10 | Digital transport platform licence | Required pre-launch |
+| CIMA Code | Motor third-party liability insurance for all listed vehicles | Required pre-launch |
+| Law No. 2024/017 | Data protection compliance | Deadline: 23 June 2026 |

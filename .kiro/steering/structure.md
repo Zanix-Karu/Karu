@@ -2,209 +2,196 @@
 inclusion: always
 ---
 
-# Zanix — Project Structure
+# Karu — Project Structure
 
-## Repository Root
+## Repository Layout
 
 ```
-zanix-web/
-├── .kiro/                        # AI steering, specs, hooks
+karu/
+├── .kiro/
 │   ├── steering/
+│   │   ├── product.md          ← Product identity, copy, tone (always loaded)
+│   │   ├── tech.md             ← Tech stack, environment setup (always loaded)
+│   │   ├── structure.md        ← This file — file layout, naming (always loaded)
+│   │   ├── security.md         ← Security rules, RBAC, data protection (always loaded)
+│   │   ├── design.md           ← Brand tokens, components, design system (always loaded)
+│   │   ├── api-standards.md    ← REST conventions, error formats (fileMatch: api/)
+│   │   └── payment-integration.md ← Mobile money patterns (fileMatch: payment*)
 │   ├── specs/
+│   │   ├── vendor-onboarding/
+│   │   │   ├── requirements.md
+│   │   │   ├── design.md
+│   │   │   └── tasks.md
+│   │   ├── booking-flow/
+│   │   │   ├── requirements.md
+│   │   │   ├── design.md
+│   │   │   └── tasks.md
+│   │   └── payment-flow/
+│   │       ├── requirements.md
+│   │       ├── design.md
+│   │       └── tasks.md
 │   └── hooks/
-├── app/                          # Next.js App Router
-│   ├── [locale]/                 # i18n root (en | fr)
-│   │   ├── layout.tsx
-│   │   ├── page.tsx              # Landing page
-│   │   ├── vendors/
-│   │   │   └── page.tsx          # Vendor sign-up landing
-│   │   └── cities/
-│   │       └── [city]/
-│   │           └── page.tsx      # City-specific pages
-│   └── api/
-│       ├── waitlist/
-│       │   └── route.ts          # POST — join waitlist
-│       └── analytics/
-│           └── route.ts          # POST — track events
-├── components/
-│   ├── landing/                  # Landing page sections
-│   │   ├── HeroSection.tsx
-│   │   ├── StatsRow.tsx
-│   │   ├── AboutSection.tsx
-│   │   ├── HowItWorksSection.tsx
-│   │   ├── FeaturesGrid.tsx
-│   │   ├── CitiesSection.tsx
-│   │   ├── WaitlistSection.tsx
-│   │   └── FooterSection.tsx
-│   ├── ui/                       # Reusable primitives
-│   │   ├── Button.tsx
-│   │   ├── Input.tsx
-│   │   ├── AnimatedCounter.tsx
-│   │   ├── ScrollReveal.tsx
-│   │   ├── Ticker.tsx
-│   │   └── CustomCursor.tsx
-│   └── layout/
-│       ├── Navigation.tsx
-│       └── LocaleSwitcher.tsx
-├── lib/
-│   ├── supabase.ts               # Supabase client (public)
-│   ├── supabase-admin.ts         # Supabase admin (server-only)
-│   ├── analytics.ts              # Plausible event helpers
-│   └── validations.ts            # Shared Zod schemas
-├── hooks/
-│   ├── useScrollProgress.ts
-│   ├── useInView.ts
-│   └── useMediaQuery.ts
-├── messages/
-│   ├── en.json                   # English copy
-│   └── fr.json                   # French copy
-├── public/
-│   ├── fonts/                    # Self-hosted fallbacks only
-│   ├── images/
-│   │   ├── cars/                 # Optimised WebP car images
-│   │   └── cities/               # Douala, Yaoundé imagery
-│   └── og/
-│       └── og-image.png          # Open Graph image (1200×630)
-├── styles/
-│   └── globals.css               # CSS custom properties + base
-├── types/
-│   └── index.ts                  # Shared TypeScript types
-├── tailwind.config.ts
-├── next.config.ts
-├── tsconfig.json
-└── .env.example
+│       ├── audit-on-save.kiro.hook
+│       └── security-scan.kiro.hook
+│
+├── apps/
+│   ├── web/                    ← Next.js marketing site (getkaru.io)
+│   │   ├── app/
+│   │   │   ├── page.tsx        ← Landing page
+│   │   │   ├── layout.tsx
+│   │   │   ├── blog/
+│   │   │   │   └── [slug]/page.tsx
+│   │   │   └── help/
+│   │   │       └── [slug]/page.tsx
+│   │   ├── components/
+│   │   │   ├── Nav.tsx
+│   │   │   ├── Hero.tsx
+│   │   │   ├── Ticker.tsx
+│   │   │   ├── HowItWorks.tsx
+│   │   │   ├── StatsRow.tsx
+│   │   │   ├── TrustSection.tsx
+│   │   │   ├── CitiesBlock.tsx
+│   │   │   ├── FAQ.tsx
+│   │   │   ├── CTASection.tsx
+│   │   │   └── Footer.tsx
+│   │   ├── styles/
+│   │   │   └── karu-tokens.css ← All CSS variables
+│   │   ├── public/
+│   │   │   └── favicon.ico
+│   │   ├── vercel.json
+│   │   └── .env.example
+│   │
+│   ├── mobile/                 ← Expo React Native app
+│   │   ├── app/
+│   │   │   ├── (auth)/
+│   │   │   │   ├── login.tsx
+│   │   │   │   └── verify.tsx
+│   │   │   ├── (customer)/
+│   │   │   │   ├── index.tsx   ← Search/browse
+│   │   │   │   ├── car/[id].tsx
+│   │   │   │   ├── booking/[id].tsx
+│   │   │   │   └── profile.tsx
+│   │   │   └── (vendor)/
+│   │   │       ├── dashboard.tsx
+│   │   │       ├── listings.tsx
+│   │   │       └── bookings.tsx
+│   │   ├── components/
+│   │   ├── lib/
+│   │   └── assets/
+│   │
+│   └── vendor-portal/          ← Vendor web dashboard (vendor.getkaru.io)
+│       └── app/
+│
+├── packages/
+│   ├── supabase/               ← Shared Supabase client + types
+│   │   ├── client.ts
+│   │   ├── types.ts            ← Generated from Supabase schema
+│   │   └── migrations/
+│   │       ├── 001_initial.sql
+│   │       ├── 002_waitlist.sql
+│   │       └── 003_rls_policies.sql
+│   │
+│   └── ui/                     ← Shared design tokens (if monorepo)
+│       └── tokens.ts
+│
+├── .env                        ← NEVER commit — in .gitignore
+├── .env.example                ← Always commit — template only
+├── .gitignore
+└── README.md
 ```
 
-## Naming Rules
+---
 
-| Type | Convention | Example |
+## Domain → Codebase Mapping
+
+| Domain | Codebase | Vercel Project |
 |---|---|---|
-| React components | PascalCase | `HeroSection.tsx` |
-| Custom hooks | camelCase, `use` prefix | `useScrollProgress.ts` |
-| Utility functions | camelCase | `formatCurrency.ts` |
-| API route files | always `route.ts` | `app/api/waitlist/route.ts` |
-| Translation keys | dot-separated snake_case | `hero.cta_primary` |
-| CSS classes | Tailwind utilities only | — |
-| CSS variables | `--color-amber`, `--font-serif` | kebab-case with prefix |
-| Supabase tables | snake_case, plural | `waitlist_entries` |
-| Environment vars | SCREAMING_SNAKE_CASE | `RESEND_API_KEY` |
+| `getkaru.io` | `apps/web` | karu-web |
+| `app.getkaru.io` | `apps/mobile` (web build) | karu-app |
+| `vendor.getkaru.io` | `apps/vendor-portal` | karu-vendor |
+| `staging.getkaru.io` | `apps/web` (staging branch) | karu-web (preview) |
 
-## Component Architecture Rules
+---
 
-### Server vs. Client Components
+## Naming Conventions
 
-Prefer **React Server Components** (RSC) by default. Only add `'use client'` when you need:
-- `useState` or `useReducer`
-- Browser APIs (`window`, `document`, `IntersectionObserver`)
-- Event listeners
-- Framer Motion animations (Motion components require client)
+### Files & Folders
+- Components: `PascalCase.tsx` (e.g. `BookingCard.tsx`)
+- Utilities: `camelCase.ts` (e.g. `formatPrice.ts`)
+- Hooks: `use` prefix (e.g. `useBooking.ts`, `useVendor.ts`)
+- Types: `PascalCase` with `.types.ts` suffix (e.g. `booking.types.ts`)
+- API routes: `kebab-case` (e.g. `/api/booking-confirm`)
+- Folders: `kebab-case` (e.g. `vendor-portal/`, `booking-flow/`)
 
-**Pattern**: Keep RSC as the shell, push interactivity into small leaf client components.
-
-```tsx
-// ✅ Correct — server shell, client leaf
-// HowItWorksSection.tsx (RSC)
-import { StepCard } from './StepCard' // RSC
-import { StepAnimationWrapper } from './StepAnimationWrapper' // 'use client'
-
-// ❌ Wrong — entire section is client for one animation
-'use client'
-export function HowItWorksSection() { ... }
+### Database Tables (snake_case)
+```
+users               ← unified user table (customer, vendor, admin roles)
+vendor_profiles     ← vendor-specific extension of users
+vehicles            ← physical vehicle assets
+listings            ← bookable configurations of vehicles
+bookings            ← core transaction entity
+availability_blocks ← dates blocked per listing
+payments            ← payment records
+reviews             ← two-sided reviews
+waitlist            ← pre-launch email capture
 ```
 
-### Props and Types
-
-All component props must have explicit TypeScript interfaces:
-
-```tsx
-interface HeroSectionProps {
-  locale: 'en' | 'fr'
-  initialWaitlistCount?: number
-}
-
-export function HeroSection({ locale, initialWaitlistCount = 500 }: HeroSectionProps) {
-  // ...
-}
+### CSS Classes (BEM-inspired with karu prefix)
+```
+.karu-[component]               ← base component
+.karu-[component]--[modifier]   ← modifier
+.karu-[component]__[element]    ← child element
 ```
 
-### Animation Components
+### Environment Variables
+- `NEXT_PUBLIC_*` — safe to expose client-side
+- All others — server-side only, NEVER in client bundles
 
-All scroll-triggered animations use the `ScrollReveal` wrapper component:
+---
 
-```tsx
-// components/ui/ScrollReveal.tsx
-'use client'
-import { motion } from 'framer-motion'
+## Blog & Help Content (SEO Subfolders)
 
-interface ScrollRevealProps {
-  children: React.ReactNode
-  direction?: 'up' | 'left' | 'right'
-  delay?: number
-}
+Blog and help docs MUST be subfolders, NEVER subdomains:
+
+```
+✅ getkaru.io/blog/how-to-rent-a-car-in-douala
+✅ getkaru.io/help/payment-methods
+❌ blog.getkaru.io/how-to-rent-a-car-in-douala  ← damages SEO authority
+❌ help.getkaru.io/payment-methods               ← same problem
 ```
 
-Never inline Framer Motion variants in section components — import from `lib/animations.ts`.
+---
 
-## API Routes
+## Git Branch Strategy
 
-All API routes follow this pattern:
-
-```ts
-// app/api/waitlist/route.ts
-import { NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
-import { supabaseAdmin } from '@/lib/supabase-admin'
-
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const validated = WaitlistSchema.parse(body)
-    // ... process
-    return NextResponse.json({ success: true }, { status: 201 })
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.issues }, { status: 400 })
-    }
-    return NextResponse.json({ error: 'Internal error' }, { status: 500 })
-  }
-}
+```
+main          ← production (auto-deploys to getkaru.io)
+staging       ← staging (auto-deploys to staging.getkaru.io)
+dev           ← active development
+feature/*     ← feature branches (e.g. feature/vendor-dashboard)
+fix/*         ← bug fix branches
 ```
 
-- Always validate with Zod before any DB operation
-- Always return typed JSON responses
-- Never expose stack traces
-- Rate limit sensitive endpoints (use Upstash Redis or Vercel KV)
-
-## Translation File Structure
-
-```json
-// messages/en.json
-{
-  "nav": {
-    "about": "About",
-    "how_it_works": "How it works",
-    "features": "Features",
-    "cities": "Cities",
-    "cta": "Pre-Register"
-  },
-  "hero": {
-    "pill": "Douala & Yaoundé · Launching Soon",
-    "title_line1": "Book Trusted",
-    "title_line2": "Rental Cars",
-    "title_line3": "in Cameroon",
-    "eyebrow": "Before You Arrive",
-    "description": "Zanix connects travelers, diaspora, and locals with verified car rental providers in Douala and Yaoundé. No stress, no middlemen, no surprises.",
-    "cta_primary": "Pre-Register Now",
-    "cta_secondary": "List Your Car →"
-  }
-}
+Commit message format: `type(scope): description`
+```
+feat(booking): add vendor approval flow
+fix(payment): handle MTN MoMo timeout state
+chore(deps): update Supabase client to 2.x
+docs(readme): add deployment instructions
 ```
 
-Every key in `en.json` must have a corresponding key in `fr.json`. Missing keys are a CI failure.
+---
 
-## Git Conventions
+## Staging Environment Rules
 
-- Branch: `feat/section-name`, `fix/bug-description`, `chore/task-name`
-- Commits: Conventional Commits — `feat(hero): add animated counter`, `fix(form): correct email validation`
-- Never commit `.env.local` — only `.env.example`
-- PR requires passing CI (type check, lint, build) before merge
+Staging environments MUST have:
+```html
+<!-- In <head> of all staging pages -->
+<meta name="robots" content="noindex, nofollow">
+```
+
+Staging environment variables use separate Supabase project:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://[staging-project-ref].supabase.co
+NEXT_PUBLIC_APP_URL=https://staging.getkaru.io
+```

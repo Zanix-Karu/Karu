@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
   // 5. Send confirmation email (non-blocking — don't fail response if email fails)
   const resend = new Resend(process.env.RESEND_API_KEY)
   resend.emails.send({
-    from: 'Karu <hello@getkaru.io>',
+    from: `Karu <${process.env.EMAIL_FROM ?? 'noreply@getkaru.io'}>`,
     to: email,
     subject: type === 'vendor'
       ? "You're registered — Zanix vendor early access"

@@ -2,80 +2,77 @@
 inclusion: always
 ---
 
-# Zanix — Product Overview
+# Karu — Product Overview
 
-## Mission
+## What Karu Is
+Karu is a verified car rental marketplace for Cameroon, launching first in Douala then Yaoundé. It connects travelers, diaspora returnees, and locals with document-verified car rental providers. Bookings are made pre-arrival, payments via MTN Mobile Money and Orange Money, trust enforced through vendor verification and escrow payments.
 
-Zanix is the first trusted, structured car rental marketplace for Cameroon. It replaces the fragmented WhatsApp-and-luck system of ground transport with a single platform where verified providers get digital visibility and customers get peace of mind — before their feet touch the tarmac.
+## Parent Company
+Karu is a consumer-facing product of **Zanix** — the parent tech company.
+- **Zanix** handles infrastructure, API, admin, and corporate identity
+- **Karu** is the brand customers and vendors interact with
 
-## The Problem
-
-The car rental market in Cameroon runs on personal contacts, informal networks, and zero guarantees. Arriving travelers — especially diaspora visitors, international business travellers, and tourists — have no reliable way to book a vehicle before landing. The demand is real and growing. The trust infrastructure does not exist. Zanix builds it.
+## Problem Being Solved
+The car rental market in Cameroon runs on WhatsApp threads, personal contacts, and borrowed trust. No verification, no payment security, no recourse. Karu brings structure and trust to a fragmented market — providers get digital visibility, customers get peace of mind before their feet touch the tarmac.
 
 ## Target Users
-
-### Customers
-- **Diaspora returnees** — Cameroonian nationals living abroad visiting family or conducting business. High intent, willing to pay for reliability and pre-arrival confirmation.
-- **International travellers** — NGO workers, business executives, conference attendees arriving at Douala International (DLA) or Nsimalen International (NSI). Need verified transport, often on expense accounts.
-- **Local professionals** — Yaoundé and Douala residents who need a vehicle for a period and want a transparent, documented rental experience.
-
-### Vendors
-- **Independent car owners** — Private vehicle owners with 1–5 cars looking for a digital channel to reach customers beyond word-of-mouth.
-- **Small fleet operators** — Local rental businesses with 5–20 vehicles lacking an online presence or booking system.
-
-### Internal
-- **Zanix Admins** — Verify providers, moderate listings, resolve disputes, manage commission payouts.
-
-## Core Value Propositions
-
-| For Customers | For Vendors |
-|---|---|
-| Book before you land — zero airport stress | First digital visibility and credibility |
-| Verified, documented providers only | Access to diaspora and international customers |
-| Pay with MTN MoMo or Orange Money | Structured payout with transparent commission |
-| Clear pricing, no negotiation surprises | Review system builds long-term reputation |
-| WhatsApp contact layer on top of trust | No upfront subscription — pay only when you earn |
+1. **Customers** — diaspora returnees, business travelers, tourists arriving in Cameroon
+2. **Vendors** — local car rental operators seeking digital bookings and visibility
+3. **Admins** — Zanix team managing platform operations and compliance
 
 ## Business Model
+- 15% platform commission deducted from vendor payouts per completed booking
+- 5–10% customer service fee added to booking total
+- Listing is free for vendors
+- No subscriptions or monthly fees
 
-- **15% platform commission** deducted from vendor payout on booking completion
-- **5–10% customer service fee** added to booking total at checkout
-- **Combined take rate: 20–25%**
-- Launch commission reduced to **10–12%** to onboard first vendors, scaling over time
-- Phase 2: Featured listing fees, priority placement
+## Launch Strategy
+- Launch in Douala first (economic capital, highest arrival volume)
+- Manually onboard 20–50 verified vendors before marketing to customers
+- Request-to-book flow (not instant booking) to build trust in new market
+- Yaoundé follows in Phase 1, Central/West Africa expansion in Phase 3
 
-## Launch Scope (Phase 1)
+## Taglines
+- "Arrive in comfort."
+- "Verified rental cars, booked before you land."
+- "No stress, no middlemen, no surprises."
+- "The car rental market in Cameroon, finally organised."
 
-- **Cities**: Douala (primary), Yaoundé (simultaneous)
-- **Strategy**: Manually onboard 20–50 verified vendors before public marketing
-- **Booking model**: Request-to-book (not instant) — vendors approve within 24 hours
-- **Payments**: MTN Mobile Money, Orange Money via NotchPay
-- **Languages**: French and English (Cameroon is officially bilingual)
+## Launch Cities
+| City | Role | Coordinates | Airport Code |
+|---|---|---|---|
+| Douala | Launching First | 3.8480°N · 11.5021°E | DLA |
+| Yaoundé | Phase One | 3.8667°N · 11.5167°E | YAO |
 
-## Phased Roadmap
+## Key Platform Features
+- Vendor identity and document verification (RCCM, carte grise, CIMA insurance, visite technique)
+- Pre-arrival booking from anywhere in the world
+- MTN Mobile Money and Orange Money payments (no card required)
+- Escrow payment model — funds held until trip completion
+- Two-sided reviews (customer ↔ vendor accountability)
+- WhatsApp integration layer on top of verified vendor contacts
+- 24-hour vendor response window with auto-cancel on timeout
 
-- **Phase 1** (Launch): Vendor listing, customer booking, request-to-approve flow, mobile money payments, in-app messaging, two-sided reviews, admin dashboard
-- **Phase 2** (Validation): Dynamic pricing, damage deposit workflows, insurance partnerships, driver add-ons, referral system, verified vendor badges
-- **Phase 3** (Scale): GPS tracking, subscription rentals, AI recommendations, expansion to other Francophone African cities
+## Copy & Tone Rules
+- Confident, not arrogant
+- Warm, not informal
+- Specific about Cameroon — never generic "Africa"
+- French-aware: key phrases work bilingually (French-first for Cameroon context)
+- NEVER use: "seamless", "revolutionary", "game-changing", "world-class"
+- NEVER write more than 2 sentences of body copy per feature
+- Mention Douala or Yaoundé specifically — never just "any city"
 
-## Brand Voice & Tone
+## Headline Rules
+```
+DO:   "Arrive in comfort."
+DO:   "Verified rental cars, booked before you land."
+DO:   "Book from London. Drive in Douala."
+DON'T: "The best car rental platform in Africa"
+DON'T: "Revolutionising transportation"
+DON'T: "Seamless booking experience"
+```
 
-- **Confident, not arrogant** — We know this market. We speak plainly.
-- **Warm, not chatty** — Respectful of the user's time and intelligence.
-- **Local-first** — Reference Douala, Yaoundé, MTN MoMo, FCFA naturally. Never sound like a generic SaaS product.
-- **Bilingual parity** — French and English content must be equally complete, not afterthoughts.
-
-## Design Identity
-
-- **Palette**: Deep espresso browns (`#1C1208`), warm amber gold (`#E8A020`), cream white (`#F5EFE4`)
-- **Typography**: DM Serif Display (headings), Playfair Display (hero numbers), DM Sans (body)
-- **Aesthetic**: Luxury-functional. Premium without being cold. African warmth encoded in every grain and gradient.
-- **Motion**: Purposeful. Scroll-triggered reveals, smooth transitions, amber glows on hover. Nothing gratuitous.
-
-## Key Metrics (Launch Targets)
-
-- 50+ verified vendor listings at launch
-- 500+ pre-registered customer waitlist
-- Sub-3s page load on 3G connections
-- 90+ Lighthouse performance score
-- WCAG 2.1 AA accessibility compliance
+## CTA Copy
+- Primary: "Pre-Register Now" / "Join the Waitlist" / "List Your Car"
+- Secondary: "Learn More →" / "How it works →" / "See cities →"
+- Nav: "Pre-Register →"

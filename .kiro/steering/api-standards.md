@@ -1,236 +1,196 @@
 ---
 inclusion: fileMatch
-fileMatchPattern: ["app/api/**/*", "lib/supabase*.ts", "lib/validations.ts"]
+fileMatchPattern: ["**/api/**", "**/routes/**", "**/*.api.ts", "**/supabase/**"]
 ---
 
-# Zanix — API Standards
+# Karu — API Standards
 
 ## REST Conventions
 
-All API Routes follow RESTful conventions and return consistent JSON shapes.
-
-### URL Structure
-
+### Base URL
 ```
-POST   /api/waitlist              — Join the waitlist
-GET    /api/waitlist/count        — Public: total signup count (no PII)
-POST   /api/analytics/event       — Track a page event
-POST   /api/contact               — Contact form submission
+Production:  https://api.zanix.co/v1
+Staging:     https://api.staging.zanix.co/v1
+Local:       http://localhost:3000/api/v1
 ```
 
-### Response Envelope
+### HTTP Methods
+```
+GET     /listings              ← list resources
+GET     /listings/:id          ← get single resource
+POST    /listings              ← create resource
+PATCH   /listings/:id          ← partial update
+DELETE  /listings/:id          ← soft delete (set deleted_at)
+```
 
-**Success:**
+NEVER use PUT — always PATCH for updates.
+NEVER hard delete records — always soft delete with `deleted_at` timestamp.
+
+### URL Conventions
+- kebab-case for all paths: `/vendor-profiles`, `/booking-requests`
+- UUIDs for resource IDs: `/bookings/550e8400-e29b-41d4-a716-446655440000`
+- NEVER sequential integers in URLs: `/bookings/1` ← forbidden
+- Version prefix always present: `/v1/`
+
+---
+
+## Request Format
+
+```typescript
+// All requests use JSON
+Content-Type: application/json
+Authorization: Bearer <jwt-access-token>
+
+// Example create booking request
+POST /v1/bookings
+{
+  "listing_id": "uuid",
+  "pickup_date": "2025-07-14T08:00:00Z",
+  "return_date": "2025-07-18T18:00:00Z",
+  "pickup_location": "Douala Airport Terminal 1",
+  "customer_note": "Optional note to vendor"
+}
+```
+
+---
+
+## Response Format
+
+### Success
 ```json
 {
-  "success": true,
   "data": { ... },
   "meta": {
-    "timestamp": "2025-01-15T10:30:00Z"
+    "timestamp": "2025-07-01T12:00:00Z",
+    "version": "1"
   }
 }
 ```
 
-**Error:**
+### List Response (paginated)
 ```json
 {
-  "success": false,
+  "data": [ ... ],
+  "meta": {
+    "total": 120,
+    "page": 1,
+    "per_page": 20,
+    "timestamp": "2025-07-01T12:00:00Z"
+  }
+}
+```
+
+### Error Response
+```json
+{
   "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Human-readable message (safe to surface to users)",
-    "fields": [
-      { "field": "email", "message": "Invalid email address" }
-    ]
+    "code": "BOOKING_CONFLICT",
+    "message": "The selected dates are not available for this listing.",
+    "field": "pickup_date"
+  },
+  "meta": {
+    "timestamp": "2025-07-01T12:00:00Z",
+    "request_id": "uuid"
   }
 }
 ```
 
-### HTTP Status Codes
+---
 
-| Code | When to use |
-|---|---|
-| `200` | GET success |
-| `201` | POST success (resource created) |
-| `400` | Validation error (malformed input) |
-| `401` | Missing or invalid authentication |
-| `403` | Authenticated but unauthorised |
-| `404` | Resource not found |
-| `409` | Conflict (e.g. email already on waitlist) |
-| `429` | Rate limit exceeded |
-| `500` | Unexpected server error (never expose details) |
+## Error Codes
 
-Never return `200` for an error. Never return `500` for a validation error.
+| HTTP Status | Error Code | Meaning |
+|---|---|---|
+| 400 | `VALIDATION_ERROR` | Invalid input data |
+| 400 | `BOOKING_CONFLICT` | Date conflict with existing booking |
+| 401 | `UNAUTHORIZED` | Missing or invalid JWT |
+| 401 | `TOKEN_EXPIRED` | JWT has expired — refresh required |
+| 403 | `FORBIDDEN` | Authenticated but insufficient permissions |
+| 403 | `RESOURCE_NOT_OWNED` | User doesn't own this resource |
+| 404 | `NOT_FOUND` | Resource does not exist |
+| 409 | `ALREADY_EXISTS` | Duplicate resource (e.g. email taken) |
+| 422 | `UNPROCESSABLE` | Semantically invalid request |
+| 429 | `RATE_LIMITED` | Too many requests |
+| 500 | `INTERNAL_ERROR` | Server error — never expose details |
+
+NEVER return raw database errors, stack traces, or internal implementation details.
 
 ---
 
-## API Route Template
+## Booking Lifecycle States
 
-Every API route must follow this exact structure:
+```
+pending_approval → approved → payment_pending → confirmed → in_progress → completed
+                ↘ declined
+                             ↘ payment_failed → cancelled
+                                               ↘ disputed → resolved
+```
 
-```ts
-// app/api/[endpoint]/route.ts
-import { NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
-import { rateLimit } from '@/lib/rate-limit'
+Vendor has 24 hours to approve/decline (`vendor_response_deadline`).
+Auto-cancel if no response within deadline.
 
-// Schema defined at module level — not inside handler
-const RequestSchema = z.object({
-  // ... fields
+---
+
+## Supabase Edge Functions
+
+Functions live at `supabase/functions/` and are deployed via Supabase CLI.
+
+```typescript
+// Example: supabase/functions/booking-confirm/index.ts
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+serve(async (req) => {
+  const supabase = createClient(
+    Deno.env.get('SUPABASE_URL')!,
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+  )
+
+  // Always validate auth first
+  const authHeader = req.headers.get('Authorization')
+  if (!authHeader) {
+    return new Response(
+      JSON.stringify({ error: { code: 'UNAUTHORIZED', message: 'Missing token' } }),
+      { status: 401, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+
+  // Implementation...
 })
-
-export async function POST(request: NextRequest) {
-  // 1. Rate limit check
-  const rateLimitResult = await rateLimit(request, { limit: 3, window: '1h' })
-  if (!rateLimitResult.success) {
-    return NextResponse.json(
-      { success: false, error: { code: 'RATE_LIMITED', message: 'Too many requests' } },
-      {
-        status: 429,
-        headers: { 'Retry-After': rateLimitResult.retryAfter.toString() },
-      }
-    )
-  }
-
-  // 2. Parse and validate
-  let body: unknown
-  try {
-    body = await request.json()
-  } catch {
-    return NextResponse.json(
-      { success: false, error: { code: 'INVALID_JSON', message: 'Request body must be valid JSON' } },
-      { status: 400 }
-    )
-  }
-
-  const result = RequestSchema.safeParse(body)
-  if (!result.success) {
-    return NextResponse.json(
-      {
-        success: false,
-        error: {
-          code: 'VALIDATION_ERROR',
-          message: 'Invalid request data',
-          fields: result.error.issues.map(i => ({ field: i.path.join('.'), message: i.message })),
-        },
-      },
-      { status: 400 }
-    )
-  }
-
-  // 3. Business logic
-  try {
-    // ... database operations, email sends, etc.
-    return NextResponse.json({ success: true, data: { ... } }, { status: 201 })
-  } catch (error) {
-    // Log privately, return generic message
-    console.error('[API /endpoint] Unexpected error:', error instanceof Error ? error.message : 'unknown')
-    return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_ERROR', message: 'An unexpected error occurred' } },
-      { status: 500 }
-    )
-  }
-}
 ```
 
 ---
 
-## Waitlist API — Specification
+## Idempotency (Payments)
 
-### `POST /api/waitlist`
+All payment initiation endpoints accept an `Idempotency-Key` header:
 
-Adds an email to the pre-launch waitlist and sends a confirmation email.
-
-**Request:**
-```json
-{
-  "email": "user@example.com",
-  "type": "customer",
-  "city": "douala"
-}
+```
+POST /v1/payments/initiate
+Idempotency-Key: booking_550e8400-e29b-41d4-a716-446655440000_attempt_1
 ```
 
-**Validation rules:**
-- `email`: valid RFC 5321 email, max 254 chars, lowercased and trimmed
-- `type`: one of `["customer", "vendor"]`
-- `city`: one of `["douala", "yaounde", "other"]`
-
-**On success (201):**
-- Insert into `waitlist_entries` (upsert on email conflict — do not error on duplicate, silently succeed)
-- Send confirmation email via Resend
-- Track `waitlist_signup` event in Plausible
-- Return `{ success: true, data: { message: "You're on the list!" } }`
-
-**On duplicate (200, not 409):** Return success silently — do not reveal whether an email was already registered.
-
-**Supabase table:**
-```sql
-CREATE TABLE waitlist_entries (
-  id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  email       TEXT NOT NULL,
-  type        TEXT NOT NULL CHECK (type IN ('customer', 'vendor')),
-  city        TEXT NOT NULL CHECK (city IN ('douala', 'yaounde', 'other')),
-  created_at  TIMESTAMPTZ DEFAULT NOW(),
-  ip_hash     TEXT,  -- SHA-256 hash of IP, for dedup only
-  UNIQUE(email)
-);
-
-ALTER TABLE waitlist_entries ENABLE ROW LEVEL SECURITY;
--- Public insert only; no public read
-CREATE POLICY "Allow public insert" ON waitlist_entries FOR INSERT WITH CHECK (true);
-```
+If the same key is used twice, return the cached response from the first request.
+Store idempotency keys with 24-hour TTL in Supabase.
 
 ---
 
-### `GET /api/waitlist/count`
+## Webhook Verification (NotchPay)
 
-Returns the total number of signups (no PII). Public endpoint, cached for 60 seconds.
+```typescript
+import crypto from 'crypto'
 
-**Response:**
-```json
-{
-  "success": true,
-  "data": { "count": 847 }
+function verifyNotchPayWebhook(payload: string, signature: string, secret: string): boolean {
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(payload)
+    .digest('hex')
+  return crypto.timingSafeEqual(
+    Buffer.from(signature),
+    Buffer.from(expected)
+  )
 }
 ```
 
-Add `Cache-Control: public, max-age=60, stale-while-revalidate=300` header.
-
----
-
-## Error Code Reference
-
-| Code | Meaning |
-|---|---|
-| `VALIDATION_ERROR` | Zod schema validation failed |
-| `INVALID_JSON` | Request body is not valid JSON |
-| `RATE_LIMITED` | Too many requests |
-| `INTERNAL_ERROR` | Unexpected server error |
-| `NOT_FOUND` | Resource does not exist |
-| `CONFLICT` | Resource already exists (use sparingly — see waitlist note above) |
-
----
-
-## Client-Side Fetch Pattern
-
-```ts
-// Always use this pattern for API calls from React components
-async function submitWaitlist(data: WaitlistFormData) {
-  const response = await fetch('/api/waitlist', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest', // CSRF hint
-    },
-    body: JSON.stringify(data),
-  })
-
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.error?.message ?? 'Request failed')
-  }
-
-  return response.json()
-}
-```
-
-Never use `axios` — native `fetch` is sufficient and reduces bundle size.
+ALWAYS verify webhook signatures before processing payment events.
+NEVER trust payment status from client-side — always verify server-to-server.
