@@ -1,37 +1,38 @@
 import { z } from 'zod'
 
-export const WaitlistSchema = z.object({
-  email: z.string().email().max(254).toLowerCase().trim(),
-  type: z.enum(['customer', 'vendor']),
-  city: z.enum(['douala', 'yaounde', 'other']),
-  // Vendor-only fields (required when type is 'vendor')
-  business_name: z.string().max(200).trim().optional(),
-  phone: z.string().max(30).trim().optional(),
-  vehicle_count: z.string().max(10).trim().optional(),
-}).refine(
-  (data) => {
-    if (data.type === 'vendor') {
-      return !!data.business_name && data.business_name.length >= 2
-    }
-    return true
-  },
-  { message: 'Business name is required', path: ['business_name'] }
-).refine(
-  (data) => {
-    if (data.type === 'vendor') {
-      return !!data.phone && data.phone.length >= 6
-    }
-    return true
-  },
-  { message: 'Phone number is required', path: ['phone'] }
-).refine(
-  (data) => {
-    if (data.type === 'vendor') {
-      return !!data.vehicle_count
-    }
-    return true
-  },
-  { message: 'Please select an estimate', path: ['vehicle_count'] }
-)
+const BaseWaitlistSchema = z.object({
+  email: z.string().email('Please enter a valid email').max(254).toLowerCase().trim(),
+  type: z.enum(['customer', 'vendor'], { required_error: 'Please select customer or vendor' }),
+  city: z.enum(['douala', 'yaounde', 'other'], { required_error: 'Please select a city' }),
+  business_name: z.string().max(200).trim().optional().or(z.literal('')),
+  phone: z.string().max(30).trim().optional().or(z.literal('')),
+  vehicle_count: z.string().max(10).trim().optional().or(z.literal('')),
+})
 
-export type WaitlistInput = z.infer<typeof WaitlistSchema>
+export const WaitlistSchema = BaseWaitlistSchema.superRefine((data, ctx) => {
+  if (data.type === 'vendor') {
+    if (!data.business_name || data.business_name.length < 2) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Business name is required',
+        path: ['business_name'],
+      })
+    }
+    if (!data.phone || data.phone.length < 6) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Phone number is required',
+        path: ['phone'],
+      })
+    }
+    if (!data.vehicle_count) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Please select an estimate',
+        path: ['vehicle_count'],
+      })
+    }
+  }
+})
+
+export type WaitlistInput = z.infer<typeof BaseWaitlistSchema>

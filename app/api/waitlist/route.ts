@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
     subject: type === 'vendor'
       ? "You're registered — Karu vendor early access"
       : "You're on the list — Karu launches soon",
-    react: WaitlistConfirmEmail({ type, city }),
+    react: WaitlistConfirmEmail({ type, city, business_name: type === 'vendor' ? (business_name ?? undefined) : undefined }),
   }).catch(err => console.error('[waitlist] Email error:', err instanceof Error ? err.message : 'unknown'))
 
   // 6. Track Plausible event (non-blocking, fire-and-forget)

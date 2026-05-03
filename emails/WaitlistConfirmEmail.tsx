@@ -3,26 +3,27 @@ import * as React from 'react'
 interface WaitlistConfirmEmailProps {
   type: 'customer' | 'vendor'
   city: 'douala' | 'yaounde' | 'other'
+  business_name?: string
 }
 
-const cityDisplayNames: Record<WaitlistConfirmEmailProps['city'], string> = {
+const cityDisplayNames: Record<string, string> = {
   douala: 'Douala',
   yaounde: 'Yaoundé',
   other: 'your city / votre ville',
 }
 
-export function WaitlistConfirmEmail({ type, city }: WaitlistConfirmEmailProps) {
-  const cityName = cityDisplayNames[city]
+export function WaitlistConfirmEmail({ type, city, business_name }: WaitlistConfirmEmailProps) {
+  const cityName = cityDisplayNames[city] ?? city
 
   const heading =
     type === 'customer'
-      ? 'Vous êtes sur la liste ! / You\'re on the list!'
+      ? "Vous êtes sur la liste ! / You're on the list!"
       : 'Inscription confirmée ! / Registration confirmed!'
 
   const body =
     type === 'customer'
       ? `Merci de votre intérêt pour Karu. Nous vous notifierons dès que nous lancerons à ${cityName}. / Thank you for your interest in Karu. We'll notify you as soon as we launch in ${cityName}.`
-      : "Merci de votre intérêt pour rejoindre Karu en tant que prestataire. Nous vous contacterons bientôt. / Thank you for your interest in joining Karu as a vendor. We'll be in touch soon."
+      : `Merci${business_name ? `, ${business_name}` : ''} de votre intérêt pour rejoindre Karu en tant que prestataire. Nous vous contacterons bientôt avec les prochaines étapes. / Thank you${business_name ? `, ${business_name}` : ''} for your interest in joining Karu as a vendor. We'll be in touch soon with next steps.`
 
   return (
     <html lang="fr">
@@ -32,51 +33,43 @@ export function WaitlistConfirmEmail({ type, city }: WaitlistConfirmEmailProps) 
         <title>{heading}</title>
       </head>
       <body style={styles.body}>
-        <table
-          role="presentation"
-          cellPadding={0}
-          cellSpacing={0}
-          style={styles.outerTable}
-        >
+        <table role="presentation" cellPadding={0} cellSpacing={0} style={styles.outerTable}>
           <tbody>
             <tr>
               <td align="center" style={styles.outerTd}>
-                <table
-                  role="presentation"
-                  cellPadding={0}
-                  cellSpacing={0}
-                  style={styles.container}
-                >
+                <table role="presentation" cellPadding={0} cellSpacing={0} style={styles.container}>
                   <tbody>
-                    {/* Logo */}
                     <tr>
                       <td style={styles.logoCell}>
                         <span style={styles.logo}>KARU</span>
                       </td>
                     </tr>
-
-                    {/* Divider */}
                     <tr>
                       <td style={styles.dividerCell}>
                         <div style={styles.divider} />
                       </td>
                     </tr>
-
-                    {/* Heading */}
                     <tr>
                       <td style={styles.headingCell}>
                         <h1 style={styles.heading}>{heading}</h1>
                       </td>
                     </tr>
-
-                    {/* Body text */}
                     <tr>
                       <td style={styles.bodyCell}>
                         <p style={styles.bodyText}>{body}</p>
                       </td>
                     </tr>
-
-                    {/* CTA button */}
+                    {type === 'vendor' && (
+                      <tr>
+                        <td style={styles.bodyCell}>
+                          <p style={styles.vendorNote}>
+                            Notre équipe examinera votre inscription et vous contactera sous 48 heures.
+                            <br />
+                            Our team will review your registration and reach out within 48 hours.
+                          </p>
+                        </td>
+                      </tr>
+                    )}
                     <tr>
                       <td style={styles.ctaCell}>
                         <a href="https://getkaru.io" style={styles.ctaButton}>
@@ -84,8 +77,6 @@ export function WaitlistConfirmEmail({ type, city }: WaitlistConfirmEmailProps) 
                         </a>
                       </td>
                     </tr>
-
-                    {/* Footer */}
                     <tr>
                       <td style={styles.footerCell}>
                         <p style={styles.footerText}>
@@ -96,7 +87,7 @@ export function WaitlistConfirmEmail({ type, city }: WaitlistConfirmEmailProps) 
                         </p>
                         <p style={styles.footerUnsubscribe}>
                           You received this email because you joined the Karu waitlist.
-                          {' '}To unsubscribe, reply with "unsubscribe" in the subject line.
+                          {' '}To unsubscribe, reply with &quot;unsubscribe&quot; in the subject line.
                           <br />
                           Vous avez reçu cet e-mail car vous vous êtes inscrit sur la liste d&apos;attente Karu.
                           {' '}Pour vous désabonner, répondez avec &quot;désabonner&quot; en objet.
@@ -121,16 +112,13 @@ const styles = {
     backgroundColor: '#1C1208',
     fontFamily: 'Arial, sans-serif',
   } as React.CSSProperties,
-
   outerTable: {
     width: '100%',
     backgroundColor: '#1C1208',
   } as React.CSSProperties,
-
   outerTd: {
     padding: '40px 16px',
   } as React.CSSProperties,
-
   container: {
     width: '100%',
     maxWidth: '600px',
@@ -138,12 +126,10 @@ const styles = {
     borderRadius: '8px',
     overflow: 'hidden',
   } as React.CSSProperties,
-
   logoCell: {
     padding: '40px 40px 24px',
     textAlign: 'center' as const,
   } as React.CSSProperties,
-
   logo: {
     fontFamily: 'Arial, sans-serif',
     fontSize: '36px',
@@ -151,21 +137,17 @@ const styles = {
     letterSpacing: '6px',
     color: '#E8A020',
   } as React.CSSProperties,
-
   dividerCell: {
     padding: '0 40px 32px',
   } as React.CSSProperties,
-
   divider: {
     height: '2px',
     backgroundColor: '#E8A020',
     borderRadius: '1px',
   } as React.CSSProperties,
-
   headingCell: {
     padding: '0 40px 20px',
   } as React.CSSProperties,
-
   heading: {
     margin: 0,
     fontFamily: 'Arial, sans-serif',
@@ -174,11 +156,9 @@ const styles = {
     color: '#F5EFE4',
     lineHeight: '1.3',
   } as React.CSSProperties,
-
   bodyCell: {
-    padding: '0 40px 32px',
+    padding: '0 40px 24px',
   } as React.CSSProperties,
-
   bodyText: {
     margin: 0,
     fontFamily: 'Arial, sans-serif',
@@ -186,12 +166,18 @@ const styles = {
     lineHeight: '1.6',
     color: '#F5EFE4',
   } as React.CSSProperties,
-
+  vendorNote: {
+    margin: 0,
+    fontFamily: 'Arial, sans-serif',
+    fontSize: '14px',
+    lineHeight: '1.6',
+    color: '#E8A020',
+    fontStyle: 'italic' as const,
+  } as React.CSSProperties,
   ctaCell: {
-    padding: '0 40px 40px',
+    padding: '8px 40px 40px',
     textAlign: 'center' as const,
   } as React.CSSProperties,
-
   ctaButton: {
     display: 'inline-block',
     padding: '14px 32px',
@@ -204,20 +190,17 @@ const styles = {
     borderRadius: '4px',
     letterSpacing: '0.5px',
   } as React.CSSProperties,
-
   footerCell: {
     padding: '24px 40px 32px',
     borderTop: '1px solid #3D2510',
     textAlign: 'center' as const,
   } as React.CSSProperties,
-
   footerText: {
     margin: '0 0 4px',
     fontFamily: 'Arial, sans-serif',
     fontSize: '13px',
     color: '#8B6A3E',
   } as React.CSSProperties,
-
   footerUnsubscribe: {
     margin: '12px 0 0',
     fontFamily: 'Arial, sans-serif',
