@@ -347,6 +347,83 @@ export function WaitlistSection() {
                 )}
               </AnimatePresence>
 
+              {/* Vendor-specific fields */}
+              <AnimatePresence>
+                {selectedType === 'vendor' && (
+                  <motion.div
+                    key="vendor-fields"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="space-y-5 mb-5">
+                      {/* Business name */}
+                      <Input
+                        id="waitlist-business-name"
+                        type="text"
+                        label={t('vendor_business_name')}
+                        placeholder={t('vendor_business_name_placeholder')}
+                        autoComplete="organization"
+                        disabled={isLoading}
+                        error={errors.business_name?.message}
+                        {...register('business_name')}
+                      />
+
+                      {/* Phone number */}
+                      <Input
+                        id="waitlist-phone"
+                        type="tel"
+                        label={t('vendor_phone')}
+                        placeholder={t('vendor_phone_placeholder')}
+                        autoComplete="tel"
+                        disabled={isLoading}
+                        error={errors.phone?.message}
+                        {...register('phone')}
+                      />
+
+                      {/* Vehicle count estimate */}
+                      <div className="flex flex-col gap-1.5 w-full">
+                        <label
+                          htmlFor="waitlist-vehicle-count"
+                          className="text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-cream/60"
+                        >
+                          {t('vendor_vehicle_count')}
+                        </label>
+                        <select
+                          id="waitlist-vehicle-count"
+                          disabled={isLoading}
+                          {...register('vehicle_count')}
+                          className={[
+                            'w-full px-4 py-3',
+                            'bg-card-bg text-cream',
+                            'border',
+                            errors.vehicle_count ? 'border-red-400/60' : 'border-cream/10',
+                            'focus:outline-none focus:border-l-2 focus:border-l-amber focus:ring-1 focus:ring-amber/40',
+                            'transition-colors duration-200',
+                            'disabled:opacity-50 disabled:cursor-not-allowed',
+                            'appearance-none cursor-pointer',
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                        >
+                          <option value="">Select</option>
+                          <option value="1-5">{t('vendor_vehicle_1_5')}</option>
+                          <option value="6-20">{t('vendor_vehicle_6_20')}</option>
+                          <option value="21+">{t('vendor_vehicle_21_plus')}</option>
+                        </select>
+                        {errors.vehicle_count && (
+                          <p className="text-[0.78rem] text-red-400" role="alert">
+                            {errors.vehicle_count.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               {/* Error message */}
               {state.status === 'error' && (
                 <p

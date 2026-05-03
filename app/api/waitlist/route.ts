@@ -45,13 +45,20 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const { email, type, city } = parsed.data
+  const { email, type, city, business_name, phone, vehicle_count } = parsed.data
 
   // 4. Upsert to Supabase (ignore duplicate — don't reveal)
   try {
+    const insertData: Record<string, unknown> = { email, type, city, ip_hash: hashedIp }
+    if (type === 'vendor') {
+      insertData.business_name = business_name ?? null
+      insertData.phone = phone ?? null
+      insertData.vehicle_count = vehicle_count ?? null
+    }
+
     const { error: dbError } = await supabaseAdmin
       .from('waitlist_entries')
-      .upsert({ email, type, city, ip_hash: hashedIp }, { onConflict: 'email', ignoreDuplicates: true })
+      .upsert(insertData, { onConflict: 'email', ignoreDuplicates: true })
 
     if (dbError) {
       console.error('[waitlist] DB error:', dbError.message)
