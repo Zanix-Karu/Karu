@@ -71,11 +71,11 @@ export async function POST(request: NextRequest) {
   // 5. Send confirmation email (non-blocking — don't fail response if email fails)
   const resend = new Resend(process.env.RESEND_API_KEY)
   resend.emails.send({
-    from: 'Zanix <hello@zanix.cm>',
+    from: 'Karu <noreply@getkaru.io>',
     to: email,
     subject: type === 'vendor'
-      ? "You're registered — Zanix vendor early access"
-      : "You're on the list — Zanix launches soon",
+      ? "You're registered — Karu vendor early access"
+      : "You're on the list — Karu launches soon",
     react: WaitlistConfirmEmail({ type, city }),
   }).catch(err => console.error('[waitlist] Email error:', err instanceof Error ? err.message : 'unknown'))
 

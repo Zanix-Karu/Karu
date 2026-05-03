@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/'],
     },
-    sitemap: 'https://zanix.cm/sitemap.xml',
+    sitemap: 'https://getkaru.io/sitemap.xml',
   }
 }

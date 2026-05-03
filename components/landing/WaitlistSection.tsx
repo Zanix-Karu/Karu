@@ -99,8 +99,8 @@ export function WaitlistSection() {
     const handler = () => {
       setValue('type', 'vendor', { shouldValidate: false })
     }
-    window.addEventListener('zanix:vendor-preselect', handler)
-    return () => window.removeEventListener('zanix:vendor-preselect', handler)
+    window.addEventListener('karu:vendor-preselect', handler)
+    return () => window.removeEventListener('karu:vendor-preselect', handler)
   }, [setValue])
 
   const onSubmit = async (data: WaitlistInput) => {

@@ -69,7 +69,7 @@ export function AnimatedHeroContent() {
   const handleVendorCTA = (e: React.MouseEvent) => {
     e.preventDefault()
     document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })
-    window.dispatchEvent(new CustomEvent('zanix:vendor-preselect'))
+    window.dispatchEvent(new CustomEvent('karu:vendor-preselect'))
   }
 
   const containerVariants = shouldReduce ? {} : heroContainer

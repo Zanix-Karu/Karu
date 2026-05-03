@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion'
 import {
-  IconShield, IconWhatsApp, IconCreditCard,
-  IconPlane, IconStar, IconCar,
+  IconShield, IconCreditCard,
+  IconPlane, IconStar, IconCar, IconChat,
 } from '@/components/ui/Icon'
 
 interface FeatureCardProps {
@@ -13,7 +13,7 @@ interface FeatureCardProps {
   index: number
 }
 
-const ICONS = [IconShield, IconWhatsApp, IconCreditCard, IconPlane, IconStar, IconCar]
+const ICONS = [IconShield, IconCreditCard, IconPlane, IconStar, IconCar, IconChat]
 
 export function FeatureCard({ label, description, index }: FeatureCardProps) {
   const ghostNumber = String(index + 1).padStart(2, '0')

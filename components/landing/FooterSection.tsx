@@ -10,7 +10,7 @@ const LINK_HREFS: Record<string, string> = {
   privacy: '/privacy',
   terms: '/terms',
   contact: '/contact',
-  instagram: 'https://instagram.com/zanix.cm',
+  instagram: 'https://instagram.com/getkaru.io',
 }
 
 export function FooterSection() {
@@ -31,7 +31,7 @@ export function FooterSection() {
         {/* ── Left: logo + tagline ── */}
         <div className="flex flex-col gap-2">
           <span className="font-serif text-amber tracking-widest text-xl uppercase">
-            ZANIX
+            KARU
           </span>
           <p className="font-sans text-[0.78rem] text-cream/50">
             {t('tagline')}

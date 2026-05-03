@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Zanix — Book Trusted Rental Cars in Cameroon'
+export const alt = 'Karu — Verified Car Rentals in Cameroon'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -56,7 +56,7 @@ export default function OgImage() {
             display: 'flex',
           }}
         >
-          ZANIX
+          KARU
         </div>
 
         {/* Amber divider */}

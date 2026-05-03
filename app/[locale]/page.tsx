@@ -4,7 +4,6 @@ import { Navigation } from '@/components/layout/Navigation'
 import { CustomCursor } from '@/components/ui/CustomCursor'
 import { HeroSection } from '@/components/landing/HeroSection'
 import { TickerBand } from '@/components/landing/TickerBand'
-import { StatsRow } from '@/components/landing/StatsRow'
 import { AboutSection } from '@/components/landing/AboutSection'
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection'
 import { FeaturesGrid } from '@/components/landing/FeaturesGrid'
@@ -22,7 +21,6 @@ export default async function Page({ params: { locale } }: { params: { locale: s
       <main>
         <HeroSection />
         <TickerBand />
-        <StatsRow />
         <AboutSection />
         <HowItWorksSection />
         <FeaturesGrid />

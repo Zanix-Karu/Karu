@@ -21,8 +21,8 @@ export function WaitlistConfirmEmail({ type, city }: WaitlistConfirmEmailProps) 
 
   const body =
     type === 'customer'
-      ? `Merci de votre intérêt pour Zanix. Nous vous notifierons dès que nous lancerons à ${cityName}. / Thank you for your interest in Zanix. We'll notify you as soon as we launch in ${cityName}.`
-      : "Merci de votre intérêt pour rejoindre Zanix en tant que prestataire. Nous vous contacterons bientôt. / Thank you for your interest in joining Zanix as a vendor. We'll be in touch soon."
+      ? `Merci de votre intérêt pour Karu. Nous vous notifierons dès que nous lancerons à ${cityName}. / Thank you for your interest in Karu. We'll notify you as soon as we launch in ${cityName}.`
+      : "Merci de votre intérêt pour rejoindre Karu en tant que prestataire. Nous vous contacterons bientôt. / Thank you for your interest in joining Karu as a vendor. We'll be in touch soon."
 
   return (
     <html lang="fr">
@@ -51,7 +51,7 @@ export function WaitlistConfirmEmail({ type, city }: WaitlistConfirmEmailProps) 
                     {/* Logo */}
                     <tr>
                       <td style={styles.logoCell}>
-                        <span style={styles.logo}>ZANIX</span>
+                        <span style={styles.logo}>KARU</span>
                       </td>
                     </tr>
 
@@ -79,8 +79,8 @@ export function WaitlistConfirmEmail({ type, city }: WaitlistConfirmEmailProps) 
                     {/* CTA button */}
                     <tr>
                       <td style={styles.ctaCell}>
-                        <a href="https://zanix.cm" style={styles.ctaButton}>
-                          Visit zanix.cm
+                        <a href="https://getkaru.io" style={styles.ctaButton}>
+                          Visit getkaru.io
                         </a>
                       </td>
                     </tr>
@@ -89,16 +89,16 @@ export function WaitlistConfirmEmail({ type, city }: WaitlistConfirmEmailProps) 
                     <tr>
                       <td style={styles.footerCell}>
                         <p style={styles.footerText}>
-                          © {new Date().getFullYear()} Zanix. All rights reserved.
+                          © {new Date().getFullYear()} Karu. All rights reserved.
                         </p>
                         <p style={styles.footerText}>
                           Douala &amp; Yaoundé, Cameroon
                         </p>
                         <p style={styles.footerUnsubscribe}>
-                          You received this email because you joined the Zanix waitlist.
+                          You received this email because you joined the Karu waitlist.
                           {' '}To unsubscribe, reply with "unsubscribe" in the subject line.
                           <br />
-                          Vous avez reçu cet e-mail car vous vous êtes inscrit sur la liste d&apos;attente Zanix.
+                          Vous avez reçu cet e-mail car vous vous êtes inscrit sur la liste d&apos;attente Karu.
                           {' '}Pour vous désabonner, répondez avec &quot;désabonner&quot; en objet.
                         </p>
                       </td>

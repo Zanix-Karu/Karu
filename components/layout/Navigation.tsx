@@ -37,9 +37,9 @@ export function Navigation() {
         <a
           href="#hero"
           className="font-serif2 text-[1.35rem] font-bold text-amber tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
-          aria-label="Zanix — back to top"
+          aria-label="Karu — back to top"
         >
-          Zanix
+          Karu
         </a>
 
         {/* Nav links — hidden below 900px */}
