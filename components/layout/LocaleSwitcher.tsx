@@ -1,61 +1,54 @@
 'use client'
 
-import { Fragment } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useLocale } from 'next-intl'
-
-const LOCALES = ['en', 'fr'] as const
 
 export function LocaleSwitcher() {
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
 
-  function switchLocale(next: string) {
-    if (next === locale) return
-
-    // Preserve scroll position
+  function toggle() {
+    const next = locale === 'en' ? 'fr' : 'en'
     const scrollY = window.scrollY
-
-    // Replace locale segment in pathname: /en/... → /fr/...
     const segments = pathname.split('/')
     segments[1] = next
-    const newPath = segments.join('/')
-
-    router.push(newPath)
-
-    // Restore scroll after navigation
+    router.push(segments.join('/'))
     requestAnimationFrame(() => {
       window.scrollTo({ top: scrollY, behavior: 'instant' })
     })
   }
 
+  const isEN = locale === 'en'
+
   return (
-    <div
-      className="flex items-center gap-1 font-sans text-[0.72rem] font-semibold tracking-[0.12em] uppercase"
-      role="group"
-      aria-label="Language switcher"
+    <button
+      onClick={toggle}
+      aria-label={isEN ? 'Switch to French' : 'Switch to English'}
+      className="relative flex items-center gap-0 border border-cream/20 hover:border-amber/50 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
     >
-      {LOCALES.map((l, i) => (
-        <Fragment key={l}>
-          <button
-            onClick={() => switchLocale(l)}
-            aria-pressed={locale === l}
-            aria-label={`Switch to ${l === 'en' ? 'English' : 'French'}`}
-            className={[
-              'transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber',
-              locale === l ? 'text-amber' : 'text-cream/40 hover:text-cream/70',
-            ].join(' ')}
-          >
-            {l.toUpperCase()}
-          </button>
-          {i < LOCALES.length - 1 && (
-            <span className="text-cream/20" aria-hidden="true">
-              /
-            </span>
-          )}
-        </Fragment>
-      ))}
-    </div>
+      {/* Sliding amber indicator */}
+      <span
+        className="absolute top-0 bottom-0 w-1/2 bg-amber transition-transform duration-200"
+        style={{ transform: isEN ? 'translateX(0%)' : 'translateX(100%)' }}
+        aria-hidden="true"
+      />
+      <span
+        className={[
+          'relative z-10 px-3 py-1.5 text-[0.65rem] font-semibold tracking-[0.14em] font-sans uppercase transition-colors duration-200',
+          isEN ? 'text-espresso' : 'text-cream/40',
+        ].join(' ')}
+      >
+        EN
+      </span>
+      <span
+        className={[
+          'relative z-10 px-3 py-1.5 text-[0.65rem] font-semibold tracking-[0.14em] font-sans uppercase transition-colors duration-200',
+          !isEN ? 'text-espresso' : 'text-cream/40',
+        ].join(' ')}
+      >
+        FR
+      </span>
+    </button>
   )
 }

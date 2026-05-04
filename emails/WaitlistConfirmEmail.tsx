@@ -15,7 +15,7 @@ const copy = {
     customer: {
       heading: "You're on the list.",
       body: (city: string) =>
-        `Thank you for joining the Karu waitlist. We'll send you one email the moment we go live in ${city}. No spam, no filler — just the launch notification.`,
+        `Thank you for joining the Karu waitlist. We'll send you one email the moment we go live in ${city}. No spam, no filler. Just the launch notification.`,
       note: null,
     },
     vendor: {
@@ -34,7 +34,7 @@ const copy = {
     customer: {
       heading: 'Vous êtes sur la liste.',
       body: (city: string) =>
-        `Merci de rejoindre la liste d'attente Karu. Nous vous enverrons un e-mail dès que nous lançons à ${city}. Pas de spam — juste la notification de lancement.`,
+        `Merci de rejoindre la liste d'attente Karu. Nous vous enverrons un e-mail dès que nous lançons à ${city}. Pas de spam. Juste la notification de lancement.`,
       note: null,
     },
     vendor: {

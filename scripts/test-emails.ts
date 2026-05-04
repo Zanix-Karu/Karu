@@ -18,7 +18,7 @@ const variants = [
     locale: 'en' as const,
     type: 'customer' as const,
     city: 'douala' as const,
-    subject: "You're on the list — Karu launches soon",
+    subject: "You're on the list. Karu launches soon",
   },
   {
     label: 'EN · Vendor · Yaoundé',
@@ -26,14 +26,14 @@ const variants = [
     type: 'vendor' as const,
     city: 'yaounde' as const,
     business_name: "Falah's Rentals",
-    subject: "You're registered — Karu vendor early access",
+    subject: "You're registered. Karu vendor early access",
   },
   {
     label: 'FR · Client · Douala',
     locale: 'fr' as const,
     type: 'customer' as const,
     city: 'douala' as const,
-    subject: "Vous êtes sur la liste — Karu arrive bientôt",
+    subject: "Vous êtes sur la liste. Karu arrive bientôt",
   },
   {
     label: 'FR · Prestataire · Yaoundé',
@@ -41,7 +41,7 @@ const variants = [
     type: 'vendor' as const,
     city: 'yaounde' as const,
     business_name: "Falah's Rentals",
-    subject: "Inscription confirmée — Accès anticipé prestataire Karu",
+    subject: "Inscription confirmée. Accès anticipé prestataire Karu",
   },
 ]
 

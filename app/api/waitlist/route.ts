@@ -79,12 +79,12 @@ export async function POST(request: NextRequest) {
       const resend = new Resend(apiKey)
       const subjects = {
         en: {
-          customer: "You're on the list — Karu launches soon",
-          vendor: "You're registered — Karu vendor early access",
+          customer: "You're on the list. Karu launches soon",
+          vendor: "You're registered. Karu vendor early access",
         },
         fr: {
-          customer: "Vous êtes sur la liste — Karu arrive bientôt",
-          vendor: "Inscription confirmée — Accès anticipé prestataire Karu",
+          customer: "Vous êtes sur la liste. Karu arrive bientôt",
+          vendor: "Inscription confirmée. Accès anticipé prestataire Karu",
         },
       }
       const subject = subjects[locale as 'en' | 'fr']?.[type] ?? subjects.en[type]
