@@ -7,7 +7,7 @@ export async function GET() {
   try {
     const { count, error } = await supabaseAdmin
       .from('waitlist_entries')
-      .select('*', { count: 'exact', head: true })
+      .select('id', { count: 'exact', head: true })
 
     if (error) {
       console.error('[waitlist/count] DB error:', error.message)
