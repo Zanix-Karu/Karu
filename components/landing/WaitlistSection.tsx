@@ -1,7 +1,7 @@
 'use client'
 
 import { useReducer, useEffect, useState, useCallback, useRef } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { AnimatePresence, motion } from 'framer-motion'
 import useSWR from 'swr'
 import { z } from 'zod'
@@ -72,6 +72,7 @@ const selectClass = (hasError: boolean) => [
 
 export function WaitlistSection() {
   const t = useTranslations('waitlist')
+  const locale = useLocale()
   const [state, dispatch] = useReducer(waitlistReducer, { status: 'idle' })
 
   const { data: countData } = useSWR<{ count: number }>('/api/waitlist/count', fetcher, { refreshInterval: 60_000 })
@@ -180,6 +181,7 @@ export function WaitlistSection() {
       email: email.toLowerCase().trim(),
       type: selectedType!,
       city,
+      locale,
     }
     if (isVendor) {
       payload.business_name = businessName.trim()

@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   description: 'Karu connects travelers and locals with verified car rental providers in Douala and Yaoundé. No stress, no middlemen, no surprises.',
   openGraph: {
     title: 'Karu — Verified Car Rentals in Cameroon',
-    description: 'No stress, no middlemen. Verified providers, mobile money payments.',
+    description: 'No stress, no middlemen. Verified providers, secure payments, pre-arrival booking.',
     images: [{ url: '/opengraph-image', width: 1200, height: 630 }],
     locale: 'en_CM',
     alternateLocale: ['fr_CM'],
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Karu — Cameroon Car Rental Marketplace',
-    description: 'Verified providers, mobile money payments, pre-arrival booking.',
+    description: 'Verified providers, secure payments, pre-arrival booking.',
     images: ['/opengraph-image'],
   },
   robots: { index: true, follow: true },

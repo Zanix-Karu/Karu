@@ -19,8 +19,8 @@
   "ticker": {
     "phrase_1": "Verified Providers",
     "phrase_2": "Airport Pickups",
-    "phrase_3": "MTN Mobile Money",
-    "phrase_4": "Orange Money",
+    "phrase_3": "Secure Payments",
+    "phrase_4": "Transparent Pricing",
     "phrase_5": "Douala",
     "phrase_6": "Yaoundé",
     "phrase_7": "Pre-Arrival Booking",
@@ -88,7 +88,7 @@
       {
         "number": "03",
         "title": "Confirm",
-        "description": "Vendor approves within 24 hrs. Pay securely via MTN MoMo or Orange Money."
+        "description": "Vendor approves within 24 hrs. Pay securely through the platform — fast and transparent."
       },
       {
         "number": "04",
@@ -108,8 +108,8 @@
       },
       {
         "icon": "",
-        "label": "Mobile Money Payments",
-        "description": "Pay with MTN MoMo or Orange Money. No card required."
+        "label": "Secure Payments",
+        "description": "Multiple payment options built for Cameroon. Fast, simple, and transparent."
       },
       {
         "icon": "✈️",

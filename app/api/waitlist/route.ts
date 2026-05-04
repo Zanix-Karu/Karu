@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const { email, type, city, business_name, phone, vehicle_count } = parsed.data
+  const { email, type, city, locale = 'en', business_name, phone, vehicle_count } = parsed.data
 
   // 3. Hash IP
   let hashedIp = 'unknown'
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
 
   // 4. Insert to Supabase
   try {
-    const insertData: Record<string, unknown> = { email, type, city, ip_hash: hashedIp }
+    const insertData: Record<string, unknown> = { email, type, city, locale, ip_hash: hashedIp }
     if (type === 'vendor') {
       insertData.business_name = business_name || null
       insertData.phone = phone || null
@@ -77,13 +77,28 @@ export async function POST(request: NextRequest) {
     const apiKey = process.env.RESEND_API_KEY
     if (apiKey) {
       const resend = new Resend(apiKey)
+      const subjects = {
+        en: {
+          customer: "You're on the list — Karu launches soon",
+          vendor: "You're registered — Karu vendor early access",
+        },
+        fr: {
+          customer: "Vous êtes sur la liste — Karu arrive bientôt",
+          vendor: "Inscription confirmée — Accès anticipé prestataire Karu",
+        },
+      }
+      const subject = subjects[locale as 'en' | 'fr']?.[type] ?? subjects.en[type]
+
       resend.emails.send({
         from: 'Karu <noreply@getkaru.io>',
         to: email,
-        subject: type === 'vendor'
-          ? "You're registered — Karu vendor early access"
-          : "You're on the list — Karu launches soon",
-        react: WaitlistConfirmEmail({ type, city, business_name: type === 'vendor' ? (business_name || undefined) : undefined }),
+        subject,
+        react: WaitlistConfirmEmail({
+          type,
+          city,
+          locale: locale as 'en' | 'fr',
+          business_name: type === 'vendor' ? (business_name || undefined) : undefined,
+        }),
       }).catch(err => console.error('[waitlist] Email error:', err instanceof Error ? err.message : 'unknown'))
     }
   } catch (err) {

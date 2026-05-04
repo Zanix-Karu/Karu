@@ -19,8 +19,8 @@
   "ticker": {
     "phrase_1": "Prestataires Vérifiés",
     "phrase_2": "Transferts Aéroport",
-    "phrase_3": "MTN Mobile Money",
-    "phrase_4": "Orange Money",
+    "phrase_3": "Paiements Sécurisés",
+    "phrase_4": "Tarification Transparente",
     "phrase_5": "Douala",
     "phrase_6": "Yaoundé",
     "phrase_7": "Réservation Avant Arrivée",
@@ -88,7 +88,7 @@
       {
         "number": "03",
         "title": "Confirmer",
-        "description": "Le prestataire approuve sous 24h. Payez via MTN MoMo ou Orange Money."
+        "description": "Le prestataire approuve sous 24h. Payez en toute sécurité via la plateforme — rapide et transparent."
       },
       {
         "number": "04",
@@ -108,8 +108,8 @@
       },
       {
         "icon": "",
-        "label": "Paiements Mobile Money",
-        "description": "Payez avec MTN MoMo ou Orange Money. Aucune carte requise."
+        "label": "Paiements Sécurisés",
+        "description": "Plusieurs options de paiement adaptées au Cameroun. Rapide, simple et transparent."
       },
       {
         "icon": "✈️",
