@@ -1,5 +1,6 @@
 'use client'
 
+import { Fragment } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useLocale } from 'next-intl'
 
@@ -36,9 +37,8 @@ export function LocaleSwitcher() {
       aria-label="Language switcher"
     >
       {LOCALES.map((l, i) => (
-        <>
+        <Fragment key={l}>
           <button
-            key={l}
             onClick={() => switchLocale(l)}
             aria-pressed={locale === l}
             aria-label={`Switch to ${l === 'en' ? 'English' : 'French'}`}
@@ -50,11 +50,11 @@ export function LocaleSwitcher() {
             {l.toUpperCase()}
           </button>
           {i < LOCALES.length - 1 && (
-            <span key={`sep-${l}`} className="text-cream/20" aria-hidden="true">
+            <span className="text-cream/20" aria-hidden="true">
               /
             </span>
           )}
-        </>
+        </Fragment>
       ))}
     </div>
   )

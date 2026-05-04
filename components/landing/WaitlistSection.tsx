@@ -1,6 +1,6 @@
 'use client'
 
-import { useReducer, useEffect, useState, useCallback } from 'react'
+import { useReducer, useEffect, useState, useCallback, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { AnimatePresence, motion } from 'framer-motion'
 import useSWR from 'swr'
@@ -93,15 +93,22 @@ export function WaitlistSection() {
   const isLoading = state.status === 'loading'
   const isVendor = selectedType === 'vendor'
 
-  // Vendor pre-select from hero CTA
+  // Vendor pre-select from hero CTA.
+  // The event fires while the user is still on the email step, so we store the
+  // intent in a ref and apply it once they advance to the details step.
+  const vendorPreSelectRef = useRef(false)
+
   useEffect(() => {
-    const handler = () => {
-      if (step === 'details') {
-        setSelectedType('vendor')
-      }
-    }
+    const handler = () => { vendorPreSelectRef.current = true }
     window.addEventListener('karu:vendor-preselect', handler)
     return () => window.removeEventListener('karu:vendor-preselect', handler)
+  }, [])
+
+  useEffect(() => {
+    if (step === 'details' && vendorPreSelectRef.current) {
+      setSelectedType('vendor')
+      vendorPreSelectRef.current = false
+    }
   }, [step])
 
   // ── Step 1: Validate email and advance ──────────────────────────────────────

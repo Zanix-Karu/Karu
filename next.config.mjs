@@ -2,6 +2,14 @@ import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 
+const isDev = process.env.NODE_ENV !== 'production'
+
+// In dev mode webpack uses eval() for source maps, so 'unsafe-eval' is required.
+// In production builds eval() is not used, so it's omitted for security.
+const scriptSrc = isDev
+  ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' plausible.io"
+  : "script-src 'self' 'unsafe-inline' plausible.io"
+
 const securityHeaders = [
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
   {
@@ -15,7 +23,7 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' plausible.io",
+      scriptSrc,
       "style-src 'self' 'unsafe-inline' fonts.googleapis.com",
       "font-src 'self' fonts.gstatic.com",
       "img-src 'self' data: blob: *.supabase.co",
