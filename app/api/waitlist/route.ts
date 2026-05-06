@@ -113,7 +113,15 @@ export async function POST(request: NextRequest) {
 
   // 7. Insert to Supabase (parameterised query, no raw SQL)
   try {
-    const insertData: Record<string, unknown> = { email, type, city, locale, ip_hash: hashedIp }
+    const insertData: Record<string, unknown> = {
+      email, type, city, locale, ip_hash: hashedIp,
+      // Vercel geo headers — populated automatically on Vercel Edge, null locally
+      country:  request.headers.get('x-vercel-ip-country') ?? null,
+      region:   request.headers.get('x-vercel-ip-country-region') ?? null,
+      city_geo: request.headers.get('x-vercel-ip-city') ?? null,
+      lat:      parseFloat(request.headers.get('x-vercel-ip-latitude') ?? '') || null,
+      lng:      parseFloat(request.headers.get('x-vercel-ip-longitude') ?? '') || null,
+    }
     if (type === 'vendor') {
       insertData.business_name = business_name || null
       insertData.business_email = (parsed.data as Record<string, unknown>).business_email || null

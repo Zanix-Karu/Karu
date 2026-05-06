@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { jwtVerify } from 'jose'
 import createMiddleware from 'next-intl/middleware'
 
 const intlMiddleware = createMiddleware({
@@ -6,29 +7,62 @@ const intlMiddleware = createMiddleware({
   defaultLocale: 'en',
 })
 
-export default function middleware(request: NextRequest) {
+function jwtSecret() {
+  const s = process.env.ADMIN_JWT_SECRET ?? 'fallback-dev-secret-change-in-prod'
+  return new TextEncoder().encode(s)
+}
+
+async function handleAdmin(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl
 
-  // Maintenance mode — toggle via MAINTENANCE_MODE env var in Vercel
+  // Login page is always accessible
+  if (pathname === '/admin/login') return NextResponse.next()
+
+  // Redirect bare /admin to /admin/dashboard
+  if (pathname === '/admin') {
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url))
+  }
+
+  const token = request.cookies.get('karu_admin')?.value
+  if (!token) {
+    return NextResponse.redirect(new URL('/admin/login', request.url))
+  }
+
+  try {
+    await jwtVerify(token, jwtSecret())
+    return NextResponse.next()
+  } catch {
+    const res = NextResponse.redirect(new URL('/admin/login', request.url))
+    res.cookies.delete('karu_admin')
+    return res
+  }
+}
+
+export default async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Admin routes bypass i18n entirely
+  if (pathname.startsWith('/admin')) {
+    return handleAdmin(request)
+  }
+
+  // Maintenance mode
   if (process.env.MAINTENANCE_MODE === 'true') {
-    // Allow access to the maintenance page itself and static assets
     if (pathname === '/maintenance' || pathname.startsWith('/_next') || pathname.startsWith('/api')) {
       return NextResponse.next()
     }
-    // Redirect everything else to maintenance page
     const url = request.nextUrl.clone()
     url.pathname = '/maintenance'
     return NextResponse.rewrite(url)
   }
 
-  // Block access to maintenance page when not in maintenance mode
+  // Block maintenance page when not in maintenance mode
   if (pathname === '/maintenance') {
     const url = request.nextUrl.clone()
     url.pathname = '/en'
     return NextResponse.redirect(url)
   }
 
-  // Normal i18n routing
   return intlMiddleware(request)
 }
 
