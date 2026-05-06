@@ -16,7 +16,7 @@ export function TickerBand() {
   ]
 
   return (
-    <section className="w-full bg-amber py-4">
+    <section className="w-full bg-amber py-4 min-h-[48px]">
       <Ticker
         items={phrases}
         className="font-sans font-bold uppercase text-espresso tracking-widest text-sm"

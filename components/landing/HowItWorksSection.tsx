@@ -32,8 +32,8 @@ export function HowItWorksSection() {
 
         {/* Steps grid with connecting line */}
         <div className="relative">
-          {/* Amber connecting line — desktop only */}
-          <div className="hidden lg:block absolute top-[40px] left-[calc(12.5%+20px)] right-[calc(12.5%+20px)] h-px bg-amber/30" />
+          {/* Amber connecting line — desktop only, hidden until section is in view */}
+          <div className="hidden lg:block absolute top-[40px] left-[calc(12.5%+20px)] right-[calc(12.5%+20px)] h-px bg-amber/20" aria-hidden="true" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, i) => (
