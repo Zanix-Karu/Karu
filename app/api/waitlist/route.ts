@@ -5,8 +5,63 @@ import { hashIp } from '@/lib/crypto'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { WaitlistConfirmEmail } from '@/emails/WaitlistConfirmEmail'
 
+// Allowed origins for CSRF protection
+const ALLOWED_ORIGINS = [
+  'https://getkaru.io',
+  'https://www.getkaru.io',
+  'https://karu-mu.vercel.app',
+]
+
+function isAllowedOrigin(request: NextRequest): boolean {
+  // In development, allow all origins
+  if (process.env.NODE_ENV !== 'production') return true
+
+  const origin = request.headers.get('origin')
+  const referer = request.headers.get('referer')
+
+  if (origin && ALLOWED_ORIGINS.some(o => origin.startsWith(o))) return true
+  if (referer && ALLOWED_ORIGINS.some(o => referer.startsWith(o))) return true
+
+  return false
+}
+
 export async function POST(request: NextRequest) {
-  // 1. Parse JSON
+  // 0. CSRF / Origin check
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json(
+      { success: false, error: { code: 'FORBIDDEN', message: 'Request not allowed' } },
+      { status: 403 }
+    )
+  }
+
+  // Verify X-Requested-With header (CSRF defence)
+  const xrw = request.headers.get('x-requested-with')
+  if (xrw !== 'XMLHttpRequest') {
+    return NextResponse.json(
+      { success: false, error: { code: 'FORBIDDEN', message: 'Request not allowed' } },
+      { status: 403 }
+    )
+  }
+
+  // 1. Enforce content-type
+  const contentType = request.headers.get('content-type')
+  if (!contentType?.includes('application/json')) {
+    return NextResponse.json(
+      { success: false, error: { code: 'INVALID_CONTENT_TYPE', message: 'Content-Type must be application/json' } },
+      { status: 400 }
+    )
+  }
+
+  // 2. Limit request body size (prevent DoS via large payloads)
+  const contentLength = request.headers.get('content-length')
+  if (contentLength && parseInt(contentLength, 10) > 5000) {
+    return NextResponse.json(
+      { success: false, error: { code: 'PAYLOAD_TOO_LARGE', message: 'Request body too large' } },
+      { status: 413 }
+    )
+  }
+
+  // 3. Parse JSON
   let body: unknown
   try {
     body = await request.json()
@@ -17,7 +72,19 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  // 2. Validate with Zod
+  // 4. Reject unexpected fields (only allow known keys)
+  if (typeof body === 'object' && body !== null) {
+    const allowedKeys = new Set(['email', 'type', 'city', 'locale', 'business_name', 'business_email', 'phone', 'vehicle_count'])
+    const bodyKeys = Object.keys(body as Record<string, unknown>)
+    if (bodyKeys.length > allowedKeys.size || bodyKeys.some(k => !allowedKeys.has(k))) {
+      return NextResponse.json(
+        { success: false, error: { code: 'VALIDATION_ERROR', message: 'Unknown fields in request' } },
+        { status: 400 }
+      )
+    }
+  }
+
+  // 5. Validate with Zod (sanitises input via transforms)
   const parsed = WaitlistSchema.safeParse(body)
   if (!parsed.success) {
     return NextResponse.json(
@@ -35,7 +102,7 @@ export async function POST(request: NextRequest) {
 
   const { email, type, city, locale = 'en', business_name, phone, vehicle_count } = parsed.data
 
-  // 3. Hash IP
+  // 6. Hash IP (one-way, non-reversible)
   let hashedIp = 'unknown'
   try {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
@@ -44,7 +111,7 @@ export async function POST(request: NextRequest) {
     console.error('[waitlist] IP hash error:', err instanceof Error ? err.message : 'unknown')
   }
 
-  // 4. Insert to Supabase
+  // 7. Insert to Supabase (parameterised query, no raw SQL)
   try {
     const insertData: Record<string, unknown> = { email, type, city, locale, ip_hash: hashedIp }
     if (type === 'vendor') {
@@ -59,7 +126,8 @@ export async function POST(request: NextRequest) {
       .upsert(insertData, { onConflict: 'email', ignoreDuplicates: true })
 
     if (dbError) {
-      console.error('[waitlist] DB error:', dbError.message, dbError.details, dbError.hint)
+      // Log internally, never expose DB details to client
+      console.error('[waitlist] DB error:', dbError.message)
       return NextResponse.json(
         { success: false, error: { code: 'INTERNAL_ERROR', message: 'An unexpected error occurred' } },
         { status: 500 }
@@ -73,7 +141,7 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  // 5. Send confirmation email (non-blocking)
+  // 8. Send confirmation email (non-blocking, fire-and-forget)
   try {
     const apiKey = process.env.RESEND_API_KEY
     if (apiKey) {
@@ -89,7 +157,6 @@ export async function POST(request: NextRequest) {
         },
       }
       const subject = subjects[locale as 'en' | 'fr']?.[type] ?? subjects.en[type]
-
       const bizEmail = type === 'vendor' ? ((parsed.data as Record<string, unknown>).business_email as string | undefined) : undefined
 
       resend.emails.send({
@@ -108,17 +175,12 @@ export async function POST(request: NextRequest) {
     console.error('[waitlist] Resend init error:', err instanceof Error ? err.message : 'unknown')
   }
 
-  // 6. Track Plausible event (non-blocking)
+  // 9. Track analytics (non-blocking, no PII sent)
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
   if (plausibleDomain) {
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? ''
     fetch('https://plausible.io/api/event', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': request.headers.get('user-agent') ?? '',
-        'X-Forwarded-For': ip,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: 'waitlist_signup',
         url: `https://${plausibleDomain}/`,
@@ -132,4 +194,18 @@ export async function POST(request: NextRequest) {
     { success: true, data: { message: "You're on the list!" } },
     { status: 201 }
   )
+}
+
+// Block all other HTTP methods
+export async function GET() {
+  return NextResponse.json({ success: false, error: { code: 'METHOD_NOT_ALLOWED', message: 'Method not allowed' } }, { status: 405 })
+}
+export async function PUT() {
+  return NextResponse.json({ success: false, error: { code: 'METHOD_NOT_ALLOWED', message: 'Method not allowed' } }, { status: 405 })
+}
+export async function DELETE() {
+  return NextResponse.json({ success: false, error: { code: 'METHOD_NOT_ALLOWED', message: 'Method not allowed' } }, { status: 405 })
+}
+export async function PATCH() {
+  return NextResponse.json({ success: false, error: { code: 'METHOD_NOT_ALLOWED', message: 'Method not allowed' } }, { status: 405 })
 }
