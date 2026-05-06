@@ -148,7 +148,7 @@
       "code": "YAO",
       "coordinates": "3.8667° N · 11.5167° E",
       "badge": "Launching First",
-      "description": "The political capital. Nsimalen International connects government officials, NGO workers, and business visitors."
+      "description": "The political capital. Nsimalen International Airport serves government officials, NGO workers, and business visitors."
     },
     "more_cities": "More cities across Central & West Africa in Phase 3"
   },
@@ -161,6 +161,8 @@
     "type_vendor": "I'm a Vendor",
     "vendor_business_name": "Business Name",
     "vendor_business_name_placeholder": "e.g. Douala Auto Rentals",
+    "vendor_business_email": "Business Email",
+    "vendor_business_email_placeholder": "e.g. info@yourbusiness.com",
     "vendor_phone": "Phone Number",
     "vendor_phone_placeholder": "+237 6XX XXX XXX",
     "vendor_vehicle_count": "Estimated Number of Vehicles",

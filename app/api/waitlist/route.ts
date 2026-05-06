@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
     const insertData: Record<string, unknown> = { email, type, city, locale, ip_hash: hashedIp }
     if (type === 'vendor') {
       insertData.business_name = business_name || null
+      insertData.business_email = (parsed.data as Record<string, unknown>).business_email || null
       insertData.phone = phone || null
       insertData.vehicle_count = vehicle_count || null
     }
@@ -89,9 +90,11 @@ export async function POST(request: NextRequest) {
       }
       const subject = subjects[locale as 'en' | 'fr']?.[type] ?? subjects.en[type]
 
+      const bizEmail = type === 'vendor' ? ((parsed.data as Record<string, unknown>).business_email as string | undefined) : undefined
+
       resend.emails.send({
         from: 'Karu <noreply@getkaru.io>',
-        to: email,
+        to: bizEmail ? [email, bizEmail] : email,
         subject,
         react: WaitlistConfirmEmail({
           type,

@@ -2,6 +2,7 @@
 
 ALTER TABLE waitlist_entries
   ADD COLUMN IF NOT EXISTS business_name TEXT,
+  ADD COLUMN IF NOT EXISTS business_email TEXT,
   ADD COLUMN IF NOT EXISTS phone TEXT,
   ADD COLUMN IF NOT EXISTS vehicle_count TEXT;
 

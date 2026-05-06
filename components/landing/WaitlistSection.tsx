@@ -10,13 +10,9 @@ import { Button } from '@/components/ui/Button'
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
-// ─── Validation schemas ───────────────────────────────────────────────────────
-
 const emailSchema = z.string().email('Please enter a valid email address').max(254).toLowerCase().trim()
 
-// ─── State machine ────────────────────────────────────────────────────────────
-
-type FormStep = 'email' | 'details'
+type FormStep = 'type' | 'details'
 
 type WaitlistState =
   | { status: 'idle' }
@@ -45,8 +41,6 @@ function waitlistReducer(state: WaitlistState, action: WaitlistAction): Waitlist
   }
 }
 
-// ─── Checkmark ────────────────────────────────────────────────────────────────
-
 function AmberCheckmark() {
   return (
     <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
@@ -57,8 +51,6 @@ function AmberCheckmark() {
   )
 }
 
-// ─── Select styling ───────────────────────────────────────────────────────────
-
 const selectClass = (hasError: boolean) => [
   'w-full px-4 py-3 bg-card-bg text-cream border',
   hasError ? 'border-red-400/60' : 'border-cream/10',
@@ -68,8 +60,6 @@ const selectClass = (hasError: boolean) => [
   'appearance-none cursor-pointer',
 ].join(' ')
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
 export function WaitlistSection() {
   const t = useTranslations('waitlist')
   const locale = useLocale()
@@ -78,14 +68,16 @@ export function WaitlistSection() {
   const { data: countData } = useSWR<{ count: number }>('/api/waitlist/count', fetcher, { refreshInterval: 60_000 })
 
   // Form state
-  const [step, setStep] = useState<FormStep>('email')
+  const [step, setStep] = useState<FormStep>('type')
+  const [selectedType, setSelectedType] = useState<'customer' | 'vendor' | null>(null)
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
-  const [selectedType, setSelectedType] = useState<'customer' | 'vendor' | null>(null)
   const [city, setCity] = useState('')
   const [cityError, setCityError] = useState('')
   const [businessName, setBusinessName] = useState('')
   const [businessNameError, setBusinessNameError] = useState('')
+  const [businessEmail, setBusinessEmail] = useState('')
+  const [businessEmailError, setBusinessEmailError] = useState('')
   const [phone, setPhone] = useState('')
   const [phoneError, setPhoneError] = useState('')
   const [vehicleCount, setVehicleCount] = useState('')
@@ -94,44 +86,25 @@ export function WaitlistSection() {
   const isLoading = state.status === 'loading'
   const isVendor = selectedType === 'vendor'
 
-  // Vendor pre-select from hero CTA.
-  // The event fires while the user is still on the email step, so we store the
-  // intent in a ref and apply it once they advance to the details step.
+  // Vendor pre-select from hero CTA
   const vendorPreSelectRef = useRef(false)
-
   useEffect(() => {
     const handler = () => { vendorPreSelectRef.current = true }
     window.addEventListener('karu:vendor-preselect', handler)
     return () => window.removeEventListener('karu:vendor-preselect', handler)
   }, [])
 
-  useEffect(() => {
-    if (step === 'details' && vendorPreSelectRef.current) {
-      setSelectedType('vendor')
-      vendorPreSelectRef.current = false
-    }
-  }, [step])
-
-  // ── Step 1: Validate email and advance ──────────────────────────────────────
-
-  const handleEmailContinue = useCallback(() => {
-    const result = emailSchema.safeParse(email)
-    if (!result.success) {
-      setEmailError(result.error.issues[0].message)
-      return
-    }
-    setEmailError('')
-    setStep('details')
-  }, [email])
-
-  // ── Step 2: Select type ─────────────────────────────────────────────────────
+  // ── Step 1: Choose type ─────────────────────────────────────────────────────
 
   const handleTypeSelect = useCallback((type: 'customer' | 'vendor') => {
     setSelectedType(type)
-    // Clear vendor errors when switching
+    setStep('details')
+    // Clear vendor fields when switching
     if (type === 'customer') {
       setBusinessName('')
       setBusinessNameError('')
+      setBusinessEmail('')
+      setBusinessEmailError('')
       setPhone('')
       setPhoneError('')
       setVehicleCount('')
@@ -139,11 +112,29 @@ export function WaitlistSection() {
     }
   }, [])
 
+  // Apply vendor pre-select on mount
+  useEffect(() => {
+    if (vendorPreSelectRef.current) {
+      handleTypeSelect('vendor')
+      vendorPreSelectRef.current = false
+    }
+  }, [handleTypeSelect])
+
   // ── Submit ──────────────────────────────────────────────────────────────────
 
   const handleFormSubmit = useCallback(async () => {
-    // Validate city
     let hasError = false
+
+    // Validate email
+    const emailResult = emailSchema.safeParse(email)
+    if (!emailResult.success) {
+      setEmailError(emailResult.error.issues[0].message)
+      hasError = true
+    } else {
+      setEmailError('')
+    }
+
+    // Validate city
     if (!city) {
       setCityError('Please select a city')
       hasError = true
@@ -158,6 +149,17 @@ export function WaitlistSection() {
         hasError = true
       } else {
         setBusinessNameError('')
+      }
+      if (businessEmail) {
+        const bizEmailResult = emailSchema.safeParse(businessEmail)
+        if (!bizEmailResult.success) {
+          setBusinessEmailError('Please enter a valid business email')
+          hasError = true
+        } else {
+          setBusinessEmailError('')
+        }
+      } else {
+        setBusinessEmailError('')
       }
       if (!phone || phone.trim().length < 6) {
         setPhoneError('Phone number is required')
@@ -187,6 +189,9 @@ export function WaitlistSection() {
       payload.business_name = businessName.trim()
       payload.phone = phone.trim()
       payload.vehicle_count = vehicleCount
+      if (businessEmail) {
+        payload.business_email = businessEmail.toLowerCase().trim()
+      }
     }
 
     try {
@@ -216,18 +221,20 @@ export function WaitlistSection() {
     } catch {
       dispatch({ type: 'ERROR', message: t('error_generic') })
     }
-  }, [email, selectedType, city, isVendor, businessName, phone, vehicleCount, t])
+  }, [email, selectedType, city, isVendor, businessName, businessEmail, phone, vehicleCount, locale, t])
 
   const handleReset = () => {
     dispatch({ type: 'RESET' })
-    setStep('email')
+    setStep('type')
+    setSelectedType(null)
     setEmail('')
     setEmailError('')
-    setSelectedType(null)
     setCity('')
     setCityError('')
     setBusinessName('')
     setBusinessNameError('')
+    setBusinessEmail('')
+    setBusinessEmailError('')
     setPhone('')
     setPhoneError('')
     setVehicleCount('')
@@ -275,7 +282,6 @@ export function WaitlistSection() {
 
         <AnimatePresence mode="wait" initial={false}>
           {state.status === 'success' ? (
-            /* ── Success ─────────────────────────────────────────────────── */
             <motion.div
               key="success"
               initial={{ opacity: 0, y: 12 }}
@@ -298,35 +304,37 @@ export function WaitlistSection() {
                 Register another
               </button>
             </motion.div>
-          ) : step === 'email' ? (
-            /* ── Step 1: Email ───────────────────────────────────────────── */
+          ) : step === 'type' ? (
+            /* ── Step 1: Choose type ─────────────────────────────────────── */
             <motion.div
-              key="step-email"
+              key="step-type"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.3 }}
               className="text-left"
             >
-              <div className="mb-5">
-                <Input
-                  id="waitlist-email"
-                  type="email"
-                  label="Email"
-                  placeholder={t('email_placeholder')}
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => { setEmail(e.target.value); setEmailError('') }}
-                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleEmailContinue() } }}
-                  error={emailError}
-                />
+              <p className="text-[0.78rem] font-medium tracking-[0.1em] uppercase text-cream/60 mb-3 text-center">
+                I am a
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                {([
+                  { value: 'customer' as const, label: t('type_customer') },
+                  { value: 'vendor' as const, label: t('type_vendor') },
+                ]).map(({ value, label }) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => handleTypeSelect(value)}
+                    className="px-4 py-4 text-[0.85rem] font-semibold tracking-[0.06em] uppercase border border-cream/10 bg-card-bg text-cream/70 hover:border-amber hover:text-amber transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
-              <Button type="button" variant="primary" className="w-full" onClick={handleEmailContinue}>
-                Continue
-              </Button>
             </motion.div>
           ) : (
-            /* ── Step 2: Type + Details ──────────────────────────────────── */
+            /* ── Step 2: Details ─────────────────────────────────────────── */
             <motion.div
               key="step-details"
               initial={{ opacity: 0, y: 12 }}
@@ -335,163 +343,150 @@ export function WaitlistSection() {
               transition={{ duration: 0.3 }}
               className="text-left"
             >
-              {/* Email display with edit */}
+              {/* Type indicator with back button */}
               <div className="flex items-center justify-between mb-5 px-4 py-3 bg-card-bg border border-cream/10">
-                <span className="text-cream text-[0.95rem] truncate">{email}</span>
+                <span className="text-cream text-[0.85rem] font-semibold uppercase tracking-[0.06em]">
+                  {isVendor ? t('type_vendor') : t('type_customer')}
+                </span>
                 <button
                   type="button"
-                  onClick={() => { setStep('email'); setSelectedType(null) }}
+                  onClick={() => { setStep('type'); setSelectedType(null) }}
                   className="text-amber text-[0.72rem] font-semibold tracking-[0.1em] uppercase ml-3 shrink-0 hover:opacity-70 transition-opacity"
                 >
-                  Edit
+                  Change
                 </button>
               </div>
 
-              {/* Type toggle */}
+              {/* Email */}
               <div className="mb-5">
-                <p className="text-[0.78rem] font-medium tracking-[0.1em] uppercase text-cream/60 mb-2">
-                  I am a
-                </p>
-                <div className="grid grid-cols-2 gap-2">
-                  {([
-                    { value: 'customer' as const, label: t('type_customer') },
-                    { value: 'vendor' as const, label: t('type_vendor') },
-                  ]).map(({ value, label }) => (
-                    <button
-                      key={value}
-                      type="button"
-                      aria-pressed={selectedType === value}
-                      disabled={isLoading}
-                      onClick={() => handleTypeSelect(value)}
-                      className={[
-                        'px-4 py-3 text-[0.82rem] font-semibold tracking-[0.06em] uppercase',
-                        'border transition-all duration-200',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber',
-                        'disabled:opacity-50 disabled:cursor-not-allowed',
-                        selectedType === value
-                          ? 'bg-amber text-espresso border-amber'
-                          : 'bg-card-bg text-cream/70 border-cream/10 hover:border-amber/40',
-                      ].join(' ')}
-                    >
-                      {label}
-                    </button>
-                  ))}
+                <Input
+                  id="waitlist-email"
+                  type="email"
+                  label="Email"
+                  placeholder={t('email_placeholder')}
+                  autoComplete="email"
+                  disabled={isLoading}
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setEmailError('') }}
+                  error={emailError}
+                />
+              </div>
+
+              {/* City */}
+              <div className="mb-5">
+                <div className="flex flex-col gap-1.5 w-full">
+                  <label htmlFor="waitlist-city" className="text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-cream/60">
+                    City
+                  </label>
+                  <select
+                    id="waitlist-city"
+                    disabled={isLoading}
+                    value={city}
+                    onChange={(e) => { setCity(e.target.value); setCityError('') }}
+                    className={selectClass(!!cityError)}
+                  >
+                    <option value="" disabled>Select your city</option>
+                    <option value="douala">{t('city_douala')}</option>
+                    <option value="yaounde">{t('city_yaounde')}</option>
+                    <option value="other">{t('city_other')}</option>
+                  </select>
+                  {cityError && <p className="text-[0.78rem] text-red-400" role="alert">{cityError}</p>}
                 </div>
               </div>
 
-              {/* City + vendor fields + submit — shown after type is selected */}
-              {selectedType && (
+              {/* Vendor-only fields */}
+              {isVendor && (
                 <motion.div
-                  key={`fields-${selectedType}`}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-5 mb-5"
                 >
-                  {/* City */}
-                  <div className="mb-5">
-                    <div className="flex flex-col gap-1.5 w-full">
-                      <label htmlFor="waitlist-city" className="text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-cream/60">
-                        City
-                      </label>
-                      <select
-                        id="waitlist-city"
-                        disabled={isLoading}
-                        value={city}
-                        onChange={(e) => { setCity(e.target.value); setCityError('') }}
-                        className={selectClass(!!cityError)}
-                      >
-                        <option value="" disabled>Select your city</option>
-                        <option value="douala">{t('city_douala')}</option>
-                        <option value="yaounde">{t('city_yaounde')}</option>
-                        <option value="other">{t('city_other')}</option>
-                      </select>
-                      {cityError && <p className="text-[0.78rem] text-red-400" role="alert">{cityError}</p>}
-                    </div>
-                  </div>
-
-                  {/* Vendor-only fields */}
-                  {isVendor && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-5 mb-5"
-                    >
-                      <Input
-                        id="waitlist-business-name"
-                        type="text"
-                        label={t('vendor_business_name')}
-                        placeholder={t('vendor_business_name_placeholder')}
-                        autoComplete="organization"
-                        disabled={isLoading}
-                        value={businessName}
-                        onChange={(e) => { setBusinessName(e.target.value); setBusinessNameError('') }}
-                        error={businessNameError}
-                      />
-
-                      <Input
-                        id="waitlist-phone"
-                        type="tel"
-                        label={t('vendor_phone')}
-                        placeholder={t('vendor_phone_placeholder')}
-                        autoComplete="tel"
-                        disabled={isLoading}
-                        value={phone}
-                        onChange={(e) => { setPhone(e.target.value); setPhoneError('') }}
-                        error={phoneError}
-                      />
-
-                      <div className="flex flex-col gap-1.5 w-full">
-                        <label htmlFor="waitlist-vehicle-count" className="text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-cream/60">
-                          {t('vendor_vehicle_count')}
-                        </label>
-                        <select
-                          id="waitlist-vehicle-count"
-                          disabled={isLoading}
-                          value={vehicleCount}
-                          onChange={(e) => { setVehicleCount(e.target.value); setVehicleCountError('') }}
-                          className={selectClass(!!vehicleCountError)}
-                        >
-                          <option value="">Select</option>
-                          <option value="1-5">{t('vendor_vehicle_1_5')}</option>
-                          <option value="6-20">{t('vendor_vehicle_6_20')}</option>
-                          <option value="21+">{t('vendor_vehicle_21_plus')}</option>
-                        </select>
-                        {vehicleCountError && <p className="text-[0.78rem] text-red-400" role="alert">{vehicleCountError}</p>}
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* Error */}
-                  {state.status === 'error' && (
-                    <p className="text-[0.82rem] text-red-400 mb-4" role="alert" aria-live="assertive">{state.message}</p>
-                  )}
-
-                  {/* Submit */}
-                  <Button
-                    type="button"
-                    variant="primary"
+                  <Input
+                    id="waitlist-business-name"
+                    type="text"
+                    label={t('vendor_business_name')}
+                    placeholder={t('vendor_business_name_placeholder')}
+                    autoComplete="organization"
                     disabled={isLoading}
-                    className="w-full"
-                    aria-busy={isLoading}
-                    onClick={handleFormSubmit}
-                  >
-                    {isLoading ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                        </svg>
-                        <span>Submitting…</span>
-                      </span>
-                    ) : (
-                      t('submit_cta')
-                    )}
-                  </Button>
+                    value={businessName}
+                    onChange={(e) => { setBusinessName(e.target.value); setBusinessNameError('') }}
+                    error={businessNameError}
+                  />
 
-                  <p className="font-sans text-[0.72rem] text-cream/30 text-center mt-3">{t('no_spam')}</p>
+                  <Input
+                    id="waitlist-business-email"
+                    type="email"
+                    label={t('vendor_business_email')}
+                    placeholder={t('vendor_business_email_placeholder')}
+                    autoComplete="email"
+                    disabled={isLoading}
+                    value={businessEmail}
+                    onChange={(e) => { setBusinessEmail(e.target.value); setBusinessEmailError('') }}
+                    error={businessEmailError}
+                  />
+
+                  <Input
+                    id="waitlist-phone"
+                    type="tel"
+                    label={t('vendor_phone')}
+                    placeholder={t('vendor_phone_placeholder')}
+                    autoComplete="tel"
+                    disabled={isLoading}
+                    value={phone}
+                    onChange={(e) => { setPhone(e.target.value); setPhoneError('') }}
+                    error={phoneError}
+                  />
+
+                  <div className="flex flex-col gap-1.5 w-full">
+                    <label htmlFor="waitlist-vehicle-count" className="text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-cream/60">
+                      {t('vendor_vehicle_count')}
+                    </label>
+                    <select
+                      id="waitlist-vehicle-count"
+                      disabled={isLoading}
+                      value={vehicleCount}
+                      onChange={(e) => { setVehicleCount(e.target.value); setVehicleCountError('') }}
+                      className={selectClass(!!vehicleCountError)}
+                    >
+                      <option value="">Select</option>
+                      <option value="1-5">{t('vendor_vehicle_1_5')}</option>
+                      <option value="6-20">{t('vendor_vehicle_6_20')}</option>
+                      <option value="21+">{t('vendor_vehicle_21_plus')}</option>
+                    </select>
+                    {vehicleCountError && <p className="text-[0.78rem] text-red-400" role="alert">{vehicleCountError}</p>}
+                  </div>
                 </motion.div>
               )}
+
+              {/* Error */}
+              {state.status === 'error' && (
+                <p className="text-[0.82rem] text-red-400 mb-4" role="alert" aria-live="assertive">{state.message}</p>
+              )}
+
+              {/* Submit */}
+              <Button
+                type="button"
+                variant="primary"
+                disabled={isLoading}
+                className="w-full"
+                aria-busy={isLoading}
+                onClick={handleFormSubmit}
+              >
+                {isLoading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    <span>Submitting…</span>
+                  </span>
+                ) : (
+                  t('submit_cta')
+                )}
+              </Button>
+
+              <p className="font-sans text-[0.72rem] text-cream/30 text-center mt-3">{t('no_spam')}</p>
             </motion.div>
           )}
         </AnimatePresence>

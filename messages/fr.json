@@ -148,7 +148,7 @@
       "code": "YAO",
       "coordinates": "3.8667° N · 11.5167° E",
       "badge": "Lancement en Premier",
-      "description": "La capitale politique. Nsimalen International connecte les fonctionnaires, les travailleurs d'ONG et les visiteurs d'affaires."
+      "description": "La capitale politique. L'aéroport international de Nsimalen dessert les fonctionnaires, les travailleurs d'ONG et les visiteurs d'affaires."
     },
     "more_cities": "Plus de villes en Afrique Centrale & de l'Ouest en Phase 3"
   },
@@ -161,6 +161,8 @@
     "type_vendor": "Je suis un Prestataire",
     "vendor_business_name": "Nom de l'entreprise",
     "vendor_business_name_placeholder": "ex. Douala Auto Location",
+    "vendor_business_email": "E-mail professionnel",
+    "vendor_business_email_placeholder": "ex. info@votreentreprise.com",
     "vendor_phone": "Numéro de téléphone",
     "vendor_phone_placeholder": "+237 6XX XXX XXX",
     "vendor_vehicle_count": "Nombre estimé de véhicules",

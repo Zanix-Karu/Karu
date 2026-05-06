@@ -6,6 +6,7 @@ const BaseWaitlistSchema = z.object({
   city: z.enum(['douala', 'yaounde', 'other'], { required_error: 'Please select a city' }),
   locale: z.enum(['en', 'fr']).optional().default('en'),
   business_name: z.string().max(200).trim().optional().or(z.literal('')),
+  business_email: z.string().email().max(254).toLowerCase().trim().optional().or(z.literal('')),
   phone: z.string().max(30).trim().optional().or(z.literal('')),
   vehicle_count: z.string().max(10).trim().optional().or(z.literal('')),
 })
