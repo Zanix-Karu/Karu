@@ -21,18 +21,12 @@ export function FeatureCard({ label, description, index }: FeatureCardProps) {
 
   return (
     <motion.div
-      className="relative overflow-hidden bg-card-bg border border-card-border px-6 py-10 md:px-10 md:py-[52px]"
+      className="group relative overflow-hidden bg-card-bg border border-card-border px-6 py-10 md:px-10 md:py-[52px]"
       whileHover={{ y: -4 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
     >
-      {/* Top amber bar */}
-      <motion.div
-        className="absolute top-0 left-0 right-0 h-[3px] bg-amber origin-left"
-        initial={{ scaleX: 0 }}
-        whileHover={{ scaleX: 1 }}
-        transition={{ duration: 0.45, ease: 'easeOut' }}
-        style={{ originX: 0 }}
-      />
+      {/* Top amber bar — CSS-only so SSR renders it at scale-x-0 (no hydration flash) */}
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-amber origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-[450ms] ease-out" />
 
       {/* Ghost number */}
       <span
