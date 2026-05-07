@@ -26,9 +26,9 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       scriptSrc,
-      "style-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline' unpkg.com",
       "font-src 'self' data:",
-      "img-src 'self' data: blob: *.supabase.co",
+      "img-src 'self' data: blob: *.supabase.co *.tile.openstreetmap.org *.basemaps.cartocdn.com unpkg.com",
       "connect-src 'self' *.supabase.co plausible.io",
       "frame-ancestors 'none'",
       "base-uri 'self'",
