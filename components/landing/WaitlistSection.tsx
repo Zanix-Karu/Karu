@@ -314,9 +314,6 @@ export function WaitlistSection() {
               transition={{ duration: 0.3 }}
               className="text-left"
             >
-              <p className="text-[0.78rem] font-medium tracking-[0.1em] uppercase text-cream/60 mb-3 text-center">
-                I am a
-              </p>
               <div className="grid grid-cols-2 gap-3">
                 {([
                   { value: 'customer' as const, label: t('type_customer') },

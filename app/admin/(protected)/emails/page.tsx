@@ -1,23 +1,41 @@
+import { supabaseAdmin } from '@/lib/supabase-admin'
+import { decryptBody } from '@/lib/email-encrypt'
 import { EmailCenter } from '@/components/admin/EmailCenter'
 
-async function getEmails() {
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) return []
-  try {
-    const res = await fetch('https://api.resend.com/emails?limit=100', {
-      headers: { Authorization: `Bearer ${apiKey}` },
-      next: { revalidate: 60 },
-    })
-    if (!res.ok) return []
-    const json = await res.json()
-    return json.data ?? []
-  } catch {
-    return []
-  }
+export const dynamic = 'force-dynamic'
+
+async function getEmailLog() {
+  const { data: rows } = await supabaseAdmin
+    .from('admin_email_log')
+    .select('*')
+    .order('sent_at', { ascending: false })
+    .limit(200)
+
+  const log = (rows ?? []).map(row => ({
+    id: row.id as string,
+    subject: row.subject as string,
+    recipient_count: row.recipient_count as number,
+    segment: row.segment as Record<string, string> | null,
+    resend_id: row.resend_id as string | null,
+    sent_at: row.sent_at as string,
+    email_type: (row.email_type ?? 'broadcast') as string,
+    recipient_email: (row.recipient_email ?? null) as string | null,
+    metadata: (row.metadata ?? null) as Record<string, string> | null,
+    // Decrypt HTML body server-side — never send ciphertext to client
+    html_body: (() => {
+      if (!row.html_encrypted || !row.html_iv) return null
+      try { return decryptBody(row.html_encrypted as string, row.html_iv as string) }
+      catch { return null }
+    })(),
+  }))
+
+  return log
 }
 
 export default async function EmailsPage() {
-  const emails = await getEmails()
+  const log = await getEmailLog()
+  const broadcasts = log.filter(e => e.email_type === 'broadcast')
+  const signups = log.filter(e => e.email_type !== 'broadcast')
 
   return (
     <div>
@@ -26,13 +44,20 @@ export default async function EmailsPage() {
           <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.25em', marginBottom: 6 }}>KARU INTELLIGENCE PLATFORM</div>
           <div style={{ color: '#CDD6E0', fontSize: 18, fontWeight: 700, letterSpacing: '0.05em' }}>COMMUNICATIONS HUB</div>
         </div>
-        <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.15em' }}>
-          POWERED BY RESEND · {emails.length} LOGGED
+        <div style={{ display: 'flex', gap: 24 }}>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ color: '#3D5065', fontSize: 8, letterSpacing: '0.1em' }}>BROADCASTS</div>
+            <div style={{ color: '#E8A020', fontSize: 14, fontWeight: 700 }}>{broadcasts.length}</div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ color: '#3D5065', fontSize: 8, letterSpacing: '0.1em' }}>SIGNUPS</div>
+            <div style={{ color: '#34D399', fontSize: 14, fontWeight: 700 }}>{signups.length}</div>
+          </div>
         </div>
       </div>
 
       <div style={{ padding: '24px 32px' }}>
-        <EmailCenter emails={emails} />
+        <EmailCenter log={log} />
       </div>
     </div>
   )

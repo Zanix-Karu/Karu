@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { encryptBody } from '@/lib/email-encrypt'
 
 export async function POST(request: NextRequest) {
   const { subject, html, segment } = await request.json()
@@ -10,7 +11,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Build recipient list from Supabase based on segment
-  let query = supabaseAdmin.from('waitlist_entries').select('email, locale')
+  let query = supabaseAdmin.from('waitlist_entries').select('email')
 
   if (segment?.type && segment.type !== 'all') query = query.eq('type', segment.type)
   if (segment?.city && segment.city !== 'all') query = query.eq('city', segment.city)
@@ -23,19 +24,33 @@ export async function POST(request: NextRequest) {
   if (emails.length === 0) return NextResponse.json({ error: 'No recipients in segment' }, { status: 400 })
 
   const resend = new Resend(process.env.RESEND_API_KEY)
-  const results = []
+  let lastId: string | undefined
 
-  // Resend batch limit: 100 per call
-  for (let i = 0; i < emails.length; i += 50) {
-    const batch = emails.slice(i, i + 50)
-    const { data, error: sendErr } = await resend.emails.send({
+  // Send in BCC batches of 50
+  const batchSize = 50
+  for (let i = 0; i < emails.length; i += batchSize) {
+    const batch = emails.slice(i, i + batchSize)
+    const { data } = await resend.emails.send({
       from: 'Karu <noreply@getkaru.io>',
       to: batch,
       subject,
       html,
     })
-    results.push({ batch: i / 50, sent: batch.length, id: data?.id, error: sendErr?.message })
+    if (data?.id) lastId = data.id
   }
 
-  return NextResponse.json({ results, total: emails.length })
+  // Encrypt HTML body before storing
+  const { encrypted, iv } = encryptBody(html)
+
+  await supabaseAdmin.from('admin_email_log').insert({
+    subject,
+    recipient_count: emails.length,
+    segment,
+    resend_id: lastId ?? null,
+    email_type: 'broadcast',
+    html_encrypted: encrypted,
+    html_iv: iv,
+  })
+
+  return NextResponse.json({ ok: true, total: emails.length })
 }

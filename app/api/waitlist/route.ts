@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  // 8. Send confirmation email (non-blocking, fire-and-forget)
+  // 8. Send confirmation email and log it
   try {
     const apiKey = process.env.RESEND_API_KEY
     if (apiKey) {
@@ -166,10 +166,11 @@ export async function POST(request: NextRequest) {
       }
       const subject = subjects[locale as 'en' | 'fr']?.[type] ?? subjects.en[type]
       const bizEmail = type === 'vendor' ? ((parsed.data as Record<string, unknown>).business_email as string | undefined) : undefined
+      const to = bizEmail ? [email, bizEmail] : email
 
       resend.emails.send({
         from: 'Karu <noreply@getkaru.io>',
-        to: bizEmail ? [email, bizEmail] : email,
+        to,
         subject,
         react: WaitlistConfirmEmail({
           type,
@@ -177,6 +178,17 @@ export async function POST(request: NextRequest) {
           locale: locale as 'en' | 'fr',
           business_name: type === 'vendor' ? (business_name || undefined) : undefined,
         }),
+      }).then(async () => {
+        // Log to admin email log after successful send
+        await supabaseAdmin.from('admin_email_log').insert({
+          subject,
+          recipient_count: Array.isArray(to) ? to.length : 1,
+          segment: null,
+          resend_id: null,
+          email_type: type === 'vendor' ? 'vendor_signup' : 'customer_signup',
+          recipient_email: email,
+          metadata: { city, locale, business_name: business_name ?? null, type },
+        })
       }).catch(err => console.error('[waitlist] Email error:', err instanceof Error ? err.message : 'unknown'))
     }
   } catch (err) {
