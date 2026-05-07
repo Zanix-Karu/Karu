@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const l=require\\('/Users/falahahamad/Developer/Karu/package-lock.json'\\);console.log\\('recharts:',l.packages['node_modules/recharts']?.version\\);console.log\\('react-leaflet:',l.packages['node_modules/react-leaflet']?.version??'NOT PRESENT'\\)\")"
+    ]
+  }
+}

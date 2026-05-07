@@ -41,8 +41,9 @@ async function handleAdmin(request: NextRequest): Promise<NextResponse> {
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Admin routes bypass i18n entirely
-  if (pathname.startsWith('/admin')) {
+  // Admin routes and admin API routes bypass i18n entirely
+  if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
+    if (pathname.startsWith('/api/admin')) return NextResponse.next()
     return handleAdmin(request)
   }
 
