@@ -284,49 +284,68 @@ export function WaitlistSection() {
           {state.status === 'success' ? (
             <motion.div
               key="success"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col items-center gap-5 py-8"
               role="status"
               aria-live="polite"
             >
-              <AmberCheckmark />
-              <div>
+              {/* Animated checkmark with scale bounce */}
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <AmberCheckmark />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+              >
                 <p className="font-sans font-semibold text-amber text-lg mb-1">{t('success_title')}</p>
                 <p className="font-sans font-light text-cream/70 text-base leading-[1.8]">{successMessage}</p>
-              </div>
-              <button
+              </motion.div>
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
                 onClick={handleReset}
                 className="text-[0.78rem] font-medium tracking-[0.08em] uppercase text-cream/40 hover:text-amber transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
               >
                 Register another
-              </button>
+              </motion.button>
             </motion.div>
           ) : step === 'type' ? (
             /* ── Step 1: Choose type ─────────────────────────────────────── */
             <motion.div
               key="step-type"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="text-left"
             >
               <div className="grid grid-cols-2 gap-3">
                 {([
                   { value: 'customer' as const, label: t('type_customer') },
                   { value: 'vendor' as const, label: t('type_vendor') },
-                ]).map(({ value, label }) => (
-                  <button
+                ]).map(({ value, label }, i) => (
+                  <motion.button
                     key={value}
                     type="button"
                     onClick={() => handleTypeSelect(value)}
-                    className="px-4 py-4 text-[0.85rem] font-semibold tracking-[0.06em] uppercase border border-cream/10 bg-card-bg text-cream/70 hover:border-amber hover:text-amber transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="px-4 py-5 text-[0.85rem] font-semibold tracking-[0.06em] uppercase border border-cream/10 bg-card-bg text-cream/70 hover:border-amber hover:text-amber hover:shadow-[0_8px_30px_rgba(232,160,32,0.15)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
                   >
                     {label}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </motion.div>
@@ -334,10 +353,10 @@ export function WaitlistSection() {
             /* ── Step 2: Details ─────────────────────────────────────────── */
             <motion.div
               key="step-details"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="text-left"
             >
               {/* Type indicator with back button */}
