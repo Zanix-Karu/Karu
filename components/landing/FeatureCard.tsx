@@ -28,28 +28,37 @@ export function FeatureCard({ label, description, index }: FeatureCardProps) {
       {/* Top amber bar — CSS-only so SSR renders it at scale-x-0 (no hydration flash) */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-amber origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-[450ms] ease-out" />
 
-      {/* Ghost number */}
+      {/* Hover gradient shift overlay */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: 'linear-gradient(135deg, rgba(232,160,32,0.04) 0%, transparent 50%, rgba(232,160,32,0.02) 100%)',
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Ghost number — scales up on hover */}
       <span
-        className="absolute bottom-0 right-2 font-serif2 text-[8rem] font-black opacity-[0.05] text-cream select-none pointer-events-none leading-none"
+        className="absolute bottom-0 right-2 font-serif2 text-[8rem] font-black opacity-[0.05] text-cream select-none pointer-events-none leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-bottom-right"
         aria-hidden="true"
       >
         {ghostNumber}
       </span>
 
       {/* Icon */}
-      <div className="mb-5">
+      <div className="relative z-10 mb-5">
         <div className="w-11 h-11 rounded-lg bg-amber/10 flex items-center justify-center">
           <IconComponent size={22} className="text-amber" />
         </div>
       </div>
 
       {/* Label */}
-      <p className="font-sans font-semibold text-[0.72rem] tracking-[0.2em] uppercase text-amber mb-3">
+      <p className="relative z-10 font-sans font-semibold text-[0.72rem] tracking-[0.2em] uppercase text-amber mb-3">
         {label}
       </p>
 
       {/* Description */}
-      <p className="font-sans font-light text-[0.9rem] leading-[1.8] text-cream/60">
+      <p className="relative z-10 font-sans font-light text-[0.9rem] leading-[1.8] text-cream/60">
         {description}
       </p>
     </motion.div>

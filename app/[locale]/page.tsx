@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { Navigation } from '@/components/layout/Navigation'
 import { CustomCursor } from '@/components/ui/CustomCursor'
+import { BackToTop } from '@/components/ui/BackToTop'
 import { HeroSection } from '@/components/landing/HeroSection'
 import { TickerBand } from '@/components/landing/TickerBand'
 import { AboutSection } from '@/components/landing/AboutSection'
@@ -17,6 +18,7 @@ export default async function Page({ params: { locale } }: { params: { locale: s
   return (
     <NextIntlClientProvider messages={messages}>
       <CustomCursor />
+      <BackToTop />
       <Navigation />
       <main>
         <HeroSection />

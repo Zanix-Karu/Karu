@@ -14,16 +14,13 @@ interface CityCardProps {
 export function CityCard({ name, code, coordinates, badge, description }: CityCardProps) {
   return (
     <motion.div
-      className="relative overflow-hidden bg-card-bg border border-card-border p-6 md:p-10 min-h-[280px] flex flex-col justify-between"
+      className="group relative overflow-hidden bg-card-bg border border-card-border p-6 md:p-10 min-h-[280px] flex flex-col justify-between"
       whileHover={{ y: -8 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
     >
       {/* Amber glow — appears on hover */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-400"
         style={{
           background: 'radial-gradient(circle at bottom right, rgba(232,160,32,0.3) 0%, transparent 70%)',
         }}
@@ -40,9 +37,12 @@ export function CityCard({ name, code, coordinates, badge, description }: CityCa
 
       {/* Top content */}
       <div className="relative z-10 flex flex-col gap-4">
-        {/* Badge */}
+        {/* Badge with pulsing dot */}
         <div className="inline-flex w-fit items-center gap-2 bg-amber/10 border border-amber/22 px-[14px] py-[5px]">
-          <span className="w-1.5 h-1.5 bg-amber rounded-full" aria-hidden="true" />
+          <span className="relative w-1.5 h-1.5" aria-hidden="true">
+            <span className="absolute inset-0 bg-amber rounded-full" />
+            <span className="absolute inset-0 bg-amber rounded-full badge-pulse-dot" />
+          </span>
           <span className="font-sans text-[0.64rem] font-semibold tracking-[0.18em] uppercase text-amber">
             {badge}
           </span>
@@ -59,9 +59,9 @@ export function CityCard({ name, code, coordinates, badge, description }: CityCa
         </p>
       </div>
 
-      {/* Coordinates — bottom right */}
+      {/* Coordinates — animates in on hover */}
       <div className="relative z-10 flex justify-end mt-8">
-        <span className="font-sans text-[0.64rem] tracking-[0.1em] text-cream/30">
+        <span className="font-sans text-[0.64rem] tracking-[0.1em] text-cream/30 transition-all duration-500 ease-out translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
           {coordinates}
         </span>
       </div>

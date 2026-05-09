@@ -17,6 +17,12 @@ export function HeroSection() {
         }}
       />
 
+      {/* ── Grain texture overlay ── */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 grain-overlay"
+      />
+
       {/* ── SVG dot-grid overlay (parallax target — id used by client) ── */}
       <svg
         id="hero-grid"
@@ -40,26 +46,26 @@ export function HeroSection() {
         <rect width="100%" height="100%" fill="url(#dot-grid)" />
       </svg>
 
-      {/* ── Diagonal amber streaks ── */}
+      {/* ── Diagonal amber streaks — opacity: 0 base prevents flash ── */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* streak 1 */}
         <div
-          className="absolute top-[20%] left-0 w-[200%] h-[2px] bg-gradient-to-r from-transparent via-amber to-transparent"
+          className="hero-streak opacity-0 absolute top-[20%] left-0 w-[200%] h-[2px] bg-gradient-to-r from-transparent via-amber to-transparent"
           style={{ animation: 'streak1 7s ease-in-out 0.5s infinite' }}
         />
         {/* streak 2 */}
         <div
-          className="absolute top-[45%] left-0 w-[200%] h-[1.5px] bg-gradient-to-r from-transparent via-amber to-transparent"
+          className="hero-streak opacity-0 absolute top-[45%] left-0 w-[200%] h-[1.5px] bg-gradient-to-r from-transparent via-amber to-transparent"
           style={{ animation: 'streak2 9s ease-in-out 2s infinite' }}
         />
         {/* streak 3 */}
         <div
-          className="absolute top-[65%] left-0 w-[200%] h-[1px] bg-gradient-to-r from-transparent via-amber-light to-transparent"
+          className="hero-streak opacity-0 absolute top-[65%] left-0 w-[200%] h-[1px] bg-gradient-to-r from-transparent via-amber-light to-transparent"
           style={{ animation: 'streak3 11s ease-in-out 4s infinite' }}
         />
         {/* streak 4 */}
         <div
-          className="absolute top-[30%] left-0 w-[200%] h-[1px] bg-gradient-to-r from-transparent via-amber to-transparent"
+          className="hero-streak opacity-0 absolute top-[30%] left-0 w-[200%] h-[1px] bg-gradient-to-r from-transparent via-amber to-transparent"
           style={{ animation: 'streak4 13s ease-in-out 1s infinite' }}
         />
       </div>
@@ -106,10 +112,10 @@ export function HeroSection() {
       {/* ── Client animated content (pill, headline, CTAs) ── */}
       <AnimatedHeroContent />
 
-      {/* ── Scroll hint ── */}
+      {/* ── Scroll hint — smoother custom animation ── */}
       <div
         aria-label="Scroll down"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 scroll-hint"
       >
         <span className="text-[0.6rem] font-medium tracking-[0.2em] uppercase text-cream/40">
           Scroll

@@ -121,6 +121,11 @@ body.hovering .cursor-circle {
 }
 
 /* ─── Hero Streak Animations ─────────────────────────────────────────────── */
+/* Base opacity: 0 prevents flash before animation starts */
+.hero-streak {
+  opacity: 0;
+}
+
 @keyframes streak1 {
   0%   { transform: translateX(-120%) translateY(60%) rotate(-35deg); opacity: 0; }
   10%  { opacity: 0.18; }
@@ -152,6 +157,80 @@ body.hovering .cursor-circle {
 @keyframes carFloat {
   0%, 100% { transform: translateY(0px) rotate(-2deg); }
   50%       { transform: translateY(-18px) rotate(2deg); }
+}
+
+/* ─── Scroll Hint Animation ──────────────────────────────────────────────── */
+@keyframes scrollHint {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50%      { transform: translateY(6px); opacity: 0.8; }
+}
+
+.scroll-hint {
+  animation: scrollHint 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* ─── Nav CTA Pulse ──────────────────────────────────────────────────────── */
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 160, 32, 0.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(232, 160, 32, 0); }
+}
+
+.nav-cta-pulse {
+  animation: ctaPulse 2.5s ease-in-out infinite;
+}
+
+/* ─── Waitlist Glow ──────────────────────────────────────────────────────── */
+@keyframes formGlow {
+  0%, 100% { box-shadow: 0 0 20px 0 rgba(232, 160, 32, 0); }
+  50%      { box-shadow: 0 0 30px 2px rgba(232, 160, 32, 0.08); }
+}
+
+.waitlist-glow {
+  animation: formGlow 3s ease-in-out infinite;
+}
+
+/* ─── Badge Pulse Dot ────────────────────────────────────────────────────── */
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.8); opacity: 0.4; }
+}
+
+.badge-pulse-dot {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* ─── Success Particles ──────────────────────────────────────────────────── */
+@keyframes particleFloat {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-60px) rotate(180deg); opacity: 0; }
+}
+
+.success-particle {
+  animation: particleFloat 1.2s ease-out forwards;
+}
+
+/* ─── Grain Texture Overlay ──────────────────────────────────────────────── */
+.grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+/* ─── Section Fade Connector ─────────────────────────────────────────────── */
+.section-fade-top {
+  position: relative;
+}
+
+.section-fade-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, var(--color-espresso), transparent);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* ─── Reduced Motion ─────────────────────────────────────────────────────── */
