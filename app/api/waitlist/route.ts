@@ -79,12 +79,37 @@ export async function POST(request: NextRequest) {
 
   // 4. Reject unexpected fields (only allow known keys)
   if (typeof body === 'object' && body !== null) {
-    const allowedKeys = new Set(['email', 'type', 'city', 'locale', 'business_name', 'business_email', 'phone', 'vehicle_count'])
+    const allowedKeys = new Set(['email', 'type', 'city', 'locale', 'business_name', 'business_email', 'phone', 'vehicle_count', 'turnstile_token'])
     const bodyKeys = Object.keys(body as Record<string, unknown>)
-    if (bodyKeys.length > allowedKeys.size || bodyKeys.some(k => !allowedKeys.has(k))) {
+    if (bodyKeys.length > allowedKeys.size + 1 || bodyKeys.some(k => !allowedKeys.has(k))) {
       return NextResponse.json(
         { success: false, error: { code: 'VALIDATION_ERROR', message: 'Unknown fields in request' } },
         { status: 400 }
+      )
+    }
+  }
+
+  // 4b. Verify Cloudflare Turnstile token (if configured)
+  const turnstileSecret = process.env.TURNSTILE_SECRET_KEY
+  if (turnstileSecret) {
+    const token = (body as Record<string, unknown>).turnstile_token
+    if (!token || typeof token !== 'string') {
+      return NextResponse.json(
+        { success: false, error: { code: 'CAPTCHA_REQUIRED', message: 'Human verification required' } },
+        { status: 403 }
+      )
+    }
+
+    const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret: turnstileSecret, response: token }),
+    })
+    const verifyData = await verifyRes.json() as { success: boolean }
+    if (!verifyData.success) {
+      return NextResponse.json(
+        { success: false, error: { code: 'CAPTCHA_FAILED', message: 'Human verification failed. Please try again.' } },
+        { status: 403 }
       )
     }
   }

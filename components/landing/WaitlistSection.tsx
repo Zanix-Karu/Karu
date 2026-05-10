@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { AnimatePresence, motion } from 'framer-motion'
 import useSWR from 'swr'
 import { z } from 'zod'
+import { Turnstile } from '@marsidev/react-turnstile'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 
@@ -82,6 +83,7 @@ export function WaitlistSection() {
   const [phoneError, setPhoneError] = useState('')
   const [vehicleCount, setVehicleCount] = useState('')
   const [vehicleCountError, setVehicleCountError] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState('')
 
   const isLoading = state.status === 'loading'
   const isVendor = selectedType === 'vendor'
@@ -184,6 +186,7 @@ export function WaitlistSection() {
       type: selectedType!,
       city,
       locale,
+      turnstile_token: turnstileToken,
     }
     if (isVendor) {
       payload.business_name = businessName.trim()
@@ -480,11 +483,22 @@ export function WaitlistSection() {
                 <p className="text-[0.82rem] text-red-400 mb-4" role="alert" aria-live="assertive">{state.message}</p>
               )}
 
+              {/* Cloudflare Turnstile human verification */}
+              {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                <div className="mb-5 flex justify-center">
+                  <Turnstile
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                    onSuccess={setTurnstileToken}
+                    options={{ theme: 'dark', size: 'normal' }}
+                  />
+                </div>
+              )}
+
               {/* Submit */}
               <Button
                 type="button"
                 variant="primary"
-                disabled={isLoading}
+                disabled={isLoading || (!turnstileToken && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)}
                 className="w-full"
                 aria-busy={isLoading}
                 onClick={handleFormSubmit}
