@@ -1,0 +1,4 @@
+Contact: mailto:hello@getkaru.io
+Expires: 2027-05-10T00:00:00.000Z
+Preferred-Languages: en, fr
+Canonical: https://getkaru.io/.well-known/security.txt
