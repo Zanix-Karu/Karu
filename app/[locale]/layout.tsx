@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { DM_Serif_Display, Playfair_Display, DM_Sans } from 'next/font/google'
 import Script from 'next/script'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import '../globals.css'
 
 const dmSerif = DM_Serif_Display({
@@ -60,6 +61,7 @@ export default function RootLayout({ children, params: { locale } }: RootLayoutP
     >
       <body>
         {children}
+        <SpeedInsights />
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
           <Script
             src="https://plausible.io/js/script.js"
