@@ -149,8 +149,8 @@ export function WaitlistTable({ initialData }: Props) {
                 <td style={{ padding: '8px 12px', color: '#7D8A97', maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {row.business_name ?? <span style={{ color: '#1C2936' }}>—</span>}
                 </td>
-                <td style={{ padding: '8px 12px', color: '#7D8A97' }}>
-                  {row.phone ? <span style={{ color: '#34D399', fontSize: 9 }}>✓</span> : <span style={{ color: '#1C2936' }}>—</span>}
+                <td style={{ padding: '8px 12px', color: '#7D8A97', fontSize: 10 }}>
+                  {row.phone ?? <span style={{ color: '#1C2936' }}>—</span>}
                 </td>
                 <td style={{ padding: '8px 12px', color: '#7D8A97', fontSize: 10 }}>
                   {row.vehicle_count ?? <span style={{ color: '#1C2936' }}>—</span>}
