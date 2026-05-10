@@ -122,6 +122,9 @@ export async function POST(request: NextRequest) {
       email, type, city, locale, ip_hash: hashedIp,
       country:  request.headers.get('x-vercel-ip-country') ?? null,
       city_geo: request.headers.get('x-vercel-ip-city') ?? null,
+      region:   request.headers.get('x-vercel-ip-country-region') ?? null,
+      lat:      parseFloat(request.headers.get('x-vercel-ip-latitude') ?? '') || null,
+      lng:      parseFloat(request.headers.get('x-vercel-ip-longitude') ?? '') || null,
     }
     if (type === 'vendor') {
       insertData.business_name = business_name || null
