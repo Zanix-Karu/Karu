@@ -19,8 +19,13 @@ function isAllowedOrigin(request: NextRequest): boolean {
   const origin = request.headers.get('origin')
   const referer = request.headers.get('referer')
 
+  // Allow exact matches
   if (origin && ALLOWED_ORIGINS.some(o => origin.startsWith(o))) return true
   if (referer && ALLOWED_ORIGINS.some(o => referer.startsWith(o))) return true
+
+  // Allow Vercel preview deployments
+  if (origin && origin.includes('.vercel.app')) return true
+  if (referer && referer.includes('.vercel.app')) return true
 
   return false
 }
