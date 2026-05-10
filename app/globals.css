@@ -249,3 +249,38 @@ body.hovering .cursor-circle {
     display: none;
   }
 }
+
+/* ─── Mobile Optimisations ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Disable custom cursor on mobile */
+  .cursor-dot,
+  .cursor-circle {
+    display: none !important;
+  }
+
+  /* Reduce animation complexity on mobile for performance */
+  .hero-streak {
+    display: none;
+  }
+
+  /* Tighter spacing on mobile */
+  section {
+    min-height: auto;
+  }
+
+  /* Ensure touch targets are at least 44px */
+  button,
+  a,
+  select,
+  input {
+    min-height: 44px;
+  }
+}
+
+/* ─── 3G Performance: reduce motion on slow connections ──────────────────── */
+@media (prefers-reduced-data: reduce) {
+  .hero-streak,
+  .grain-overlay {
+    display: none;
+  }
+}

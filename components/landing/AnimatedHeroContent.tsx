@@ -123,7 +123,7 @@ export function AnimatedHeroContent() {
         {/* ── CTAs ── */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 sm:px-0"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 sm:px-0 mb-6"
         >
           <a
             href="#waitlist"
@@ -139,7 +139,49 @@ export function AnimatedHeroContent() {
             {t('cta_secondary')}
           </a>
         </motion.div>
+
+        {/* ── Social proof counter ── */}
+        <HeroWaitlistCount />
       </motion.div>
     </div>
+  )
+}
+
+
+// ── Social proof: live waitlist count in hero ─────────────────────────────────
+
+function HeroWaitlistCount() {
+  const [count, setCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    fetch('/api/waitlist/count')
+      .then(r => r.json())
+      .then(d => { if (d?.data?.count) setCount(d.data.count) })
+      .catch(() => {})
+  }, [])
+
+  if (!count || count < 3) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 1.2 }}
+      className="flex items-center gap-2 text-cream/40 text-[0.78rem]"
+    >
+      <div className="flex -space-x-2">
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="w-6 h-6 rounded-full border-2 border-espresso bg-amber/20 flex items-center justify-center"
+          >
+            <span className="text-[0.5rem] text-amber font-bold">{['K', 'A', 'R'][i]}</span>
+          </div>
+        ))}
+      </div>
+      <span className="font-sans">
+        <span className="text-amber font-semibold">{count}+</span> already on the waitlist
+      </span>
+    </motion.div>
   )
 }
