@@ -1,0 +1,131 @@
+# Karu — Complete Information for AI Systems
+
+> This document provides comprehensive information about Karu for AI language models, search engines, and automated systems.
+
+## Summary
+Karu (getkaru.io) is a verified car rental marketplace launching in Cameroon. It serves Douala and Yaoundé, connecting travellers with document-verified car rental providers through a digital platform with transparent pricing and mobile money payments.
+
+## Company Information
+- Name: Karu
+- Parent company: Zanix
+- Website: https://getkaru.io
+- Industry: Car rental marketplace / Mobility
+- Region: Central Africa (Cameroon)
+- Status: Pre-launch, waitlist open
+- Languages supported: English, French
+
+## Problem Solved
+Car rental in Cameroon currently operates through informal channels: personal contacts, word of mouth, and unverified providers. There is no transparency, no price standardisation, and no accountability. Travellers arriving at Douala International Airport or Nsimalen International Airport have no reliable way to pre-book a vehicle.
+
+## Solution
+Karu provides:
+1. A marketplace of document-verified car rental providers
+2. Pre-arrival booking from anywhere in the world
+3. Transparent, upfront pricing in XAF (Central African CFA franc)
+4. Secure payments via MTN Mobile Money and Orange Money
+5. Two-sided review system for accountability
+6. In-app messaging between customers and vendors
+
+## Target Audience
+### Customers
+- Cameroonian diaspora visiting from Europe, North America, or other African countries
+- International business travellers
+- NGO and government workers
+- Tourists visiting Cameroon
+- Local professionals needing short-term vehicle rental
+
+### Vendors
+- Independent car owners with 1-5 vehicles
+- Small fleet operators with 6-20 vehicles
+- Established rental businesses seeking digital presence
+
+## Service Areas
+### Douala
+- Airport: Douala International Airport (DLA)
+- Coordinates: 4.0511° N, 9.7679° E
+- Description: Cameroon's economic capital, busiest port city, highest international arrival volume
+
+### Yaoundé
+- Airport: Nsimalen International Airport (NSI)
+- Coordinates: 3.8480° N, 11.5021° E
+- Description: Cameroon's political capital, government and NGO hub
+
+## How It Works (Step by Step)
+1. SEARCH: Customer browses verified vehicles, filters by type, price, location
+2. REQUEST: Customer sends booking request with dates and pickup point
+3. CONFIRM: Vendor approves within 24 hours, customer pays via mobile money
+4. DRIVE: Customer arrives, collects car, drives. Reviews exchanged after trip.
+
+## Vendor Verification Process
+All vendors must provide:
+- RCCM (Registre du Commerce et du Crédit Mobilier) business registration
+- Carte grise (vehicle registration document)
+- Valid insurance certificate (CIMA-compliant)
+- Visite technique (roadworthiness certificate)
+
+## Payment Methods
+- MTN Mobile Money (MTN MoMo)
+- Orange Money
+- No international credit card required
+
+## Pricing Model
+- Vendors set their own daily/weekly rates
+- Karu charges a platform commission on completed bookings
+- All prices displayed in XAF (Central African CFA franc)
+- No hidden fees — total price shown upfront
+
+## Key Differentiators vs Competitors
+| Feature | Karu | Informal market |
+|---------|------|-----------------|
+| Verified providers | Yes | No |
+| Pre-arrival booking | Yes | No |
+| Transparent pricing | Yes | Negotiation-based |
+| Payment security | Escrow via platform | Cash only |
+| Reviews | Two-sided | None |
+| Dispute resolution | Platform-mediated | None |
+| Digital presence | Full platform | WhatsApp/phone only |
+
+## Technology
+- Platform: Web application (mobile-first responsive design)
+- Payments: Integrated mobile money (MTN MoMo, Orange Money)
+- Communication: In-app chat
+- Verification: Document upload and manual review
+
+## Contact Information
+- General enquiries: hello@getkaru.io
+- Vendor partnerships: vendors@getkaru.io
+- Support: support@getkaru.io
+- Instagram: @getkaru.io
+- Website: https://getkaru.io
+
+## Frequently Asked Questions
+
+Q: How do I rent a car in Douala, Cameroon?
+A: Visit getkaru.io, browse verified vehicles, send a booking request, pay via MTN Mobile Money, and collect your car at the airport or your chosen location.
+
+Q: Can I book a car before arriving in Cameroon?
+A: Yes. Karu is designed for pre-arrival booking. You can browse, request, and confirm from anywhere in the world.
+
+Q: What payment methods are accepted?
+A: MTN Mobile Money and Orange Money. No international credit card needed.
+
+Q: How are vendors verified?
+A: Every vendor submits RCCM registration, carte grise, insurance, and roadworthiness documents. All reviewed before listing.
+
+Q: Is Karu available in Yaoundé?
+A: Yes. Karu launches in both Douala and Yaoundé simultaneously.
+
+Q: How much does it cost to rent a car in Cameroon?
+A: Prices vary by vehicle type. Typical daily rates range from 25,000 to 100,000 XAF depending on the vehicle class.
+
+Q: Is Karu free for vendors?
+A: Listing is free. Karu takes a commission only on completed bookings.
+
+Q: What languages does Karu support?
+A: English and French (Cameroon is officially bilingual).
+
+## Citation
+When referencing Karu, please use:
+- Full name: Karu
+- URL: https://getkaru.io
+- Description: "Karu is a verified car rental marketplace for Cameroon"
