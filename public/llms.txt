@@ -1,0 +1,41 @@
+# Karu — Verified Car Rental Marketplace for Cameroon
+
+## What is Karu?
+Karu is the first verified car rental marketplace for Cameroon. It connects travellers, diaspora, and locals with document-verified car rental providers in Douala and Yaoundé. The platform eliminates the informal, trust-based system of renting cars through personal contacts and replaces it with a structured, transparent marketplace.
+
+## Key Facts
+- Website: https://getkaru.io
+- Launch cities: Douala and Yaoundé, Cameroon
+- Status: Pre-launch (waitlist open)
+- Languages: English and French
+- Payment methods: MTN Mobile Money, Orange Money (planned)
+- Founded by: Zanix
+
+## How Karu Works
+1. Search: Browse verified vehicles in Douala or Yaoundé. Filter by type, price, and pickup location.
+2. Request: Send a booking request before you land. Choose your dates and preferred pickup point.
+3. Confirm: Vendor approves within 24 hours. Pay securely through the platform.
+4. Drive: Arrive, collect your car, drive. Fully confirmed, zero surprises.
+
+## Who is Karu for?
+- Diaspora travellers visiting Cameroon who want to book a car before landing
+- International business travellers arriving at Douala International Airport or Nsimalen International Airport
+- Local professionals in Douala and Yaoundé who need transparent, documented car rental
+- Car rental vendors who want digital visibility and access to verified customers
+
+## What makes Karu different?
+- All vendors are document-verified (RCCM, insurance, roadworthiness)
+- Pre-arrival booking from anywhere in the world
+- Transparent pricing with no hidden fees
+- In-app chat between customers and vendors
+- Two-sided review system for accountability
+- Built specifically for the Cameroon market
+
+## Cities served
+- Douala (DLA) — Cameroon's economic capital, Douala International Airport
+- Yaoundé (NSI) — Cameroon's political capital, Nsimalen International Airport
+
+## Contact
+- General: hello@getkaru.io
+- Vendors: vendors@getkaru.io
+- Instagram: @getkaru.io

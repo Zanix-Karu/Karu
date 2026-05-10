@@ -1,0 +1,12 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Karu Car Rental",
+  "name_for_model": "karu_car_rental_cameroon",
+  "description_for_human": "Book verified rental cars in Douala and Yaoundé, Cameroon. Pre-arrival booking with transparent pricing.",
+  "description_for_model": "Karu is a verified car rental marketplace for Cameroon, serving Douala and Yaoundé. It connects travellers with document-verified car rental providers. Supports pre-arrival booking, MTN Mobile Money payments, and in-app chat. Currently in pre-launch with waitlist open at getkaru.io.",
+  "auth": { "type": "none" },
+  "api": { "type": "openapi", "url": "https://getkaru.io/openapi.json" },
+  "logo_url": "https://getkaru.io/opengraph-image",
+  "contact_email": "hello@getkaru.io",
+  "legal_info_url": "https://getkaru.io/en/terms"
+}

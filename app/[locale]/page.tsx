@@ -70,9 +70,56 @@ export default async function Page({ params: { locale } }: { params: { locale: s
     priceRange: 'XAF',
   }
 
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'How do I rent a car in Douala, Cameroon?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'With Karu, you can browse verified rental cars in Douala, send a booking request before you land, and pay securely via MTN Mobile Money or Orange Money. The vendor confirms within 24 hours and your car is ready at the airport.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is Karu available in Yaoundé?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. Karu launches simultaneously in both Douala and Yaoundé. You can book a car for pickup at Nsimalen International Airport or anywhere in the city.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How are car rental vendors verified on Karu?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Every vendor on Karu must submit their RCCM business registration, carte grise, insurance certificate, and vehicle roadworthiness documents. All documents are reviewed before any listing goes live.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can I book a car in Cameroon before I arrive?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. Karu is designed for pre-arrival booking. You can browse, request, and confirm a rental car from anywhere in the world before your flight lands in Douala or Yaoundé.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What payment methods does Karu accept?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Karu supports MTN Mobile Money and Orange Money. No international credit card is required. Payments are held securely and released to the vendor after your trip completes.',
+        },
+      },
+    ],
+  }
+
   return (
     <NextIntlClientProvider messages={messages}>
-      {/* Structured data for search engines */}
+      {/* Structured data for search engines and AI */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -80,6 +127,10 @@ export default async function Page({ params: { locale } }: { params: { locale: s
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <CustomCursor />
       <BackToTop />
