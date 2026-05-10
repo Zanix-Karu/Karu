@@ -5,8 +5,8 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 const isDev = process.env.NODE_ENV !== 'production'
 
 const scriptSrc = isDev
-  ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' plausible.io"
-  : "script-src 'self' 'unsafe-inline' plausible.io"
+  ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' plausible.io challenges.cloudflare.com"
+  : "script-src 'self' 'unsafe-inline' plausible.io challenges.cloudflare.com"
 
 const securityHeaders = [
   // Force HTTPS for 2 years, include subdomains, allow preload list
@@ -29,7 +29,8 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline' unpkg.com",
       "font-src 'self' data:",
       "img-src 'self' data: blob: *.supabase.co *.basemaps.cartocdn.com unpkg.com",
-      "connect-src 'self' *.supabase.co plausible.io",
+      "connect-src 'self' *.supabase.co plausible.io challenges.cloudflare.com",
+      "frame-src 'self' challenges.cloudflare.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
