@@ -181,7 +181,7 @@ export function EmailCenter({ log }: Props) {
   const router = useRouter()
   const [tab, setTab] = useState<'all' | 'broadcasts' | 'signups' | 'compose'>('all')
   const [selected, setSelected] = useState<EmailLogEntry | null>(null)
-  const [form, setForm] = useState({ subject: '', html: '', type: 'all', city: 'all', locale: 'all' })
+  const [form, setForm] = useState({ subject: '', html: '', type: 'all', city: 'all', locale: 'all', mode: 'broadcast' as 'single' | 'broadcast', to: '' })
   const [sending, setSending] = useState(false)
   const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null)
 
@@ -191,17 +191,30 @@ export function EmailCenter({ log }: Props) {
 
   async function send() {
     if (!form.subject || !form.html) return
+    if (form.mode === 'single' && !form.to) return
     setSending(true)
     setResult(null)
+
+    const payload: Record<string, unknown> = {
+      subject: form.subject,
+      html: form.html,
+      mode: form.mode,
+    }
+    if (form.mode === 'single') {
+      payload.to = form.to
+    } else {
+      payload.segment = { type: form.type, city: form.city, locale: form.locale }
+    }
+
     const res = await fetch('/api/admin/send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ subject: form.subject, html: form.html, segment: { type: form.type, city: form.city, locale: form.locale } }),
+      body: JSON.stringify(payload),
     })
     const json = await res.json()
     if (res.ok) {
-      setResult({ ok: true, message: `TRANSMITTED TO ${json.total} RECIPIENTS` })
-      setForm(f => ({ ...f, subject: '', html: '' }))
+      setResult({ ok: true, message: form.mode === 'single' ? `SENT TO ${form.to}` : `TRANSMITTED TO ${json.total} RECIPIENTS` })
+      setForm(f => ({ ...f, subject: '', html: '', to: '' }))
       setTimeout(() => router.refresh(), 800)
     } else {
       setResult({ ok: false, message: `ERROR: ${json.error}` })
@@ -253,24 +266,66 @@ export function EmailCenter({ log }: Props) {
       {tab === 'compose' && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ background: '#0C1118', border: '1px solid #1C2936', padding: '24px' }}>
-            <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.2em', marginBottom: 24 }}>BROADCAST CONFIGURATION</div>
+            <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.2em', marginBottom: 24 }}>EMAIL CONFIGURATION</div>
 
+            {/* Mode toggle: Single vs Broadcast */}
             <div style={{ marginBottom: 20 }}>
-              <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.15em', marginBottom: 10 }}>TARGET SEGMENT</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-                {(['type', 'city', 'locale'] as const).map(key => (
-                  <div key={key}>
-                    <div style={{ color: '#1C2936', fontSize: 8, letterSpacing: '0.15em', marginBottom: 4 }}>{key.toUpperCase()}</div>
-                    <select value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))} style={selStyle}>
-                      <option value="all">ALL</option>
-                      {key === 'type' && <><option value="vendor">VENDOR</option><option value="customer">CUSTOMER</option></>}
-                      {key === 'city' && <><option value="douala">DOUALA</option><option value="yaounde">YAOUNDÉ</option><option value="other">OTHER</option></>}
-                      {key === 'locale' && <><option value="en">EN</option><option value="fr">FR</option></>}
-                    </select>
-                  </div>
-                ))}
+              <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.15em', marginBottom: 10 }}>MODE</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                <button
+                  onClick={() => setForm(f => ({ ...f, mode: 'single' }))}
+                  style={{
+                    ...inputStyle,
+                    textAlign: 'center', cursor: 'pointer', fontWeight: 700, letterSpacing: '0.15em',
+                    background: form.mode === 'single' ? 'rgba(232,160,32,0.1)' : '#060A0E',
+                    borderColor: form.mode === 'single' ? '#E8A020' : '#1C2936',
+                    color: form.mode === 'single' ? '#E8A020' : '#3D5065',
+                  }}
+                >
+                  SINGLE
+                </button>
+                <button
+                  onClick={() => setForm(f => ({ ...f, mode: 'broadcast' }))}
+                  style={{
+                    ...inputStyle,
+                    textAlign: 'center', cursor: 'pointer', fontWeight: 700, letterSpacing: '0.15em',
+                    background: form.mode === 'broadcast' ? 'rgba(232,160,32,0.1)' : '#060A0E',
+                    borderColor: form.mode === 'broadcast' ? '#E8A020' : '#1C2936',
+                    color: form.mode === 'broadcast' ? '#E8A020' : '#3D5065',
+                  }}
+                >
+                  BROADCAST
+                </button>
               </div>
             </div>
+
+            {/* Single: recipient email */}
+            {form.mode === 'single' && (
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.15em', marginBottom: 8 }}>RECIPIENT EMAIL</div>
+                <input value={form.to} onChange={e => setForm(f => ({ ...f, to: e.target.value }))} placeholder="recipient@example.com" style={inputStyle} />
+              </div>
+            )}
+
+            {/* Broadcast: segment filters */}
+            {form.mode === 'broadcast' && (
+              <div style={{ marginBottom: 20 }}>
+                <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.15em', marginBottom: 10 }}>TARGET SEGMENT</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
+                  {(['type', 'city', 'locale'] as const).map(key => (
+                    <div key={key}>
+                      <div style={{ color: '#1C2936', fontSize: 8, letterSpacing: '0.15em', marginBottom: 4 }}>{key.toUpperCase()}</div>
+                      <select value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))} style={selStyle}>
+                        <option value="all">ALL</option>
+                        {key === 'type' && <><option value="vendor">VENDOR</option><option value="customer">CUSTOMER</option></>}
+                        {key === 'city' && <><option value="douala">DOUALA</option><option value="yaounde">YAOUNDÉ</option><option value="other">OTHER</option></>}
+                        {key === 'locale' && <><option value="en">EN</option><option value="fr">FR</option></>}
+                      </select>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div style={{ marginBottom: 16 }}>
               <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.15em', marginBottom: 8 }}>SUBJECT LINE</div>
@@ -278,14 +333,17 @@ export function EmailCenter({ log }: Props) {
             </div>
 
             <div style={{ marginBottom: 20 }}>
-              <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.15em', marginBottom: 8 }}>MESSAGE BODY (HTML)</div>
+              <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.15em', marginBottom: 8 }}>MESSAGE BODY (HTML content inside Karu template)</div>
               <textarea
                 value={form.html}
                 onChange={e => setForm(f => ({ ...f, html: e.target.value }))}
                 rows={12}
-                placeholder="<p>Your message here...</p>"
+                placeholder="<p>Your message here...</p>&#10;&#10;The content will be wrapped in the Karu branded email template automatically."
                 style={{ ...inputStyle, resize: 'vertical', verticalAlign: 'top', lineHeight: 1.6 }}
               />
+              <div style={{ color: '#3D5065', fontSize: 8, marginTop: 6, letterSpacing: '0.1em' }}>
+                ✓ CONTENT WILL BE WRAPPED IN KARU BRANDED TEMPLATE (LOGO + AMBER DIVIDER + FOOTER)
+              </div>
             </div>
 
             {result && (
@@ -301,7 +359,7 @@ export function EmailCenter({ log }: Props) {
 
             <button
               onClick={send}
-              disabled={sending || !form.subject || !form.html}
+              disabled={sending || !form.subject || !form.html || (form.mode === 'single' && !form.to)}
               style={{
                 width: '100%',
                 background: sending || !form.subject || !form.html ? '#1C2936' : '#E8A020',
@@ -310,14 +368,27 @@ export function EmailCenter({ log }: Props) {
                 letterSpacing: '0.25em', cursor: sending ? 'not-allowed' : 'pointer', transition: 'background 0.2s',
               }}
             >
-              {sending ? 'TRANSMITTING...' : 'SEND BROADCAST →'}
+              {sending ? 'TRANSMITTING...' : form.mode === 'single' ? 'SEND EMAIL →' : 'SEND BROADCAST →'}
             </button>
           </div>
 
           <div style={{ background: '#0C1118', border: '1px solid #1C2936', padding: '24px' }}>
-            <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.2em', marginBottom: 16 }}>HTML PREVIEW</div>
+            <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.2em', marginBottom: 16 }}>TEMPLATE PREVIEW</div>
             {form.html ? (
-              <div style={{ background: '#fff', padding: 16, minHeight: 200 }} dangerouslySetInnerHTML={{ __html: form.html }} />
+              <div style={{ background: '#1C1208', padding: 16, minHeight: 200, border: '1px solid #3D2510' }}>
+                <div style={{ textAlign: 'center', marginBottom: 16 }}>
+                  <span style={{ fontSize: 24, fontWeight: 'bold', letterSpacing: 4, color: '#E8A020' }}>KARU</span>
+                </div>
+                <div style={{ height: 2, background: '#E8A020', marginBottom: 16 }} />
+                <div style={{ color: '#F5EFE4', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>{form.subject || 'Subject'}</div>
+                <div style={{ color: '#F5EFE4', fontSize: 13, lineHeight: 1.7 }} dangerouslySetInnerHTML={{ __html: form.html }} />
+                <div style={{ textAlign: 'center', marginTop: 20 }}>
+                  <span style={{ background: '#E8A020', color: '#1C1208', padding: '8px 20px', fontSize: 11, fontWeight: 'bold' }}>Visit getkaru.io</span>
+                </div>
+                <div style={{ borderTop: '1px solid #3D2510', marginTop: 20, paddingTop: 12, textAlign: 'center', color: '#5C3A1E', fontSize: 10 }}>
+                  © {new Date().getFullYear()} Karu · Douala & Yaoundé
+                </div>
+              </div>
             ) : (
               <div style={{ color: '#1C2936', fontSize: 10, padding: '48px 0', textAlign: 'center' }}>PREVIEW RENDERS HERE</div>
             )}
