@@ -67,6 +67,27 @@ export default function RootLayout({ children, params: { locale } }: RootLayoutP
             strategy="lazyOnload"
           />
         )}
+        {/* Disable React DevTools and right-click inspection hints in production */}
+        {process.env.NODE_ENV === 'production' && (
+          <Script
+            id="security-hardening"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(){
+                  // Disable React DevTools
+                  if(typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__==='object'){
+                    for(var p in window.__REACT_DEVTOOLS_GLOBAL_HOOK__){
+                      if(p!=='renderers'){
+                        window.__REACT_DEVTOOLS_GLOBAL_HOOK__[p]=typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__[p]==='function'?function(){}:null;
+                      }
+                    }
+                  }
+                })();
+              `,
+            }}
+          />
+        )}
       </body>
     </html>
   )
