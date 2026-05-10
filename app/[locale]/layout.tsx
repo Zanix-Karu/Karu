@@ -27,25 +27,59 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Karu | Verified Car Rentals in Cameroon',
-  description: 'Karu connects travelers and locals with verified car rental providers in Douala and Yaoundé. No stress, no middlemen, no surprises.',
+  title: {
+    default: 'Karu — Car Rental Cameroon | Book Verified Cars in Douala & Yaoundé',
+    template: '%s | Karu',
+  },
+  description: 'Book verified rental cars in Douala and Yaoundé, Cameroon. Trusted providers, transparent pricing, pre-arrival booking. MTN Mobile Money accepted. No middlemen.',
+  keywords: [
+    'car rental Cameroon',
+    'location voiture Cameroun',
+    'rent a car Douala',
+    'car hire Yaoundé',
+    'location voiture Douala',
+    'location voiture Yaoundé',
+    'airport car rental Cameroon',
+    'Douala airport car hire',
+    'Nsimalen airport car rental',
+    'car rental Douala airport',
+    'verified car rental Africa',
+    'mobile money car rental',
+    'MTN MoMo car rental',
+    'diaspora car rental Cameroon',
+    'louer voiture Douala',
+    'louer voiture Yaoundé',
+    'Karu car rental',
+  ],
   openGraph: {
-    title: 'Karu | Verified Car Rentals in Cameroon',
-    description: 'No stress, no middlemen. Verified providers, secure payments, pre-arrival booking.',
+    title: 'Karu — Verified Car Rentals in Douala & Yaoundé, Cameroon',
+    description: 'Book trusted rental cars before you land. Verified providers, transparent pricing, MTN Mobile Money. Launching in Douala and Yaoundé.',
     images: [{ url: '/opengraph-image', width: 1200, height: 630 }],
     locale: 'en_CM',
     alternateLocale: ['fr_CM'],
     type: 'website',
     siteName: 'Karu',
+    url: 'https://getkaru.io',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Karu | Cameroon Car Rental Marketplace',
-    description: 'Verified providers, secure payments, pre-arrival booking.',
+    title: 'Karu — Car Rental Cameroon | Douala & Yaoundé',
+    description: 'Verified providers, transparent pricing, pre-arrival booking. Launching soon.',
     images: ['/opengraph-image'],
+    creator: '@getkaru',
   },
   robots: { index: true, follow: true },
   metadataBase: new URL('https://getkaru.io'),
+  alternates: {
+    canonical: 'https://getkaru.io',
+    languages: {
+      'en': 'https://getkaru.io/en',
+      'fr': 'https://getkaru.io/fr',
+    },
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION ?? undefined,
+  },
 }
 
 interface RootLayoutProps {
