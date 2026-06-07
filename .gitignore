@@ -36,3 +36,10 @@ Thumbs.db
 # IDE
 .idea/
 .vscode/settings.json
+
+# Documentation (kept local only, not in git)
+docs/
+.kiro/
+*.md
+*.pdf
+*.pptx
