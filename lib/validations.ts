@@ -1,6 +1,13 @@
 import { z } from 'zod'
 
 /**
+ * Version of the privacy notice the user consents to at signup.
+ * Bump this whenever the privacy policy materially changes —
+ * stored per entry as consent_version (Law 2024/017 consent record).
+ */
+export const CONSENT_VERSION = '2026-06-10'
+
+/**
  * Strip HTML tags and dangerous characters from user input.
  * Defence-in-depth: Supabase uses parameterised queries so SQL injection
  * is not possible via the client library, but we sanitise anyway.
@@ -26,6 +33,7 @@ const BaseWaitlistSchema = z.object({
     .transform(v => v.replace(/[^0-9+\-() ]/g, ''))  // only allow phone characters
     .optional().or(z.literal('')),
   vehicle_count: z.enum(['1-5', '6-20', '21+', '']).optional(),
+  consent: z.boolean().refine(v => v === true, { message: 'Consent is required' }),
 })
 
 export const WaitlistSchema = BaseWaitlistSchema.superRefine((data, ctx) => {

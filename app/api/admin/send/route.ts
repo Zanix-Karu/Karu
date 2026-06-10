@@ -49,7 +49,8 @@ export async function POST(request: NextRequest) {
   }
 
   // ── Broadcast mode (default) ──────────────────────────────────────────────
-  let query = supabaseAdmin.from('waitlist_entries').select('email')
+  // Exclude anyone who has exercised their marketing objection (Law 2024/017)
+  let query = supabaseAdmin.from('waitlist_entries').select('email').neq('marketing_opt_out', true)
 
   if (segment?.type && segment.type !== 'all') query = query.eq('type', segment.type)
   if (segment?.city && segment.city !== 'all') query = query.eq('city', segment.city)

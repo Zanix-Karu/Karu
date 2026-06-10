@@ -32,6 +32,13 @@ export default function PrivacyPage() {
               </p>
             </section>
           ))}
+
+          <Link
+            href="/privacy/rights"
+            className="inline-block text-amber text-[0.85rem] font-semibold tracking-[0.06em] uppercase border border-amber/40 px-6 py-3 hover:bg-amber/10 transition-colors duration-200"
+          >
+            {t('rights_cta')}
+          </Link>
         </div>
       </div>
     </main>

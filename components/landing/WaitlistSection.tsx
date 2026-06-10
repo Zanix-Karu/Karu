@@ -2,6 +2,7 @@
 
 import { useReducer, useEffect, useState, useCallback, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
+import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import useSWR from 'swr'
 import { z } from 'zod'
@@ -84,6 +85,8 @@ export function WaitlistSection() {
   const [vehicleCount, setVehicleCount] = useState('')
   const [vehicleCountError, setVehicleCountError] = useState('')
   const [turnstileToken, setTurnstileToken] = useState('')
+  const [consent, setConsent] = useState(false)
+  const [consentError, setConsentError] = useState('')
 
   const isLoading = state.status === 'loading'
   const isVendor = selectedType === 'vendor'
@@ -177,16 +180,25 @@ export function WaitlistSection() {
       }
     }
 
+    // Validate consent (Law 2024/017 — explicit, recorded consent)
+    if (!consent) {
+      setConsentError(t('consent_error'))
+      hasError = true
+    } else {
+      setConsentError('')
+    }
+
     if (hasError) return
 
     dispatch({ type: 'SUBMIT' })
 
-    const payload: Record<string, string> = {
+    const payload: Record<string, string | boolean> = {
       email: email.toLowerCase().trim(),
       type: selectedType!,
       city,
       locale,
       turnstile_token: turnstileToken,
+      consent: true,
     }
     if (isVendor) {
       payload.business_name = businessName.trim()
@@ -224,7 +236,7 @@ export function WaitlistSection() {
     } catch {
       dispatch({ type: 'ERROR', message: t('error_generic') })
     }
-  }, [email, selectedType, city, isVendor, businessName, businessEmail, phone, vehicleCount, locale, t])
+  }, [email, selectedType, city, isVendor, businessName, businessEmail, phone, vehicleCount, consent, turnstileToken, locale, t])
 
   const handleReset = () => {
     dispatch({ type: 'RESET' })
@@ -242,6 +254,8 @@ export function WaitlistSection() {
     setPhoneError('')
     setVehicleCount('')
     setVehicleCountError('')
+    setConsent(false)
+    setConsentError('')
   }
 
   const successMessage =
@@ -477,6 +491,34 @@ export function WaitlistSection() {
                   </div>
                 </motion.div>
               )}
+
+              {/* Consent (Law 2024/017) */}
+              <div className="mb-5">
+                <label htmlFor="waitlist-consent" className="flex items-start gap-3 cursor-pointer select-none">
+                  <input
+                    id="waitlist-consent"
+                    type="checkbox"
+                    disabled={isLoading}
+                    checked={consent}
+                    onChange={(e) => { setConsent(e.target.checked); setConsentError('') }}
+                    aria-invalid={!!consentError}
+                    aria-describedby={consentError ? 'waitlist-consent-error' : undefined}
+                    className="mt-[3px] h-4 w-4 shrink-0 cursor-pointer appearance-none border border-cream/30 bg-card-bg checked:bg-amber checked:border-amber transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                  />
+                  <span className="text-[0.78rem] font-light leading-[1.6] text-cream/60">
+                    {t.rich('consent_label', {
+                      link: (chunks) => (
+                        <Link href={`/${locale}/privacy`} target="_blank" className="text-amber hover:underline">
+                          {chunks}
+                        </Link>
+                      ),
+                    })}
+                  </span>
+                </label>
+                {consentError && (
+                  <p id="waitlist-consent-error" className="text-[0.78rem] text-red-400 mt-1.5" role="alert">{consentError}</p>
+                )}
+              </div>
 
               {/* Error */}
               {state.status === 'error' && (

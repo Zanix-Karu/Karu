@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { WaitlistSchema } from '@/lib/validations'
+import { WaitlistSchema, CONSENT_VERSION } from '@/lib/validations'
 import { hashIp } from '@/lib/crypto'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { WaitlistConfirmEmail } from '@/emails/WaitlistConfirmEmail'
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
 
   // 4. Reject unexpected fields (only allow known keys)
   if (typeof body === 'object' && body !== null) {
-    const allowedKeys = new Set(['email', 'type', 'city', 'locale', 'business_name', 'business_email', 'phone', 'vehicle_count', 'turnstile_token'])
+    const allowedKeys = new Set(['email', 'type', 'city', 'locale', 'business_name', 'business_email', 'phone', 'vehicle_count', 'turnstile_token', 'consent'])
     const bodyKeys = Object.keys(body as Record<string, unknown>)
     if (bodyKeys.length > allowedKeys.size + 1 || bodyKeys.some(k => !allowedKeys.has(k))) {
       return NextResponse.json(
@@ -145,6 +145,8 @@ export async function POST(request: NextRequest) {
   try {
     const insertData: Record<string, unknown> = {
       email, type, city, locale, ip_hash: hashedIp,
+      consent_version: CONSENT_VERSION,
+      consent_at: new Date().toISOString(),
       country:  request.headers.get('x-vercel-ip-country') ?? null,
       city_geo: request.headers.get('x-vercel-ip-city') ?? null,
       region:   request.headers.get('x-vercel-ip-country-region') ?? null,

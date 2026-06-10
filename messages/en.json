@@ -180,7 +180,9 @@
     "success_other": "We'll notify you when Karu comes to your city.",
     "error_generic": "Something went wrong. Please try again.",
     "error_rate_limit": "Too many attempts. Please try again later.",
-    "count_label": "Join {count} others already on the waitlist"
+    "count_label": "Join {count} others already on the waitlist",
+    "consent_label": "I agree to the processing of my data as described in the <link>Privacy Policy</link>.",
+    "consent_error": "Please agree to the privacy policy to continue"
   },
   "footer": {
     "tagline": "Built for Cameroon.",
@@ -207,7 +209,8 @@
     "s5_title": "5. Data storage",
     "s5_body": "Your data is stored securely on Supabase infrastructure in the EU West region. All data is encrypted at rest and in transit.",
     "s6_title": "6. Contact",
-    "s6_body": "Questions? Email us at hello@getkaru.io."
+    "s6_body": "Questions? Email us at hello@getkaru.io.",
+    "rights_cta": "Exercise your data rights"
   },
   "terms": {
     "back": "← Back to Karu",
@@ -234,5 +237,29 @@
     "vendor_label": "Vendor partnerships",
     "social_label": "Follow us",
     "instagram_handle": "@getkaru.io on Instagram"
+  },
+  "privacy_rights": {
+    "back": "Back to home",
+    "title": "Your Data Rights",
+    "intro": "Under Cameroon's Law No. 2024/017 on the protection of personal data, you have the right to access, export, delete, and object to the processing of your personal data. Karu currently holds waitlist data only: your email, chosen city, and, for vendors, business contact details.",
+    "how_title": "How it works",
+    "how_body": "Enter your email and choose a request. We will send a confirmation link to that address. The link expires in 24 hours. Once you confirm, we act on the request immediately and keep a record of it, as the law requires.",
+    "type_label": "Request type",
+    "type_deletion": "Delete my data",
+    "type_export": "Export my data",
+    "type_objection": "Stop marketing emails",
+    "email_label": "Email",
+    "email_placeholder": "you@example.com",
+    "submit": "Send confirmation link",
+    "submitted_title": "Check your inbox",
+    "submitted_body": "If we hold data for this address, a confirmation email is on its way. Click the link inside to complete your request.",
+    "status_deleted": "Your data has been deleted. We hold no further personal data for that address.",
+    "status_objection": "Done. You will no longer receive marketing emails from Karu.",
+    "status_invalid": "That link is invalid or has expired. Please submit a new request below.",
+    "status_error": "Something went wrong handling your request. Please try again or email privacy@getkaru.io.",
+    "contact_title": "Prefer email?",
+    "contact_body": "You can also exercise any of these rights by writing to privacy@getkaru.io. We respond to all requests.",
+    "error_email": "Please enter a valid email address",
+    "error_generic": "Something went wrong. Please try again."
   }
 }

@@ -180,7 +180,9 @@
     "success_other": "Nous vous notifierons quand Karu arrivera dans votre ville.",
     "error_generic": "Une erreur s'est produite. Veuillez réessayer.",
     "error_rate_limit": "Trop de tentatives. Veuillez réessayer plus tard.",
-    "count_label": "Rejoignez {count} autres personnes déjà sur la liste"
+    "count_label": "Rejoignez {count} autres personnes déjà sur la liste",
+    "consent_label": "J'accepte le traitement de mes données conformément à la <link>Politique de confidentialité</link>.",
+    "consent_error": "Veuillez accepter la politique de confidentialité pour continuer"
   },
   "footer": {
     "tagline": "Conçu pour le Cameroun.",
@@ -207,7 +209,8 @@
     "s5_title": "5. Stockage des données",
     "s5_body": "Vos données sont stockées en toute sécurité sur l'infrastructure Supabase dans la région EU West. Toutes les données sont chiffrées au repos et en transit.",
     "s6_title": "6. Contact",
-    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@getkaru.io."
+    "s6_body": "Des questions ? Envoyez-nous un e-mail à hello@getkaru.io.",
+    "rights_cta": "Exercer vos droits sur vos données"
   },
   "terms": {
     "back": "← Retour à Karu",
@@ -234,5 +237,29 @@
     "vendor_label": "Partenariats prestataires",
     "social_label": "Suivez-nous",
     "instagram_handle": "@getkaru.io sur Instagram"
+  },
+  "privacy_rights": {
+    "back": "Retour à l'accueil",
+    "title": "Vos droits sur vos données",
+    "intro": "En vertu de la loi camerounaise n° 2024/017 sur la protection des données personnelles, vous avez le droit d'accéder à vos données, de les exporter, de les supprimer et de vous opposer à leur traitement. Karu ne détient actuellement que des données de liste d'attente : votre e-mail, la ville choisie et, pour les prestataires, les coordonnées professionnelles.",
+    "how_title": "Comment ça marche",
+    "how_body": "Saisissez votre e-mail et choisissez une demande. Nous enverrons un lien de confirmation à cette adresse. Le lien expire dans 24 heures. Une fois confirmée, la demande est traitée immédiatement et consignée, comme l'exige la loi.",
+    "type_label": "Type de demande",
+    "type_deletion": "Supprimer mes données",
+    "type_export": "Exporter mes données",
+    "type_objection": "Arrêter les e-mails marketing",
+    "email_label": "E-mail",
+    "email_placeholder": "vous@exemple.com",
+    "submit": "Envoyer le lien de confirmation",
+    "submitted_title": "Vérifiez votre boîte mail",
+    "submitted_body": "Si nous détenons des données pour cette adresse, un e-mail de confirmation est en route. Cliquez sur le lien pour finaliser votre demande.",
+    "status_deleted": "Vos données ont été supprimées. Nous ne détenons plus aucune donnée personnelle pour cette adresse.",
+    "status_objection": "C'est fait. Vous ne recevrez plus d'e-mails marketing de Karu.",
+    "status_invalid": "Ce lien est invalide ou a expiré. Veuillez soumettre une nouvelle demande ci-dessous.",
+    "status_error": "Une erreur s'est produite lors du traitement de votre demande. Réessayez ou écrivez à privacy@getkaru.io.",
+    "contact_title": "Vous préférez l'e-mail ?",
+    "contact_body": "Vous pouvez également exercer ces droits en écrivant à privacy@getkaru.io. Nous répondons à toutes les demandes.",
+    "error_email": "Veuillez saisir une adresse e-mail valide",
+    "error_generic": "Une erreur s'est produite. Veuillez réessayer."
   }
 }
