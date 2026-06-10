@@ -19,8 +19,10 @@ export async function signAdminToken(): Promise<string> {
 
 export async function verifyAdminToken(token: string): Promise<boolean> {
   try {
-    await jwtVerify(token, await secret())
-    return true
+    const { payload } = await jwtVerify(token, await secret())
+    // Role claim is required — signature alone must never grant admin access
+    // (other token types may share the signing secret, e.g. privacy links)
+    return payload.role === 'admin'
   } catch {
     return false
   }

@@ -24,7 +24,12 @@ export async function GET(request: NextRequest) {
   if (country && country !== 'all') query = query.eq('country', country)
 
   const q = p.get('q')
-  if (q) query = query.or(`email.ilike.%${q}%,business_name.ilike.%${q}%`)
+  if (q) {
+    // Strip PostgREST filter metacharacters — raw interpolation into .or()
+    // would allow crafted values to inject additional filter clauses
+    const safe = q.replace(/[,()%.\\]/g, '').slice(0, 100)
+    if (safe) query = query.or(`email.ilike.%${safe}%,business_name.ilike.%${safe}%`)
+  }
 
   const dateFrom = p.get('from')
   if (dateFrom) query = query.gte('created_at', dateFrom)

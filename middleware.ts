@@ -12,6 +12,21 @@ function jwtSecret() {
   return new TextEncoder().encode(s)
 }
 
+/**
+ * Verify the admin JWT *and* its role claim. The claim check matters:
+ * other tokens in the system (e.g. privacy-rights confirmation links) may be
+ * signed with the same secret when PRIVACY_TOKEN_SECRET is unset — signature
+ * alone must never grant admin access.
+ */
+async function isValidAdminToken(token: string): Promise<boolean> {
+  try {
+    const { payload } = await jwtVerify(token, jwtSecret())
+    return payload.role === 'admin'
+  } catch {
+    return false
+  }
+}
+
 async function handleAdmin(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl
 
@@ -24,18 +39,36 @@ async function handleAdmin(request: NextRequest): Promise<NextResponse> {
   }
 
   const token = request.cookies.get('karu_admin')?.value
-  if (!token) {
-    return NextResponse.redirect(new URL('/admin/login', request.url))
+  if (token && await isValidAdminToken(token)) {
+    return NextResponse.next()
   }
 
-  try {
-    await jwtVerify(token, jwtSecret())
+  const res = NextResponse.redirect(new URL('/admin/login', request.url))
+  res.cookies.delete('karu_admin')
+  return res
+}
+
+/** JSON 401 for unauthenticated admin API calls. */
+function adminApiUnauthorised(): NextResponse {
+  return NextResponse.json(
+    { success: false, error: { code: 'UNAUTHORISED', message: 'Authentication required' } },
+    { status: 401 }
+  )
+}
+
+async function handleAdminApi(request: NextRequest): Promise<NextResponse> {
+  const { pathname } = request.nextUrl
+
+  // Login + logout are the only unauthenticated admin endpoints
+  if (pathname === '/api/admin/login' || pathname === '/api/admin/logout') {
     return NextResponse.next()
-  } catch {
-    const res = NextResponse.redirect(new URL('/admin/login', request.url))
-    res.cookies.delete('karu_admin')
-    return res
   }
+
+  const token = request.cookies.get('karu_admin')?.value
+  if (token && await isValidAdminToken(token)) {
+    return NextResponse.next()
+  }
+  return adminApiUnauthorised()
 }
 
 export default async function middleware(request: NextRequest) {
@@ -43,8 +76,8 @@ export default async function middleware(request: NextRequest) {
 
   // API routes bypass i18n entirely
   if (pathname.startsWith('/api')) {
-    // Admin API routes need auth check handled separately
-    if (pathname.startsWith('/api/admin')) return NextResponse.next()
+    // Admin API routes require a valid admin JWT (role-checked)
+    if (pathname.startsWith('/api/admin')) return handleAdminApi(request)
     return NextResponse.next()
   }
 
