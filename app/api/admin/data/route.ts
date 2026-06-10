@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { scoreEntry } from '@/lib/sentiment'
+import { isAdminAuthenticated } from '@/lib/admin-auth'
 
 export async function GET(request: NextRequest) {
+  if (!(await isAdminAuthenticated())) {
+    return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
+  }
+
   const p = request.nextUrl.searchParams
 
   let query = supabaseAdmin

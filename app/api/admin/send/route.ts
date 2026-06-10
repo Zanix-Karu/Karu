@@ -3,8 +3,13 @@ import { Resend } from 'resend'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { encryptBody } from '@/lib/email-encrypt'
 import { wrapInKaruTemplate } from '@/lib/email-template'
+import { isAdminAuthenticated } from '@/lib/admin-auth'
 
 export async function POST(request: NextRequest) {
+  if (!(await isAdminAuthenticated())) {
+    return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
+  }
+
   const { subject, html, segment, mode, to } = await request.json()
 
   if (!subject || !html) {
