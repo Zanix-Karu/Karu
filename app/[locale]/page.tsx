@@ -1,5 +1,3 @@
-import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
 import { Navigation } from '@/components/layout/Navigation'
 import { CustomCursor } from '@/components/ui/CustomCursor'
 import { BackToTop } from '@/components/ui/BackToTop'
@@ -12,8 +10,8 @@ import { CitiesSection } from '@/components/landing/CitiesSection'
 import { WaitlistSection } from '@/components/landing/WaitlistSection'
 import { FooterSection } from '@/components/landing/FooterSection'
 
-export default async function Page({ params: { locale } }: { params: { locale: string } }) {
-  const messages = await getMessages()
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -118,7 +116,7 @@ export default async function Page({ params: { locale } }: { params: { locale: s
   }
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <>
       {/* Structured data for search engines and AI */}
       <script
         type="application/ld+json"
@@ -145,6 +143,6 @@ export default async function Page({ params: { locale } }: { params: { locale: s
         <WaitlistSection />
       </main>
       <FooterSection />
-    </NextIntlClientProvider>
+    </>
   )
 }

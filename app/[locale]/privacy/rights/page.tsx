@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { PrivacyRightsForm } from '@/components/privacy/PrivacyRightsForm'
 
@@ -6,12 +6,13 @@ import { PrivacyRightsForm } from '@/components/privacy/PrivacyRightsForm'
  * /privacy/rights — Law 2024/017 data subject rights page.
  * Deletion, export (access + portability), and marketing objection.
  */
-export default function PrivacyRightsPage({
+export default async function PrivacyRightsPage({
   searchParams,
 }: {
-  searchParams: { status?: string }
+  searchParams: Promise<{ status?: string }>
 }) {
-  const t = useTranslations('privacy_rights')
+  const t = await getTranslations('privacy_rights')
+  const { status } = await searchParams
 
   return (
     <main className="min-h-screen bg-espresso text-cream">
@@ -35,7 +36,7 @@ export default function PrivacyRightsPage({
             <p>{t('how_body')}</p>
           </section>
 
-          <PrivacyRightsForm status={searchParams.status} />
+          <PrivacyRightsForm status={status} />
 
           <section>
             <h2 className="font-sans font-semibold text-cream text-lg mb-3">{t('contact_title')}</h2>

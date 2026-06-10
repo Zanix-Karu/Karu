@@ -27,7 +27,7 @@ export async function verifyAdminToken(token: string): Promise<boolean> {
 }
 
 export async function getAdminTokenFromCookies(): Promise<string | null> {
-  const store = cookies()
+  const store = await cookies()
   return store.get(COOKIE)?.value ?? null
 }
 

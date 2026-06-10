@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { DM_Serif_Display, Playfair_Display, DM_Sans } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
 import '../globals.css'
 
 const dmSerif = DM_Serif_Display({
@@ -84,17 +86,21 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }
 
-export default function RootLayout({ children, params: { locale } }: RootLayoutProps) {
+export default async function RootLayout({ children, params }: RootLayoutProps) {
+  const { locale } = await params
+  const messages = await getMessages()
   return (
     <html
       lang={locale}
       className={`${dmSerif.variable} ${playfair.variable} ${dmSans.variable}`}
     >
       <body>
-        {children}
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
         <SpeedInsights />
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
           <Script
