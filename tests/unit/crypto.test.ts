@@ -1,8 +1,9 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { hashIp } from '@/lib/crypto'
 
 describe('hashIp', () => {
   beforeEach(() => {
+    vi.unstubAllEnvs()
     process.env.IP_HASH_SALT = 'test-salt'
   })
 
@@ -27,5 +28,19 @@ describe('hashIp', () => {
     const a = await hashIp('192.168.1.1')
     const b = await hashIp('10.0.0.1')
     expect(a).not.toBe(b)
+  })
+
+  it('throws in production when IP_HASH_SALT is unset (fail-closed)', async () => {
+    delete process.env.IP_HASH_SALT
+    vi.stubEnv('NODE_ENV', 'production')
+    await expect(hashIp('127.0.0.1')).rejects.toThrow('IP_HASH_SALT must be set')
+  })
+
+  it('allows unsalted fallback in development when IP_HASH_SALT is unset', async () => {
+    delete process.env.IP_HASH_SALT
+    vi.stubEnv('NODE_ENV', 'test')
+    const result = await hashIp('127.0.0.1')
+    expect(result).toHaveLength(64)
+    expect(result).toMatch(/^[0-9a-f]{64}$/)
   })
 })

@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
   const dateTo = p.get('to')
   if (dateTo) query = query.lte('created_at', dateTo + 'T23:59:59Z')
 
-  const limit = parseInt(p.get('limit') ?? '200', 10)
+  const limit = Math.max(1, Math.min(500, parseInt(p.get('limit') ?? '200', 10) || 200))
   query = query.limit(limit)
 
   const { data, error } = await query

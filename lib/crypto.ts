@@ -12,8 +12,12 @@
 export async function hashIp(ip: string): Promise<string> {
   const salt = process.env.IP_HASH_SALT
   if (!salt) {
-    // If no salt is configured, still hash but with a static prefix
-    // This is weaker but prevents storing raw IPs
+    // Fail-closed in production: unsalted SHA-256 over 4-billion IPv4 space is
+    // rainbow-tableable. Refuse to produce a false sense of protection.
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('IP_HASH_SALT must be set in production — unsalted hashes are reversible')
+    }
+    // Dev-only fallback to keep local development unblocked
     const data = new TextEncoder().encode('karu-ip-v1:' + ip)
     const hashBuffer = await crypto.subtle.digest('SHA-256', data)
     return bufferToHex(hashBuffer)

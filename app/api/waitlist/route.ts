@@ -5,12 +5,14 @@ import { hashIp } from '@/lib/crypto'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { WaitlistConfirmEmail } from '@/emails/WaitlistConfirmEmail'
 
-// Allowed origins for CSRF protection
 const ALLOWED_ORIGINS = [
   'https://getkaru.io',
   'https://www.getkaru.io',
   'https://karu-mu.vercel.app',
 ]
+
+// Vercel preview deploy project slug — only this project's previews are allowed
+const VERCEL_PROJECT_SLUG = 'karu'
 
 function isAllowedOrigin(request: NextRequest): boolean {
   // In development, allow all origins
@@ -23,9 +25,10 @@ function isAllowedOrigin(request: NextRequest): boolean {
   if (origin && ALLOWED_ORIGINS.some(o => origin.startsWith(o))) return true
   if (referer && ALLOWED_ORIGINS.some(o => referer.startsWith(o))) return true
 
-  // Allow Vercel preview deployments
-  if (origin && origin.includes('.vercel.app')) return true
-  if (referer && referer.includes('.vercel.app')) return true
+  // Allow only this project's Vercel preview deployments (not arbitrary .vercel.app)
+  const vercelPattern = new RegExp(`^https://${VERCEL_PROJECT_SLUG}-[a-z0-9-]+\\.vercel\\.app$`)
+  if (origin && vercelPattern.test(origin)) return true
+  if (referer && vercelPattern.test(new URL(referer).origin)) return true
 
   return false
 }
@@ -89,9 +92,16 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // 4b. Verify Cloudflare Turnstile token (if configured)
+  // 4b. Verify Cloudflare Turnstile token — fail-closed: reject if secret is not configured in production
   const turnstileSecret = process.env.TURNSTILE_SECRET_KEY
-  if (turnstileSecret) {
+  if (!turnstileSecret) {
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        { success: false, error: { code: 'CAPTCHA_REQUIRED', message: 'Human verification is unavailable. Please try again later.' } },
+        { status: 503 }
+      )
+    }
+  } else {
     const token = (body as Record<string, unknown>).turnstile_token
     if (!token || typeof token !== 'string') {
       return NextResponse.json(
