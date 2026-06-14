@@ -2,12 +2,16 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Turnstile } from '@marsidev/react-turnstile'
 
 export default function AdminLogin() {
   const router = useRouter()
   const [password, setPassword] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -17,7 +21,7 @@ export default function AdminLogin() {
     const res = await fetch('/api/admin/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ password, turnstile_token: turnstileToken }),
     })
 
     if (res.ok) {
@@ -83,6 +87,17 @@ export default function AdminLogin() {
               />
             </div>
 
+            {/* Cloudflare Turnstile human verification */}
+            {turnstileSiteKey && (
+              <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'center' }}>
+                <Turnstile
+                  siteKey={turnstileSiteKey}
+                  onSuccess={setTurnstileToken}
+                  options={{ theme: 'dark', size: 'normal' }}
+                />
+              </div>
+            )}
+
             {error && (
               <div style={{ color: '#F05252', fontSize: 10, letterSpacing: '0.15em', marginBottom: 16, padding: '8px 10px', border: '1px solid #F05252', background: 'rgba(240,82,82,0.05)' }}>
                 {error}
@@ -91,12 +106,12 @@ export default function AdminLogin() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || (!!turnstileSiteKey && !turnstileToken)}
               style={{
-                width: '100%', background: loading ? '#1C2936' : '#E8A020',
+                width: '100%', background: (loading || (!!turnstileSiteKey && !turnstileToken)) ? '#1C2936' : '#E8A020',
                 color: '#060A0E', border: 'none', padding: '12px 0',
                 fontFamily: 'monospace', fontSize: 11, fontWeight: 'bold',
-                letterSpacing: '0.25em', cursor: loading ? 'not-allowed' : 'pointer',
+                letterSpacing: '0.25em', cursor: (loading || (!!turnstileSiteKey && !turnstileToken)) ? 'not-allowed' : 'pointer',
                 transition: 'background 0.2s',
               }}
             >
