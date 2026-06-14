@@ -260,6 +260,11 @@
     "contact_title": "Vous préférez l'e-mail ?",
     "contact_body": "Vous pouvez également exercer ces droits en écrivant à privacy@getkaru.io. Nous répondons à toutes les demandes.",
     "error_email": "Veuillez saisir une adresse e-mail valide",
-    "error_generic": "Une erreur s'est produite. Veuillez réessayer."
+    "error_generic": "Une erreur s'est produite. Veuillez réessayer.",
+    "confirm_title": "Confirmez votre demande",
+    "confirm_body": "Cliquez ci-dessous pour finaliser la demande liée à votre e-mail. Cette action est définitive.",
+    "confirm_button": "Confirmer maintenant",
+    "confirm_done": "C'est fait. Votre demande a été traitée.",
+    "status_exported": "Votre export de données a été téléchargé sous forme de fichier. Nous n'avons rien d'autre à afficher."
   }
 }

@@ -53,8 +53,9 @@ check "GET  /api/waitlist/count" "$BASE/api/waitlist/count" "200"
 check "GET  /en (landing page)"  "$BASE/en"                 "200"
 
 echo ""
-echo "Privacy endpoint (POST without CSRF must be rejected):"
+echo "Privacy endpoints (POST without CSRF must be rejected):"
 check_post "POST /api/privacy/request (no XHR header)" "$BASE/api/privacy/request" "403" '{"email":"test@x.com","request_type":"export"}'
+check_post "POST /api/privacy/confirm (no XHR/cookie)"  "$BASE/api/privacy/confirm" "403" '{}'
 
 echo ""
 echo "─────────────────────────────────────"

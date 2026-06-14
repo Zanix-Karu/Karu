@@ -43,4 +43,7 @@ export const supabaseAdmin = {
   from(table: string) {
     return getClient().from(table)
   },
+  rpc(fn: string, args?: Record<string, unknown>) {
+    return getClient().rpc(fn, args)
+  },
 }

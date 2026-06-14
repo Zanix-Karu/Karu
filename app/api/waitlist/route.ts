@@ -3,35 +3,9 @@ import { Resend } from 'resend'
 import { WaitlistSchema, CONSENT_VERSION } from '@/lib/validations'
 import { hashIp } from '@/lib/crypto'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { isAllowedOrigin } from '@/lib/origin'
+import { rateLimit, rateLimitKeyForIp } from '@/lib/rate-limit'
 import { WaitlistConfirmEmail } from '@/emails/WaitlistConfirmEmail'
-
-const ALLOWED_ORIGINS = [
-  'https://getkaru.io',
-  'https://www.getkaru.io',
-  'https://karu-mu.vercel.app',
-]
-
-// Vercel preview deploy project slug — only this project's previews are allowed
-const VERCEL_PROJECT_SLUG = 'karu'
-
-function isAllowedOrigin(request: NextRequest): boolean {
-  // In development, allow all origins
-  if (process.env.NODE_ENV !== 'production') return true
-
-  const origin = request.headers.get('origin')
-  const referer = request.headers.get('referer')
-
-  // Allow exact matches
-  if (origin && ALLOWED_ORIGINS.some(o => origin.startsWith(o))) return true
-  if (referer && ALLOWED_ORIGINS.some(o => referer.startsWith(o))) return true
-
-  // Allow only this project's Vercel preview deployments (not arbitrary .vercel.app)
-  const vercelPattern = new RegExp(`^https://${VERCEL_PROJECT_SLUG}-[a-z0-9-]+\\.vercel\\.app$`)
-  if (origin && vercelPattern.test(origin)) return true
-  if (referer && vercelPattern.test(new URL(referer).origin)) return true
-
-  return false
-}
 
 export async function POST(request: NextRequest) {
   // 0. CSRF / Origin check
@@ -39,6 +13,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { success: false, error: { code: 'FORBIDDEN', message: 'Request not allowed' } },
       { status: 403 }
+    )
+  }
+
+  // 0b. Rate limit: 5 signups per IP per hour (persistent, serverless-safe)
+  const rl = await rateLimit(await rateLimitKeyForIp(request, 'waitlist'), 5, 3600)
+  if (!rl.success) {
+    return NextResponse.json(
+      { success: false, error: { code: 'RATE_LIMITED', message: 'Too many requests. Please try again later.' } },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } }
     )
   }
 

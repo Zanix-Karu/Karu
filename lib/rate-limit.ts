@@ -1,40 +1,59 @@
+import { NextRequest } from 'next/server'
+import { supabaseAdmin } from '@/lib/supabase-admin'
+import { hashIp } from '@/lib/crypto'
+
 /**
- * Rate limiter — in-memory implementation using a Map.
+ * Persistent, serverless-safe rate limiting backed by Postgres (Supabase).
  *
- * NOTE: This is suitable for development and single-instance deployments only.
- * For production (multi-instance / serverless), replace with a distributed store:
- *   - Upstash Redis: https://upstash.com  (set UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN)
- *   - Vercel KV:     https://vercel.com/docs/storage/vercel-kv
+ * Replaces the previous in-memory Map limiter, which reset on every serverless
+ * cold start and was per-instance (useless against distributed abuse). The
+ * atomic check-and-increment lives in the `check_rate_limit` SQL function
+ * (migration 009) so concurrent invocations across instances share one counter.
+ *
+ * Fail-OPEN on infrastructure error: a DB hiccup must not take down signup or
+ * the privacy rights flow. Abuse protection degrades; availability does not.
+ * (Turnstile remains the fail-CLOSED gate on the same endpoints, so a DB outage
+ * doesn't leave the endpoint defenceless.)
  */
 
-const store = new Map<string, { count: number; resetAt: number }>()
+export interface RateLimitResult {
+  success: boolean
+  /** seconds the caller should back off (0 when allowed) */
+  retryAfter: number
+}
+
+/** Derive a stable, non-PII rate-limit subject from the request IP. */
+export async function rateLimitKeyForIp(request: NextRequest, bucket: string): Promise<string> {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
+  const hashed = await hashIp(ip).catch(() => 'unknown')
+  return `${bucket}:${hashed}`
+}
 
 /**
- * Check whether a given key is within its rate limit.
- *
- * @param key           Unique identifier for the caller (e.g. `"waitlist:${hashedIp}"`)
- * @param limit         Maximum number of requests allowed within the window
- * @param windowSeconds Length of the sliding window in seconds
- * @returns `{ success: true, retryAfter: 0 }` when the request is allowed,
- *          `{ success: false, retryAfter: N }` when the limit is exceeded (N = seconds until reset)
+ * @param key           bucket key, e.g. "privacy_request:<hash>"
+ * @param limit         max requests allowed per window
+ * @param windowSeconds window length in seconds
  */
 export async function rateLimit(
   key: string,
   limit: number,
   windowSeconds: number
-): Promise<{ success: boolean; retryAfter: number }> {
-  const now = Date.now()
-  const entry = store.get(key)
-
-  if (!entry || now > entry.resetAt) {
-    store.set(key, { count: 1, resetAt: now + windowSeconds * 1000 })
-    return { success: true, retryAfter: 0 }
+): Promise<RateLimitResult> {
+  try {
+    const { data, error } = await supabaseAdmin.rpc('check_rate_limit', {
+      p_key: key,
+      p_limit: limit,
+      p_window_seconds: windowSeconds,
+    })
+    if (error) {
+      console.error('[rate-limit] rpc error:', error.message)
+      return { success: true, retryAfter: 0 } // fail-open
+    }
+    return data === true
+      ? { success: true, retryAfter: 0 }
+      : { success: false, retryAfter: windowSeconds }
+  } catch (err) {
+    console.error('[rate-limit] unexpected:', err instanceof Error ? err.message : String(err))
+    return { success: true, retryAfter: 0 } // fail-open
   }
-
-  if (entry.count >= limit) {
-    return { success: false, retryAfter: Math.ceil((entry.resetAt - now) / 1000) }
-  }
-
-  entry.count++
-  return { success: true, retryAfter: 0 }
 }

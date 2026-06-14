@@ -208,7 +208,7 @@ export function EmailCenter({ log }: Props) {
 
     const res = await fetch('/api/admin/send', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
       body: JSON.stringify(payload),
     })
     const json = await res.json()

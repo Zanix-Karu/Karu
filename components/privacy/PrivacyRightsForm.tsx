@@ -22,12 +22,84 @@ export function PrivacyRightsForm({ status }: { status?: string }) {
   const [turnstileToken, setTurnstileToken] = useState('')
   const [state, setState] = useState<FormState>('idle')
 
+  // Confirm-step state (reached via the emailed link → GET set a cookie → ?status=confirm)
+  const [confirmState, setConfirmState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
+  const [confirmOutcome, setConfirmOutcome] = useState<string>('')
+
   const statusMessage =
     status === 'deleted' ? t('status_deleted')
     : status === 'objection' ? t('status_objection')
     : status === 'invalid' ? t('status_invalid')
     : status === 'error' ? t('status_error')
     : null
+
+  const handleConfirm = async () => {
+    setConfirmState('loading')
+    try {
+      const res = await fetch('/api/privacy/confirm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        credentials: 'same-origin',
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok || !json?.success) {
+        setConfirmState('error')
+        return
+      }
+      const outcome = json.data?.outcome as string
+      // Export: turn the inline JSON into a client-side file download.
+      if (outcome === 'exported' && json.data?.export) {
+        const blob = new Blob([JSON.stringify(json.data.export, null, 2)], { type: 'application/json' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'karu-data-export.json'
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+        URL.revokeObjectURL(url)
+      }
+      setConfirmOutcome(outcome)
+      setConfirmState('done')
+    } catch {
+      setConfirmState('error')
+    }
+  }
+
+  // ── Confirm step UI ────────────────────────────────────────────────────────
+  if (status === 'confirm') {
+    if (confirmState === 'done') {
+      const msg =
+        confirmOutcome === 'deleted' ? t('status_deleted')
+        : confirmOutcome === 'objection' ? t('status_objection')
+        : confirmOutcome === 'exported' ? t('status_exported')
+        : t('confirm_done')
+      return (
+        <div className="border border-amber/30 bg-amber/[0.06] p-6" role="status" aria-live="polite">
+          <p className="font-sans font-light text-cream/80 text-[0.9rem] leading-[1.8]">{msg}</p>
+        </div>
+      )
+    }
+    return (
+      <div className="border border-amber/30 bg-amber/[0.06] p-6 text-left">
+        <p className="font-sans font-semibold text-amber text-base mb-2">{t('confirm_title')}</p>
+        <p className="font-sans font-light text-cream/70 text-[0.9rem] leading-[1.8] mb-5">{t('confirm_body')}</p>
+        {confirmState === 'error' && (
+          <p className="text-[0.82rem] text-red-400 mb-3" role="alert">{t('status_error')}</p>
+        )}
+        <Button
+          type="button"
+          variant="primary"
+          className="w-full"
+          disabled={confirmState === 'loading'}
+          aria-busy={confirmState === 'loading'}
+          onClick={handleConfirm}
+        >
+          {confirmState === 'loading' ? '…' : t('confirm_button')}
+        </Button>
+      </div>
+    )
+  }
 
   const handleSubmit = async () => {
     const parsed = emailSchema.safeParse(email)
