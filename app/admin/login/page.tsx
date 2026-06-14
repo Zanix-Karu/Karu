@@ -23,7 +23,9 @@ export default function AdminLogin() {
     if (res.ok) {
       router.push('/admin/dashboard')
     } else {
-      setError('ACCESS DENIED — Invalid credentials')
+      const data = await res.json().catch(() => null)
+      const msg = data?.error ?? `HTTP ${res.status}`
+      setError(`ACCESS DENIED — ${msg}`)
       setLoading(false)
     }
   }
