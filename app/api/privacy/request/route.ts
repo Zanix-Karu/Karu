@@ -5,6 +5,8 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 import { hashIp } from '@/lib/crypto'
 import { createPrivacyToken, PrivacyRequestType } from '@/lib/privacy-token'
 import { wrapInKaruTemplate } from '@/lib/email-template'
+import { isAllowedOrigin } from '@/lib/origin'
+import { rateLimit, rateLimitKeyForIp } from '@/lib/rate-limit'
 
 /**
  * POST /api/privacy/request — Law 2024/017 data subject rights entry point.
@@ -16,30 +18,6 @@ import { wrapInKaruTemplate } from '@/lib/email-template'
  * Anti-enumeration: the API response is identical whether or not the email
  * exists on the waitlist. The email itself tells the recipient the truth.
  */
-
-const ALLOWED_ORIGINS = [
-  'https://getkaru.io',
-  'https://www.getkaru.io',
-  'https://karu-mu.vercel.app',
-]
-
-// Vercel preview deploy project slug — only this project's previews are allowed
-const VERCEL_PROJECT_SLUG = 'karu'
-
-function isAllowedOrigin(request: NextRequest): boolean {
-  if (process.env.NODE_ENV !== 'production') return true
-  const origin = request.headers.get('origin')
-  const referer = request.headers.get('referer')
-  if (origin && ALLOWED_ORIGINS.some(o => origin.startsWith(o))) return true
-  if (referer && ALLOWED_ORIGINS.some(o => referer.startsWith(o))) return true
-
-  // Allow only this project's Vercel preview deployments (not arbitrary .vercel.app)
-  const vercelPattern = new RegExp(`^https://${VERCEL_PROJECT_SLUG}-[a-z0-9-]+\\.vercel\\.app$`)
-  if (origin && vercelPattern.test(origin)) return true
-  if (referer && vercelPattern.test(new URL(referer).origin)) return true
-
-  return false
-}
 
 const PrivacyRequestSchema = z.object({
   email: z.string().email().max(254).toLowerCase().trim(),
@@ -103,6 +81,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { success: false, error: { code: 'FORBIDDEN', message: 'Request not allowed' } },
       { status: 403 }
+    )
+  }
+
+  // 0b. Rate limit: 5 rights requests per IP per hour (persistent, serverless-safe).
+  // Stops the privacy endpoint being scripted into an email-bomb against waitlist members.
+  const rl = await rateLimit(await rateLimitKeyForIp(request, 'privacy_request'), 5, 3600)
+  if (!rl.success) {
+    return NextResponse.json(
+      { success: false, error: { code: 'RATE_LIMITED', message: 'Too many requests. Please try again later.' } },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } }
     )
   }
 

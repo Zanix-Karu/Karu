@@ -260,6 +260,11 @@
     "contact_title": "Prefer email?",
     "contact_body": "You can also exercise any of these rights by writing to privacy@getkaru.io. We respond to all requests.",
     "error_email": "Please enter a valid email address",
-    "error_generic": "Something went wrong. Please try again."
+    "error_generic": "Something went wrong. Please try again.",
+    "confirm_title": "Confirm your request",
+    "confirm_body": "Click below to complete the request linked to your email. This action is final.",
+    "confirm_button": "Confirm now",
+    "confirm_done": "Done. Your request has been completed.",
+    "status_exported": "Your data export has been downloaded as a file. We hold nothing further to show."
   }
 }

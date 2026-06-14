@@ -5,6 +5,12 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      smoke_base_url:
+        description: 'Base URL to smoke-test (post-deploy)'
+        required: false
+        default: 'https://www.getkaru.io'
 
 jobs:
   check:
@@ -26,3 +32,13 @@ jobs:
         run: npm test
       - name: Build
         run: npm run build
+
+  # Post-deploy production smoke test. Run manually from the Actions tab after a
+  # deploy (workflow_dispatch) — asserts the security-critical endpoints behave.
+  smoke:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Smoke test
+        run: bash scripts/smoke.sh "${{ github.event.inputs.smoke_base_url }}"

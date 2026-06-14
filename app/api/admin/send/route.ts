@@ -4,16 +4,28 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 import { encryptBody } from '@/lib/email-encrypt'
 import { wrapInKaruTemplate } from '@/lib/email-template'
 import { isAdminAuthenticated } from '@/lib/admin-auth'
+import { isAllowedOrigin, hasXhrHeader } from '@/lib/origin'
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function POST(request: NextRequest) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
   }
 
+  // CSRF defence in depth: the admin cookie is SameSite=lax, but a state-changing
+  // POST that can email the whole list must also pass Origin + XHR checks.
+  if (!isAllowedOrigin(request) || !hasXhrHeader(request)) {
+    return NextResponse.json({ error: 'Request not allowed' }, { status: 403 })
+  }
+
   const { subject, html, segment, mode, to } = await request.json()
 
-  if (!subject || !html) {
-    return NextResponse.json({ error: 'Missing subject or body' }, { status: 400 })
+  if (!subject || typeof subject !== 'string' || subject.length > 300) {
+    return NextResponse.json({ error: 'Invalid subject' }, { status: 400 })
+  }
+  if (!html || typeof html !== 'string' || html.length > 100_000) {
+    return NextResponse.json({ error: 'Invalid body' }, { status: 400 })
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
@@ -23,8 +35,8 @@ export async function POST(request: NextRequest) {
 
   // ── Single email mode ─────────────────────────────────────────────────────
   if (mode === 'single') {
-    if (!to || typeof to !== 'string') {
-      return NextResponse.json({ error: 'Missing recipient email' }, { status: 400 })
+    if (!to || typeof to !== 'string' || !EMAIL_RE.test(to) || to.length > 254) {
+      return NextResponse.json({ error: 'Invalid recipient email' }, { status: 400 })
     }
 
     const { data, error } = await resend.emails.send({

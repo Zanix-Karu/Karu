@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createHash, timingSafeEqual } from 'crypto'
 import { signAdminToken, ADMIN_COOKIE } from '@/lib/admin-auth'
+import { rateLimit, rateLimitKeyForIp } from '@/lib/rate-limit'
 
 /** Constant-time comparison via digest — avoids leaking match length/prefix. */
 function safeCompare(a: string, b: string): boolean {
@@ -9,46 +10,15 @@ function safeCompare(a: string, b: string): boolean {
   return timingSafeEqual(da, db)
 }
 
-// Simple in-memory rate limiter for admin login attempts.
-// Resets on cold-start (serverless), but catches burst attacks within a single instance.
-const loginAttempts = new Map<string, { count: number; firstAttempt: number }>()
-const MAX_ATTEMPTS = 5
-const WINDOW_MS = 15 * 60 * 1000 // 15 minutes
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now()
-  const entry = loginAttempts.get(ip)
-  if (!entry) return false
-  // Reset window if expired
-  if (now - entry.firstAttempt > WINDOW_MS) {
-    loginAttempts.delete(ip)
-    return false
-  }
-  return entry.count >= MAX_ATTEMPTS
-}
-
-function recordAttempt(ip: string): void {
-  const now = Date.now()
-  const entry = loginAttempts.get(ip)
-  if (!entry || now - entry.firstAttempt > WINDOW_MS) {
-    loginAttempts.set(ip, { count: 1, firstAttempt: now })
-  } else {
-    entry.count++
-  }
-}
-
-function clearAttempts(ip: string): void {
-  loginAttempts.delete(ip)
-}
-
 export async function POST(request: NextRequest) {
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
-
-  // Rate limit check
-  if (isRateLimited(ip)) {
+  // Persistent rate limit: 5 login attempts per IP per 15 min, shared across
+  // serverless instances (the previous in-memory Map reset on every cold start).
+  const rlKey = await rateLimitKeyForIp(request, 'admin_login')
+  const rl = await rateLimit(rlKey, 5, 15 * 60)
+  if (!rl.success) {
     return NextResponse.json(
       { error: 'Too many login attempts. Please try again in 15 minutes.' },
-      { status: 429 }
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } }
     )
   }
 
@@ -81,12 +51,11 @@ export async function POST(request: NextRequest) {
   const adminSecret = process.env.ADMIN_SECRET
 
   if (!adminSecret || typeof password !== 'string' || !safeCompare(password, adminSecret)) {
-    recordAttempt(ip)
+    // The attempt was already counted by the rate limiter above.
     return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
   }
 
-  // Successful login — clear rate limit and issue token
-  clearAttempts(ip)
+  // Successful login — issue token
   const token = await signAdminToken()
   const res = NextResponse.json({ ok: true })
 
