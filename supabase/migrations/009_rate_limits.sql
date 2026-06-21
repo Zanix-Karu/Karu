@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS rate_limits (
 ALTER TABLE rate_limits ENABLE ROW LEVEL SECURITY;
 
 -- service_role only; no public access in any form
+DROP POLICY IF EXISTS rate_limits_service_role_all ON rate_limits;
 CREATE POLICY rate_limits_service_role_all ON rate_limits
   FOR ALL
   USING (auth.role() = 'service_role')

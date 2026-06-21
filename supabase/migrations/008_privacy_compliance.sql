@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS data_requests (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email TEXT NOT NULL,                  -- subject of the request; retained as compliance evidence (see ROPA retention)
   type TEXT NOT NULL CHECK (type IN ('deletion', 'export', 'objection')),
-  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed', 'expired', 'rejected')),
+  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'completed', 'expired', 'rejected')),
   locale TEXT NOT NULL DEFAULT 'en' CHECK (locale IN ('en', 'fr')),
   ip_hash TEXT,                         -- HMAC-SHA256, never raw
   detail JSONB,
@@ -26,6 +26,7 @@ CREATE INDEX IF NOT EXISTS idx_data_requests_email ON data_requests(email);
 ALTER TABLE data_requests ENABLE ROW LEVEL SECURITY;
 
 -- service_role only — no public access in any form
+DROP POLICY IF EXISTS data_requests_service_role_all ON data_requests;
 CREATE POLICY data_requests_service_role_all ON data_requests
   FOR ALL
   USING (auth.role() = 'service_role')
@@ -47,6 +48,7 @@ CREATE TABLE IF NOT EXISTS breach_log (
 
 ALTER TABLE breach_log ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS breach_log_service_role_all ON breach_log;
 CREATE POLICY breach_log_service_role_all ON breach_log
   FOR ALL
   USING (auth.role() = 'service_role')

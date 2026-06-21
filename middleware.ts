@@ -7,8 +7,11 @@ const intlMiddleware = createMiddleware({
   defaultLocale: 'en',
 })
 
-function jwtSecret() {
-  const s = process.env.ADMIN_JWT_SECRET ?? 'fallback-dev-secret-change-in-prod'
+function jwtSecret(): Uint8Array | null {
+  // Fail closed: no fallback secret. If ADMIN_JWT_SECRET is unset, admin access
+  // is denied outright (matches lib/admin-auth, which throws when it's missing).
+  const s = process.env.ADMIN_JWT_SECRET
+  if (!s) return null
   return new TextEncoder().encode(s)
 }
 
@@ -20,7 +23,9 @@ function jwtSecret() {
  */
 async function isValidAdminToken(token: string): Promise<boolean> {
   try {
-    const { payload } = await jwtVerify(token, jwtSecret())
+    const key = jwtSecret()
+    if (!key) return false
+    const { payload } = await jwtVerify(token, key, { issuer: 'karu-admin' })
     return payload.role === 'admin'
   } catch {
     return false
