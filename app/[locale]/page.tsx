@@ -134,7 +134,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
       <CustomCursor />
       <BackToTop />
       <Navigation />
-      <main>
+      <main id="main">
         <HeroSection />
         <TickerBand />
         <AboutSection />

@@ -5,7 +5,7 @@ export default function ContactPage() {
   const t = useTranslations('contact')
 
   return (
-    <main className="min-h-screen bg-espresso text-cream flex items-center">
+    <main id="main" className="min-h-screen bg-espresso text-cream flex items-center">
       <div className="max-w-2xl mx-auto px-6 py-24 w-full">
         <Link
           href="/"

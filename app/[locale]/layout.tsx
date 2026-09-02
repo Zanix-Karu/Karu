@@ -107,6 +107,13 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
       className={`${cormorant.variable} ${outfit.variable} ${inter.variable}`}
     >
       <body>
+        {/*
+          First thing in the tab order, visually hidden until focused. Without
+          it a keyboard user walks the whole nav on every page load.
+        */}
+        <a href="#main" className="skip-link">
+          {locale === 'fr' ? 'Aller au contenu' : 'Skip to content'}
+        </a>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

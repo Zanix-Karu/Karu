@@ -304,3 +304,25 @@ body.hovering .cursor-circle {
     display: none;
   }
 }
+
+/* ─── Skip Link ──────────────────────────────────────────────────────────── */
+/* Off-screen rather than display:none — the latter would remove it from the
+   tab order, which is the only reason it exists. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 20px;
+  background-color: var(--color-amber);
+  color: var(--color-espresso);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 0;
+}

@@ -15,7 +15,7 @@ export default async function PrivacyRightsPage({
   const { status } = await searchParams
 
   return (
-    <main className="min-h-screen bg-espresso text-cream">
+    <main id="main" className="min-h-screen bg-espresso text-cream">
       <div className="max-w-3xl mx-auto px-6 py-24">
         <Link
           href="/"
