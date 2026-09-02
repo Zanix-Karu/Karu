@@ -27,7 +27,7 @@ export default function AdminError({ error, reset }: { error: Error & { digest?:
         <button
           onClick={reset}
           style={{
-            background: '#E8A020',
+            background: '#fbd301',
             color: '#060A0E',
             border: 'none',
             padding: '10px 24px',

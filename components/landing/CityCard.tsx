@@ -22,7 +22,7 @@ export function CityCard({ name, code, coordinates, badge, description }: CityCa
       <div
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-400"
         style={{
-          background: 'radial-gradient(circle at bottom right, rgba(232,160,32,0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle at bottom right, rgba(251,211,1,0.3) 0%, transparent 70%)',
         }}
         aria-hidden="true"
       />

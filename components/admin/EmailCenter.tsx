@@ -28,7 +28,7 @@ const inputStyle: React.CSSProperties = {
 const selStyle: React.CSSProperties = { ...inputStyle, color: '#7D8A97', cursor: 'pointer' }
 
 const TYPE_BADGE: Record<string, { label: string; color: string }> = {
-  broadcast:       { label: 'BROADCAST',    color: '#E8A020' },
+  broadcast:       { label: 'BROADCAST',    color: '#fbd301' },
   customer_signup: { label: 'CUSTOMER',     color: '#34D399' },
   vendor_signup:   { label: 'VENDOR',       color: '#2EA8FF' },
 }
@@ -112,9 +112,9 @@ function TabBtn({ active, label, count, onClick }: { active: boolean; label: str
     <button
       onClick={onClick}
       style={{
-        background: active ? 'rgba(232,160,32,0.08)' : 'transparent',
-        border: 'none', borderBottom: active ? '2px solid #E8A020' : '2px solid transparent',
-        color: active ? '#E8A020' : '#3D5065',
+        background: active ? 'rgba(251,211,1,0.08)' : 'transparent',
+        border: 'none', borderBottom: active ? '2px solid #fbd301' : '2px solid transparent',
+        color: active ? '#fbd301' : '#3D5065',
         padding: '10px 20px', fontFamily: '"JetBrains Mono", monospace',
         fontSize: 9, letterSpacing: '0.2em', cursor: 'pointer',
       }}
@@ -137,7 +137,7 @@ function Row({ entry, onClick, i }: { entry: EmailLogEntry; onClick: () => void;
         background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)',
         cursor: 'pointer',
       }}
-      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(232,160,32,0.04)')}
+      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(251,211,1,0.04)')}
       onMouseLeave={e => (e.currentTarget.style.background = i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)')}
     >
       <td style={{ padding: '10px 16px' }}>
@@ -277,9 +277,9 @@ export function EmailCenter({ log }: Props) {
                   style={{
                     ...inputStyle,
                     textAlign: 'center', cursor: 'pointer', fontWeight: 700, letterSpacing: '0.15em',
-                    background: form.mode === 'single' ? 'rgba(232,160,32,0.1)' : '#060A0E',
-                    borderColor: form.mode === 'single' ? '#E8A020' : '#1C2936',
-                    color: form.mode === 'single' ? '#E8A020' : '#3D5065',
+                    background: form.mode === 'single' ? 'rgba(251,211,1,0.1)' : '#060A0E',
+                    borderColor: form.mode === 'single' ? '#fbd301' : '#1C2936',
+                    color: form.mode === 'single' ? '#fbd301' : '#3D5065',
                   }}
                 >
                   SINGLE
@@ -289,9 +289,9 @@ export function EmailCenter({ log }: Props) {
                   style={{
                     ...inputStyle,
                     textAlign: 'center', cursor: 'pointer', fontWeight: 700, letterSpacing: '0.15em',
-                    background: form.mode === 'broadcast' ? 'rgba(232,160,32,0.1)' : '#060A0E',
-                    borderColor: form.mode === 'broadcast' ? '#E8A020' : '#1C2936',
-                    color: form.mode === 'broadcast' ? '#E8A020' : '#3D5065',
+                    background: form.mode === 'broadcast' ? 'rgba(251,211,1,0.1)' : '#060A0E',
+                    borderColor: form.mode === 'broadcast' ? '#fbd301' : '#1C2936',
+                    color: form.mode === 'broadcast' ? '#fbd301' : '#3D5065',
                   }}
                 >
                   BROADCAST
@@ -362,7 +362,7 @@ export function EmailCenter({ log }: Props) {
               disabled={sending || !form.subject || !form.html || (form.mode === 'single' && !form.to)}
               style={{
                 width: '100%',
-                background: sending || !form.subject || !form.html ? '#1C2936' : '#E8A020',
+                background: sending || !form.subject || !form.html ? '#1C2936' : '#fbd301',
                 color: '#060A0E', border: 'none', padding: '13px 0',
                 fontFamily: '"JetBrains Mono", monospace', fontSize: 10, fontWeight: 700,
                 letterSpacing: '0.25em', cursor: sending ? 'not-allowed' : 'pointer', transition: 'background 0.2s',
@@ -377,13 +377,13 @@ export function EmailCenter({ log }: Props) {
             {form.html ? (
               <div style={{ background: '#1C1208', padding: 16, minHeight: 200, border: '1px solid #3D2510' }}>
                 <div style={{ textAlign: 'center', marginBottom: 16 }}>
-                  <span style={{ fontSize: 24, fontWeight: 'bold', letterSpacing: 4, color: '#E8A020' }}>KARU</span>
+                  <span style={{ fontSize: 24, fontWeight: 'bold', letterSpacing: 4, color: '#fbd301' }}>KARU</span>
                 </div>
-                <div style={{ height: 2, background: '#E8A020', marginBottom: 16 }} />
+                <div style={{ height: 2, background: '#fbd301', marginBottom: 16 }} />
                 <div style={{ color: '#F5EFE4', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>{form.subject || 'Subject'}</div>
                 <div style={{ color: '#F5EFE4', fontSize: 13, lineHeight: 1.7 }} dangerouslySetInnerHTML={{ __html: form.html }} />
                 <div style={{ textAlign: 'center', marginTop: 20 }}>
-                  <span style={{ background: '#E8A020', color: '#1C1208', padding: '8px 20px', fontSize: 11, fontWeight: 'bold' }}>Visit getkaru.io</span>
+                  <span style={{ background: '#fbd301', color: '#1C1208', padding: '8px 20px', fontSize: 11, fontWeight: 'bold' }}>Visit getkaru.io</span>
                 </div>
                 <div style={{ borderTop: '1px solid #3D2510', marginTop: 20, paddingTop: 12, textAlign: 'center', color: '#5C3A1E', fontSize: 10 }}>
                   © {new Date().getFullYear()} Karu · Douala & Yaoundé

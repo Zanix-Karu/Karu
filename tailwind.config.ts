@@ -8,23 +8,30 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Brand values mirror the app's design tokens
+      // (~/Developer/karu-app/apps/web/src/ds/tokens.css) so a visitor crossing
+      // from the marketing site to the product doesn't have to re-orient.
+      // Names stay marketing-side; only the values converge.
       colors: {
-        espresso: '#1C1208',
-        'brown-dark': '#2A1A0A',
-        'brown-mid': '#3D2510',
-        'brown-warm': '#5C3A1E',
+        espresso: '#1c1006',      // app --brown-900
+        'brown-dark': '#35200a',  // app --brown-800
+        'brown-mid': '#442d1e',   // app --brown-700
+        'brown-warm': '#53310f',  // app --brown-600
         surface: '#231508',
         'card-bg': '#2E1C0D',
         'card-border': 'rgba(255, 195, 90, 0.10)',
-        amber: '#E8A020',
-        'amber-light': '#F5BF45',
-        cream: '#F5EFE4',
-        white: '#FEFCF8',
+        amber: '#fbd301',         // app --yellow (--brand)
+        'amber-light': '#f6dc53', // app --yellow-soft
+        gold: '#edb337',          // app --gold-400
+        'gold-deep': '#a2730c',   // app --gold-600
+        cream: '#f4efe7',         // app --cream-200
+        white: '#ffffff',         // app --white
       },
       fontFamily: {
-        serif: ['var(--font-dm-serif)', 'Georgia', 'serif'],
-        serif2: ['var(--font-playfair)', 'Georgia', 'serif'],
-        sans: ['var(--font-dm-sans)', 'sans-serif'],
+        serif: ['var(--font-cormorant)', 'ui-serif', 'Georgia', 'serif'],
+        serif2: ['var(--font-cormorant)', 'ui-serif', 'Georgia', 'serif'],
+        sans: ['var(--font-outfit)', '-apple-system', 'sans-serif'],
+        ui: ['var(--font-inter)', '-apple-system', 'sans-serif'],
       },
       keyframes: {
         ticker: {

@@ -1,30 +1,32 @@
 import type { Metadata } from 'next'
-import { DM_Serif_Display, Playfair_Display, DM_Sans } from 'next/font/google'
+import { Cormorant_Garamond, Outfit, Inter } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+import { isLocale } from '@/i18n/routing'
 import '../globals.css'
+import { SITE_URL, siteUrl } from '@/lib/site-url'
 
-const dmSerif = DM_Serif_Display({
-  weight: ['400'],
-  style: ['normal', 'italic'],
+const cormorant = Cormorant_Garamond({
+  weight: ['600', '700'],
   subsets: ['latin'],
-  variable: '--font-dm-serif',
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({
-  weight: ['700', '900'],
+const outfit = Outfit({
+  weight: ['400', '600', '700', '800'],
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-outfit',
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
-  weight: ['300', '400', '500', '600'],
+const inter = Inter({
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-dm-sans',
+  variable: '--font-inter',
   display: 'swap',
 })
 
@@ -61,7 +63,7 @@ export const metadata: Metadata = {
     alternateLocale: ['fr_CM'],
     type: 'website',
     siteName: 'Karu',
-    url: 'https://getkaru.io',
+    url: SITE_URL,
   },
   twitter: {
     card: 'summary_large_image',
@@ -71,12 +73,12 @@ export const metadata: Metadata = {
     creator: '@getkaru',
   },
   robots: { index: true, follow: true },
-  metadataBase: new URL('https://getkaru.io'),
+  metadataBase: new URL(SITE_URL),
   alternates: {
-    canonical: 'https://getkaru.io',
+    canonical: SITE_URL,
     languages: {
-      'en': 'https://getkaru.io/en',
-      'fr': 'https://getkaru.io/fr',
+      'en': siteUrl('/en'),
+      'fr': siteUrl('/fr'),
     },
   },
   verification: {
@@ -91,11 +93,18 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children, params }: RootLayoutProps) {
   const { locale } = await params
+
+  // Paths containing a dot bypass the middleware matcher, so an unvalidated
+  // segment would render the landing page under `<html lang="foo.xml">` with a
+  // 200 — a soft-404 indexable as duplicate homepage content. Refuse anything
+  // that isn't a real locale.
+  if (!isLocale(locale)) notFound()
+
   const messages = await getMessages()
   return (
     <html
       lang={locale}
-      className={`${dmSerif.variable} ${playfair.variable} ${dmSans.variable}`}
+      className={`${cormorant.variable} ${outfit.variable} ${inter.variable}`}
     >
       <body>
         <NextIntlClientProvider messages={messages}>

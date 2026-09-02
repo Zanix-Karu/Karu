@@ -46,7 +46,7 @@ export default function AdminLogin() {
       <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 400, padding: '0 24px' }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <div style={{ color: '#E8A020', fontSize: 11, letterSpacing: '0.4em', marginBottom: 8 }}>
+          <div style={{ color: '#fbd301', fontSize: 11, letterSpacing: '0.4em', marginBottom: 8 }}>
             KARU OPERATIONS
           </div>
           <div style={{ color: '#3D5065', fontSize: 10, letterSpacing: '0.2em' }}>
@@ -56,7 +56,7 @@ export default function AdminLogin() {
 
         {/* Card */}
         <div style={{ background: '#0C1118', border: '1px solid #1C2936', padding: 32 }}>
-          <div style={{ borderLeft: '2px solid #E8A020', paddingLeft: 12, marginBottom: 28 }}>
+          <div style={{ borderLeft: '2px solid #fbd301', paddingLeft: 12, marginBottom: 28 }}>
             <div style={{ color: '#CDD6E0', fontSize: 13, fontWeight: 'bold', letterSpacing: '0.1em' }}>
               AUTHENTICATION REQUIRED
             </div>
@@ -79,10 +79,10 @@ export default function AdminLogin() {
                 style={{
                   width: '100%', boxSizing: 'border-box',
                   background: '#060A0E', border: '1px solid #1C2936',
-                  color: '#E8A020', fontSize: 14, padding: '10px 12px',
+                  color: '#fbd301', fontSize: 14, padding: '10px 12px',
                   outline: 'none', fontFamily: 'monospace', letterSpacing: '0.15em',
                 }}
-                onFocus={e => { e.target.style.borderColor = '#E8A020' }}
+                onFocus={e => { e.target.style.borderColor = '#fbd301' }}
                 onBlur={e => { e.target.style.borderColor = '#1C2936' }}
               />
             </div>
@@ -108,7 +108,7 @@ export default function AdminLogin() {
               type="submit"
               disabled={loading || (!!turnstileSiteKey && !turnstileToken)}
               style={{
-                width: '100%', background: (loading || (!!turnstileSiteKey && !turnstileToken)) ? '#1C2936' : '#E8A020',
+                width: '100%', background: (loading || (!!turnstileSiteKey && !turnstileToken)) ? '#1C2936' : '#fbd301',
                 color: '#060A0E', border: 'none', padding: '12px 0',
                 fontFamily: 'monospace', fontSize: 11, fontWeight: 'bold',
                 letterSpacing: '0.25em', cursor: (loading || (!!turnstileSiteKey && !turnstileToken)) ? 'not-allowed' : 'pointer',

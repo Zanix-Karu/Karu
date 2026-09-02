@@ -91,13 +91,13 @@ export default async function AnalyticsPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
           <MetricCard label="CORPORATE EMAILS" value={corpCount} sub={`${Math.round(corpCount / Math.max(rows.length, 1) * 100)}% of signups`} accent="#34D399" />
           <MetricCard label="PHONE CAPTURED" value={withPhone} sub={`${Math.round(withPhone / Math.max(vendors.length, 1) * 100)}% of vendors`} accent="#2EA8FF" />
-          <MetricCard label="BUSINESS NAME" value={withBizName} sub="profile completeness" accent="#E8A020" />
+          <MetricCard label="BUSINESS NAME" value={withBizName} sub="profile completeness" accent="#fbd301" />
           <MetricCard label="LARGE FLEET (21+)" value={vendors.filter(v => v.vehicle_count === '21+').length} sub="fleet operators" accent="#F05252" />
         </div>
 
         {/* Row 1 */}
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 12, marginBottom: 12 }}>
-          <BarChartPanel data={buckets} title="LEAD SCORE DISTRIBUTION" color="#E8A020" />
+          <BarChartPanel data={buckets} title="LEAD SCORE DISTRIBUTION" color="#fbd301" />
           <DonutChartPanel data={fleetDist} title="VENDOR FLEET SIZE" />
         </div>
 
@@ -136,8 +136,8 @@ export default async function AnalyticsPage() {
         </div>
 
         {/* Hot leads table */}
-        <div style={{ background: '#0C1118', border: '1px solid #E8A020', padding: '20px 24px' }}>
-          <div style={{ color: '#E8A020', fontSize: 9, letterSpacing: '0.2em', marginBottom: 16 }}>
+        <div style={{ background: '#0C1118', border: '1px solid #fbd301', padding: '20px 24px' }}>
+          <div style={{ color: '#fbd301', fontSize: 9, letterSpacing: '0.2em', marginBottom: 16 }}>
             HOT LEADS — PRIORITY OUTREACH ({hotLeads.length})
           </div>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11 }}>
@@ -152,7 +152,7 @@ export default async function AnalyticsPage() {
               {hotLeads.map((r, i) => (
                 <tr key={r.email} style={{ borderBottom: '1px solid #111920' }}>
                   <td style={{ padding: '8px 12px' }}>
-                    <span style={{ color: '#E8A020', fontWeight: 700 }}>{r.lead.total}</span>
+                    <span style={{ color: '#fbd301', fontWeight: 700 }}>{r.lead.total}</span>
                   </td>
                   <td style={{ padding: '8px 12px', color: '#CDD6E0' }}>{r.email}</td>
                   <td style={{ padding: '8px 12px', color: '#7D8A97', maxWidth: 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -162,7 +162,7 @@ export default async function AnalyticsPage() {
                   <td style={{ padding: '8px 12px' }}>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
                       {r.lead.flags.slice(0, 3).map((f: string) => (
-                        <span key={f} style={{ fontSize: 8, letterSpacing: '0.1em', color: '#E8A020', border: '1px solid rgba(232,160,32,0.3)', padding: '1px 5px' }}>{f}</span>
+                        <span key={f} style={{ fontSize: 8, letterSpacing: '0.1em', color: '#fbd301', border: '1px solid rgba(251,211,1,0.3)', padding: '1px 5px' }}>{f}</span>
                       ))}
                     </div>
                   </td>

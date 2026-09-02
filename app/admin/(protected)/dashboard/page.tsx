@@ -64,7 +64,7 @@ export default async function Dashboard() {
         {/* KPIs */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, marginBottom: 24 }}>
           <MetricCard label="TOTAL SIGNUPS" value={total} sub="all time" />
-          <MetricCard label="VENDORS" value={vendors} sub={`${Math.round(vendors / Math.max(total, 1) * 100)}% of total`} accent="#E8A020" />
+          <MetricCard label="VENDORS" value={vendors} sub={`${Math.round(vendors / Math.max(total, 1) * 100)}% of total`} accent="#fbd301" />
           <MetricCard label="CUSTOMERS" value={customers} sub={`${Math.round(customers / Math.max(total, 1) * 100)}% of total`} accent="#2EA8FF" />
           <MetricCard label="HOT LEADS" value={hot} sub="score ≥ 65" accent="#F05252" />
           <MetricCard label="AVG LEAD SCORE" value={avgScore} sub="/ 100" accent="#34D399" />
@@ -87,7 +87,7 @@ export default async function Dashboard() {
               { label: 'HOT', value: hot },
             ]}
             title="LEAD TIER DISTRIBUTION"
-            color="#E8A020"
+            color="#fbd301"
           />
         </div>
 
@@ -106,12 +106,12 @@ export default async function Dashboard() {
               {recent.map((r, i) => (
                 <tr key={r.email} style={{ borderBottom: '1px solid #111920', background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)' }}>
                   <td style={{ padding: '7px 12px' }}>
-                    <span style={{ color: r.lead.tier === 'HOT' ? '#E8A020' : r.lead.tier === 'WARM' ? '#2EA8FF' : '#3D5065', fontSize: 10 }}>
+                    <span style={{ color: r.lead.tier === 'HOT' ? '#fbd301' : r.lead.tier === 'WARM' ? '#2EA8FF' : '#3D5065', fontSize: 10 }}>
                       {r.lead.total} {r.lead.tier}
                     </span>
                   </td>
                   <td style={{ padding: '7px 12px', color: '#CDD6E0' }}>{r.email}</td>
-                  <td style={{ padding: '7px 12px', color: r.type === 'vendor' ? '#E8A020' : '#2EA8FF', fontSize: 9, letterSpacing: '0.15em' }}>{r.type?.toUpperCase()}</td>
+                  <td style={{ padding: '7px 12px', color: r.type === 'vendor' ? '#fbd301' : '#2EA8FF', fontSize: 9, letterSpacing: '0.15em' }}>{r.type?.toUpperCase()}</td>
                   <td style={{ padding: '7px 12px', color: '#7D8A97', fontSize: 10 }}>{r.city?.toUpperCase()}</td>
                   <td style={{ padding: '7px 12px', color: '#7D8A97', fontSize: 10 }}>{r.lead.segment}</td>
                   <td style={{ padding: '7px 12px', color: '#3D5065', fontSize: 9 }}>{r.created_at?.slice(0, 16).replace('T', ' ')}</td>

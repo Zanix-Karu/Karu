@@ -40,7 +40,7 @@ export function HeroSection() {
             height="40"
             patternUnits="userSpaceOnUse"
           >
-            <circle cx="1" cy="1" r="1" fill="#E8A020" />
+            <circle cx="1" cy="1" r="1" fill="#fbd301" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#dot-grid)" />
@@ -86,7 +86,7 @@ export function HeroSection() {
           {/* Body */}
           <path
             d="M30 90 L50 50 Q60 30 80 28 L200 24 Q230 24 250 40 L310 70 Q330 76 330 90 L330 105 Q330 112 322 112 L290 112 Q285 130 268 130 Q251 130 246 112 L94 112 Q89 130 72 130 Q55 130 50 112 L18 112 Q10 112 10 105 L10 90 Z"
-            fill="#E8A020"
+            fill="#fbd301"
           />
           {/* Windshield */}
           <path
@@ -102,10 +102,10 @@ export function HeroSection() {
           />
           {/* Front wheel */}
           <circle cx="268" cy="112" r="22" fill="#2A1A0A" />
-          <circle cx="268" cy="112" r="10" fill="#E8A020" opacity="0.4" />
+          <circle cx="268" cy="112" r="10" fill="#fbd301" opacity="0.4" />
           {/* Rear wheel */}
           <circle cx="72" cy="112" r="22" fill="#2A1A0A" />
-          <circle cx="72" cy="112" r="10" fill="#E8A020" opacity="0.4" />
+          <circle cx="72" cy="112" r="10" fill="#fbd301" opacity="0.4" />
         </svg>
       </div>
 

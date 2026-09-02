@@ -4,7 +4,10 @@
     "how_it_works": "Comment ça marche",
     "features": "Fonctionnalités",
     "cities": "Villes",
-    "cta": "Pré-inscription"
+    "cta": "Pré-inscription",
+    "menu_open": "Ouvrir le menu",
+    "menu_close": "Fermer le menu",
+    "browse_cars": "Voir les voitures"
   },
   "hero": {
     "pill": "Douala & Yaoundé · Lancement Bientôt",
@@ -14,7 +17,8 @@
     "eyebrow": "Avant Votre Arrivée",
     "description": "Karu connecte les voyageurs, la diaspora et les locaux avec des prestataires de location vérifiés à Douala et Yaoundé. Sans stress, sans arrangements cachés, sans surprises.",
     "cta_primary": "Pré-inscription Maintenant",
-    "cta_secondary": "Lister Ma Voiture →"
+    "cta_secondary": "Lister Ma Voiture →",
+    "cta_browse": "Voir les voitures →"
   },
   "ticker": {
     "phrase_1": "Prestataires Vérifiés",
@@ -187,6 +191,7 @@
   "footer": {
     "tagline": "Conçu pour le Cameroun.",
     "links": {
+      "book": "Réserver",
       "privacy": "Confidentialité",
       "terms": "Conditions",
       "contact": "Contact",
@@ -266,5 +271,10 @@
     "confirm_button": "Confirmer maintenant",
     "confirm_done": "C'est fait. Votre demande a été traitée.",
     "status_exported": "Votre export de données a été téléchargé sous forme de fichier. Nous n'avons rien d'autre à afficher."
+  },
+  "not_found": {
+    "title": "Page introuvable",
+    "body": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "cta": "Retour à l'accueil"
   }
 }

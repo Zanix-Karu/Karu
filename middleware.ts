@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
 import createMiddleware from 'next-intl/middleware'
+import { LOCALES, DEFAULT_LOCALE } from '@/i18n/routing'
 
 const intlMiddleware = createMiddleware({
-  locales: ['en', 'fr'],
-  defaultLocale: 'en',
+  locales: [...LOCALES],
+  defaultLocale: DEFAULT_LOCALE,
 })
 
 function jwtSecret(): Uint8Array | null {

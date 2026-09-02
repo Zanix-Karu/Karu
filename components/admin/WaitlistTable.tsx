@@ -126,7 +126,7 @@ export function WaitlistTable({ initialData }: Props) {
                   borderBottom: '1px solid #111920',
                   background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)',
                 }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(232,160,32,0.04)')}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(251,211,1,0.04)')}
                 onMouseLeave={e => (e.currentTarget.style.background = i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.012)')}
               >
                 <td style={{ padding: '8px 12px', whiteSpace: 'nowrap' }}>
@@ -140,7 +140,7 @@ export function WaitlistTable({ initialData }: Props) {
                 </td>
                 <td style={{ padding: '8px 12px', color: '#CDD6E0', letterSpacing: '0.03em' }}>{row.email}</td>
                 <td style={{ padding: '8px 12px' }}>
-                  <span style={{ color: row.type === 'vendor' ? '#E8A020' : '#2EA8FF', fontSize: 9, letterSpacing: '0.2em' }}>
+                  <span style={{ color: row.type === 'vendor' ? '#fbd301' : '#2EA8FF', fontSize: 9, letterSpacing: '0.2em' }}>
                     {row.type?.toUpperCase()}
                   </span>
                 </td>

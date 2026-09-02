@@ -1,3 +1,5 @@
+import { SITE_URL } from './site-url'
+
 /**
  * Wraps email body content in the Karu branded template.
  * Matches the dark espresso/amber design of the landing page.
@@ -18,13 +20,13 @@ export function wrapInKaruTemplate(bodyHtml: string, subject: string): string {
           <!-- Logo -->
           <tr>
             <td style="padding:40px 40px 24px;text-align:center;">
-              <span style="font-family:Arial,sans-serif;font-size:36px;font-weight:bold;letter-spacing:6px;color:#E8A020;">KARU</span>
+              <span style="font-family:Arial,sans-serif;font-size:36px;font-weight:bold;letter-spacing:6px;color:#fbd301;">KARU</span>
             </td>
           </tr>
           <!-- Divider -->
           <tr>
             <td style="padding:0 40px 32px;">
-              <div style="height:2px;background-color:#E8A020;border-radius:1px;"></div>
+              <div style="height:2px;background-color:#fbd301;border-radius:1px;"></div>
             </td>
           </tr>
           <!-- Subject as heading -->
@@ -42,7 +44,7 @@ export function wrapInKaruTemplate(bodyHtml: string, subject: string): string {
           <!-- CTA -->
           <tr>
             <td style="padding:0 40px 40px;text-align:center;">
-              <a href="https://getkaru.io" style="display:inline-block;padding:14px 32px;background-color:#E8A020;color:#1C1208;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;text-decoration:none;border-radius:4px;letter-spacing:0.5px;">
+              <a href="${SITE_URL}" style="display:inline-block;padding:14px 32px;background-color:#fbd301;color:#1C1208;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;text-decoration:none;border-radius:4px;letter-spacing:0.5px;">
                 Visit getkaru.io
               </a>
             </td>

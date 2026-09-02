@@ -9,6 +9,7 @@ import { FeaturesGrid } from '@/components/landing/FeaturesGrid'
 import { CitiesSection } from '@/components/landing/CitiesSection'
 import { WaitlistSection } from '@/components/landing/WaitlistSection'
 import { FooterSection } from '@/components/landing/FooterSection'
+import { SITE_URL, siteUrl } from '@/lib/site-url'
 
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -17,7 +18,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Karu',
-    url: 'https://getkaru.io',
+    url: SITE_URL,
     description: 'Verified car rental marketplace for Cameroon. Book trusted rental cars in Douala and Yaoundé before you arrive.',
     applicationCategory: 'TravelApplication',
     operatingSystem: 'Web',
@@ -33,8 +34,8 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
     provider: {
       '@type': 'Organization',
       name: 'Karu',
-      url: 'https://getkaru.io',
-      logo: 'https://getkaru.io/opengraph-image',
+      url: SITE_URL,
+      logo: siteUrl('/opengraph-image'),
       sameAs: ['https://instagram.com/getkaru.io'],
       address: {
         '@type': 'PostalAddress',
@@ -48,7 +49,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: 'Karu Car Rental Cameroon',
-    url: 'https://getkaru.io',
+    url: SITE_URL,
     description: locale === 'fr'
       ? 'Location de voitures vérifiées à Douala et Yaoundé. Réservez avant votre arrivée.'
       : 'Verified car rental in Douala and Yaoundé. Book before you arrive.',

@@ -47,7 +47,7 @@ export default async function EmailsPage() {
         <div style={{ display: 'flex', gap: 24 }}>
           <div style={{ textAlign: 'right' }}>
             <div style={{ color: '#3D5065', fontSize: 8, letterSpacing: '0.1em' }}>BROADCASTS</div>
-            <div style={{ color: '#E8A020', fontSize: 14, fontWeight: 700 }}>{broadcasts.length}</div>
+            <div style={{ color: '#fbd301', fontSize: 14, fontWeight: 700 }}>{broadcasts.length}</div>
           </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ color: '#3D5065', fontSize: 8, letterSpacing: '0.1em' }}>SIGNUPS</div>

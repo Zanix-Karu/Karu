@@ -45,8 +45,8 @@ export const scaleOnTap: Variants = {
 }
 
 export const glowPulse: Variants = {
-  rest: { boxShadow: '0 0 0 rgba(232,160,32,0)' },
-  hover: { boxShadow: '0 0 30px rgba(232,160,32,0.3)' },
+  rest: { boxShadow: '0 0 0 rgba(251,211,1,0)' },
+  hover: { boxShadow: '0 0 30px rgba(251,211,1,0.3)' },
 }
 
 /** Standard viewport trigger options — always use once: true */

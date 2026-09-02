@@ -4,7 +4,10 @@
     "how_it_works": "How it works",
     "features": "Features",
     "cities": "Cities",
-    "cta": "Pre-Register"
+    "cta": "Pre-Register",
+    "menu_open": "Open menu",
+    "menu_close": "Close menu",
+    "browse_cars": "Browse Cars"
   },
   "hero": {
     "pill": "Douala & Yaoundé · Launching Soon",
@@ -14,7 +17,8 @@
     "eyebrow": "Before You Arrive",
     "description": "Karu connects travellers, diaspora, and locals with verified car rental providers in Douala and Yaoundé. No stress, no hidden arrangements, no surprises.",
     "cta_primary": "Pre-Register Now",
-    "cta_secondary": "List Your Car →"
+    "cta_secondary": "List Your Car →",
+    "cta_browse": "Browse Cars →"
   },
   "ticker": {
     "phrase_1": "Verified Providers",
@@ -187,6 +191,7 @@
   "footer": {
     "tagline": "Built for Cameroon.",
     "links": {
+      "book": "Book a Car",
       "privacy": "Privacy",
       "terms": "Terms",
       "contact": "Contact",
@@ -266,5 +271,10 @@
     "confirm_button": "Confirm now",
     "confirm_done": "Done. Your request has been completed.",
     "status_exported": "Your data export has been downloaded as a file. We hold nothing further to show."
+  },
+  "not_found": {
+    "title": "Page not found",
+    "body": "The page you are looking for does not exist or has been moved.",
+    "cta": "Go home"
   }
 }

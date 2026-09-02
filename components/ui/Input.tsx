@@ -32,7 +32,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               'peer w-full bg-[var(--color-card-bg)] text-cream placeholder:text-cream/30',
               'border border-[var(--color-card-border)] px-4 py-3.5 text-[0.95rem]',
               'outline-none transition-all duration-200',
-              'focus:border-amber focus:shadow-[0_0_0_3px_rgba(232,160,32,0.15)]',
+              'focus:border-amber focus:shadow-[0_0_0_3px_rgba(251,211,1,0.15)]',
               error
                 ? 'border-red-500/70 focus:border-red-500 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.15)]'
                 : '',

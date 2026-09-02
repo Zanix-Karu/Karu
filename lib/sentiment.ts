@@ -103,5 +103,5 @@ export function scoreEntry(entry: {
 }
 
 export function tierColor(tier: 'HOT' | 'WARM' | 'COLD'): string {
-  return tier === 'HOT' ? '#E8A020' : tier === 'WARM' ? '#2EA8FF' : '#3D5065'
+  return tier === 'HOT' ? '#fbd301' : tier === 'WARM' ? '#2EA8FF' : '#3D5065'
 }

@@ -30,7 +30,7 @@ export function Sidebar() {
     }}>
       {/* Logo */}
       <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid #1C2936' }}>
-        <div style={{ color: '#E8A020', fontSize: 13, fontWeight: 'bold', letterSpacing: '0.35em', fontFamily: 'monospace' }}>
+        <div style={{ color: '#fbd301', fontSize: 13, fontWeight: 'bold', letterSpacing: '0.35em', fontFamily: 'monospace' }}>
           KARU
         </div>
         <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.2em', marginTop: 4, fontFamily: 'monospace' }}>
@@ -55,9 +55,9 @@ export function Sidebar() {
               style={{
                 display: 'flex', alignItems: 'center', gap: 10,
                 padding: '10px 20px',
-                background: active ? 'rgba(232,160,32,0.07)' : 'transparent',
-                borderLeft: active ? '2px solid #E8A020' : '2px solid transparent',
-                color: active ? '#E8A020' : '#3D5065',
+                background: active ? 'rgba(251,211,1,0.07)' : 'transparent',
+                borderLeft: active ? '2px solid #fbd301' : '2px solid transparent',
+                color: active ? '#fbd301' : '#3D5065',
                 textDecoration: 'none',
                 fontSize: 10, fontWeight: 'bold', letterSpacing: '0.2em',
                 fontFamily: 'monospace',
