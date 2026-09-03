@@ -24,7 +24,7 @@ export default async function PrivacyRightsPage({
           {t('back')}
         </Link>
 
-        <h1 className="font-serif2 font-black text-[clamp(2rem,5vw,3.5rem)] text-cream mb-8">
+        <h1 className="font-serif2 font-bold text-[clamp(2rem,5vw,3.5rem)] text-cream mb-8">
           {t('title')}
         </h1>
 

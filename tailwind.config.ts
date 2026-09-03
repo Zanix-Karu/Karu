@@ -31,7 +31,7 @@ const config: Config = {
         serif: ['var(--font-cormorant)', 'ui-serif', 'Georgia', 'serif'],
         serif2: ['var(--font-cormorant)', 'ui-serif', 'Georgia', 'serif'],
         sans: ['var(--font-outfit)', '-apple-system', 'sans-serif'],
-        ui: ['var(--font-inter)', '-apple-system', 'sans-serif'],
+        ui: ['var(--font-outfit)', '-apple-system', 'sans-serif'],
       },
       keyframes: {
         ticker: {

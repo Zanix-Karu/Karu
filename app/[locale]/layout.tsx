@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Outfit, Inter } from 'next/font/google'
+import { Cormorant_Garamond, Outfit } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { NextIntlClientProvider } from 'next-intl'
@@ -17,18 +17,12 @@ const cormorant = Cormorant_Garamond({
 })
 
 const outfit = Outfit({
-  weight: ['400', '600', '700', '800'],
+  weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-outfit',
   display: 'swap',
 })
 
-const inter = Inter({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: {
@@ -104,7 +98,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   return (
     <html
       lang={locale}
-      className={`${cormorant.variable} ${outfit.variable} ${inter.variable}`}
+      className={`${cormorant.variable} ${outfit.variable}`}
     >
       <body>
         {/*

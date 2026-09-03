@@ -103,7 +103,7 @@ export function AnimatedHeroContent() {
         {/* ── Headline — Cormorant Garamond, matching the app ── */}
         <motion.h1
           variants={itemVariants}
-          className="font-serif2 font-black leading-[0.95] tracking-tight text-white mb-4"
+          className="font-serif2 font-bold leading-[0.95] tracking-tight text-white mb-4"
           style={{ fontSize: 'clamp(3.4rem, 9vw, 8.5rem)' }}
         >
           <span className="block">{t('title_line1')}</span>

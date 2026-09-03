@@ -39,7 +39,7 @@ export function FeatureCard({ label, description, index }: FeatureCardProps) {
 
       {/* Ghost number — scales up on hover */}
       <span
-        className="absolute bottom-0 right-2 font-serif2 text-[8rem] font-black opacity-[0.05] text-cream select-none pointer-events-none leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-bottom-right"
+        className="absolute bottom-0 right-2 font-serif2 text-[8rem] font-bold opacity-[0.05] text-cream select-none pointer-events-none leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-bottom-right"
         aria-hidden="true"
       >
         {ghostNumber}

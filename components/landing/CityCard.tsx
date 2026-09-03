@@ -29,7 +29,7 @@ export function CityCard({ name, code, coordinates, badge, description }: CityCa
 
       {/* Ghost city code */}
       <span
-        className="absolute right-0 top-1/2 -translate-y-1/2 font-serif2 font-black text-[6rem] md:text-[10rem] leading-none opacity-[0.025] text-cream select-none pointer-events-none"
+        className="absolute right-0 top-1/2 -translate-y-1/2 font-serif2 font-bold text-[6rem] md:text-[10rem] leading-none opacity-[0.025] text-cream select-none pointer-events-none"
         aria-hidden="true"
       >
         {code}
@@ -49,7 +49,7 @@ export function CityCard({ name, code, coordinates, badge, description }: CityCa
         </div>
 
         {/* City name */}
-        <h3 className="font-serif2 font-black text-[2.8rem] md:text-[4rem] leading-none text-cream">
+        <h3 className="font-serif2 font-bold text-[2.8rem] md:text-[4rem] leading-none text-cream">
           {name}
         </h3>
 

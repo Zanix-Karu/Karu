@@ -41,7 +41,7 @@ export function StatsRow() {
               .join(' ')}
           >
             {/* Number */}
-            <div className="font-serif2 font-black text-[2.4rem] md:text-[3.2rem] leading-none text-cream">
+            <div className="font-serif2 font-bold text-[2.4rem] md:text-[3.2rem] leading-none text-cream">
               {stat.isStatic ? (
                 <span>{t(stat.valueKey)}</span>
               ) : (

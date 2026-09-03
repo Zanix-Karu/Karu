@@ -38,7 +38,7 @@
   --font-serif:  var(--font-cormorant), ui-serif, Georgia, serif;
   --font-serif2: var(--font-cormorant), ui-serif, Georgia, serif;
   --font-sans:   var(--font-outfit), -apple-system, sans-serif;
-  --font-ui:     var(--font-inter), -apple-system, sans-serif;
+  --font-ui:     var(--font-outfit), -apple-system, sans-serif;
 }
 
 /* ─── Base Styles ────────────────────────────────────────────────────────── */
