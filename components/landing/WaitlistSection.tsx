@@ -46,9 +46,9 @@ function waitlistReducer(state: WaitlistState, action: WaitlistAction): Waitlist
 function AmberCheckmark() {
   return (
     <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-      <circle cx="28" cy="28" r="28" fill="#E8A020" fillOpacity="0.15" />
-      <circle cx="28" cy="28" r="20" fill="#E8A020" fillOpacity="0.25" />
-      <path d="M18 28.5L24.5 35L38 21" stroke="#E8A020" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="28" cy="28" r="28" fill="#fbd301" fillOpacity="0.15" />
+      <circle cx="28" cy="28" r="20" fill="#fbd301" fillOpacity="0.25" />
+      <path d="M18 28.5L24.5 35L38 21" stroke="#fbd301" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -276,7 +276,7 @@ export function WaitlistSection() {
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(232,160,32,0.06) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(251,211,1,0.06) 0%, transparent 70%)' }}
       />
 
       <div className="relative z-10 w-full max-w-lg mx-auto text-center px-2 sm:px-0">
@@ -359,7 +359,7 @@ export function WaitlistSection() {
                     transition={{ duration: 0.4, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     whileHover={{ scale: 1.03, y: -2 }}
                     whileTap={{ scale: 0.97 }}
-                    className="px-4 py-5 text-[0.85rem] font-semibold tracking-[0.06em] uppercase border border-cream/10 bg-card-bg text-cream/70 hover:border-amber hover:text-amber hover:shadow-[0_8px_30px_rgba(232,160,32,0.15)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                    className="px-4 py-5 text-[0.85rem] font-semibold tracking-[0.06em] uppercase border border-cream/10 bg-card-bg text-cream/70 hover:border-amber hover:text-amber hover:shadow-[0_8px_30px_rgba(251,211,1,0.15)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
                   >
                     {label}
                   </motion.button>

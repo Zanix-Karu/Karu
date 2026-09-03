@@ -3,33 +3,42 @@
 @tailwind utilities;
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────── */
+/*
+ * Values mirror the product app's tokens
+ * (~/Developer/karu-app/apps/web/src/ds/tokens.css). The marketing site keeps
+ * its dark structure and its own token names; only the brand values converge,
+ * so crossing from getkaru.io to app.getkaru.io reads as one product.
+ */
 :root {
   /* Backgrounds */
-  --color-espresso:    #1C1208;
-  --color-brown-dark:  #2A1A0A;
-  --color-brown-mid:   #3D2510;
-  --color-brown-warm:  #5C3A1E;
+  --color-espresso:    #1c1006;   /* app --brown-900 */
+  --color-brown-dark:  #35200a;   /* app --brown-800 */
+  --color-brown-mid:   #442d1e;   /* app --brown-700 */
+  --color-brown-warm:  #53310f;   /* app --brown-600 */
   --color-surface:     #231508;
   --color-card-bg:     #2E1C0D;
   --color-card-border: rgba(255, 195, 90, 0.10);
 
-  /* Accent */
-  --color-amber:       #E8A020;
-  --color-amber-light: #F5BF45;
-  --color-amber-pale:  rgba(232, 160, 32, 0.12);
-  --color-amber-glow:  rgba(232, 160, 32, 0.30);
+  /* Accent — the app's yellow is the brand; gold is the secondary/link tone */
+  --color-amber:       #fbd301;   /* app --yellow / --brand */
+  --color-amber-light: #f6dc53;   /* app --yellow-soft */
+  --color-gold:        #edb337;   /* app --gold-400 */
+  --color-gold-deep:   #a2730c;   /* app --gold-600 */
+  --color-amber-pale:  rgba(251, 211, 1, 0.12);
+  --color-amber-glow:  rgba(251, 211, 1, 0.30);
 
   /* Text */
-  --color-cream:       #F5EFE4;
-  --color-cream-dim:   rgba(245, 239, 228, 0.50);
-  --color-cream-faint: rgba(245, 239, 228, 0.20);
-  --color-cream-ghost: rgba(245, 239, 228, 0.07);
-  --color-white:       #FEFCF8;
+  --color-cream:       #f4efe7;   /* app --cream-200 */
+  --color-cream-dim:   rgba(244, 239, 231, 0.50);
+  --color-cream-faint: rgba(244, 239, 231, 0.20);
+  --color-cream-ghost: rgba(244, 239, 231, 0.07);
+  --color-white:       #ffffff;
 
-  /* Typography */
-  --font-serif:  var(--font-dm-serif), Georgia, serif;
-  --font-serif2: var(--font-playfair), Georgia, serif;
-  --font-sans:   var(--font-dm-sans), sans-serif;
+  /* Typography — same families the app loads */
+  --font-serif:  var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-serif2: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-sans:   var(--font-outfit), -apple-system, sans-serif;
+  --font-ui:     var(--font-outfit), -apple-system, sans-serif;
 }
 
 /* ─── Base Styles ────────────────────────────────────────────────────────── */
@@ -171,18 +180,29 @@ body.hovering .cursor-circle {
 
 /* ─── Nav CTA Pulse ──────────────────────────────────────────────────────── */
 @keyframes ctaPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 160, 32, 0.4); }
-  50%      { box-shadow: 0 0 0 6px rgba(232, 160, 32, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 211, 1, 0.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(251, 211, 1, 0); }
 }
 
 .nav-cta-pulse {
   animation: ctaPulse 2.5s ease-in-out infinite;
 }
 
+/* ─── Mobile Nav Panel ───────────────────────────────────────────────────── */
+/* Entry only — the panel unmounts on close. The global reduced-motion block
+   below neutralises this for anyone who asks for less movement. */
+@keyframes navPanelIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.nav-panel-in {
+  animation: navPanelIn 0.18s ease-out;
+}
+
 /* ─── Waitlist Glow ──────────────────────────────────────────────────────── */
 @keyframes formGlow {
-  0%, 100% { box-shadow: 0 0 20px 0 rgba(232, 160, 32, 0); }
-  50%      { box-shadow: 0 0 30px 2px rgba(232, 160, 32, 0.08); }
+  0%, 100% { box-shadow: 0 0 20px 0 rgba(251, 211, 1, 0); }
+  50%      { box-shadow: 0 0 30px 2px rgba(251, 211, 1, 0.08); }
 }
 
 .waitlist-glow {
@@ -283,4 +303,26 @@ body.hovering .cursor-circle {
   .grain-overlay {
     display: none;
   }
+}
+
+/* ─── Skip Link ──────────────────────────────────────────────────────────── */
+/* Off-screen rather than display:none — the latter would remove it from the
+   tab order, which is the only reason it exists. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 20px;
+  background-color: var(--color-amber);
+  color: var(--color-espresso);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 0;
 }

@@ -6,7 +6,7 @@ interface MetricCardProps {
   delta?: { value: string; positive: boolean }
 }
 
-export function MetricCard({ label, value, sub, accent = '#E8A020', delta }: MetricCardProps) {
+export function MetricCard({ label, value, sub, accent = '#fbd301', delta }: MetricCardProps) {
   return (
     <div style={{
       background: '#0C1118', border: '1px solid #1C2936',

@@ -50,7 +50,7 @@ export function AboutSection() {
               <div>
                 <a
                   href="#waitlist"
-                  className="relative overflow-hidden inline-flex items-center justify-center font-sans text-[0.85rem] font-semibold tracking-[0.07em] uppercase transition-all duration-250 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-espresso bg-amber text-espresso px-10 py-[15px] hover:-translate-y-[3px] hover:shadow-[0_18px_55px_rgba(232,160,32,0.4)] active:scale-[0.98]"
+                  className="relative overflow-hidden inline-flex items-center justify-center font-sans text-[0.85rem] font-semibold tracking-[0.07em] uppercase transition-all duration-250 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-espresso bg-amber text-espresso px-10 py-[15px] hover:-translate-y-[3px] hover:shadow-[0_18px_55px_rgba(251,211,1,0.4)] active:scale-[0.98]"
                 >
                   {t('cta')}
                 </a>

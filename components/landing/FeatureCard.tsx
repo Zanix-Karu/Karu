@@ -32,14 +32,14 @@ export function FeatureCard({ label, description, index }: FeatureCardProps) {
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
-          background: 'linear-gradient(135deg, rgba(232,160,32,0.04) 0%, transparent 50%, rgba(232,160,32,0.02) 100%)',
+          background: 'linear-gradient(135deg, rgba(251,211,1,0.04) 0%, transparent 50%, rgba(251,211,1,0.02) 100%)',
         }}
         aria-hidden="true"
       />
 
       {/* Ghost number — scales up on hover */}
       <span
-        className="absolute bottom-0 right-2 font-serif2 text-[8rem] font-black opacity-[0.05] text-cream select-none pointer-events-none leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-bottom-right"
+        className="absolute bottom-0 right-2 font-serif2 text-[8rem] font-bold opacity-[0.05] text-cream select-none pointer-events-none leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-bottom-right"
         aria-hidden="true"
       >
         {ghostNumber}

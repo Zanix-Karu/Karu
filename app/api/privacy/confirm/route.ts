@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 import { verifyPrivacyToken } from '@/lib/privacy-token'
 import { isAllowedOrigin, hasXhrHeader } from '@/lib/origin'
 import { rateLimit, rateLimitKeyForIp } from '@/lib/rate-limit'
+import { SITE_URL } from '@/lib/site-url'
 
 /**
  * /api/privacy/confirm — two-step data subject request confirmation.
@@ -19,7 +20,6 @@ import { rateLimit, rateLimitKeyForIp } from '@/lib/rate-limit'
  * token proves ownership. Tokens are single-use and expire after 24 hours.
  */
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://getkaru.io'
 const CONFIRM_COOKIE = 'karu_pconfirm'
 
 function redirectTo(locale: string, status: string): NextResponse {

@@ -22,14 +22,14 @@ export function CityCard({ name, code, coordinates, badge, description }: CityCa
       <div
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-400"
         style={{
-          background: 'radial-gradient(circle at bottom right, rgba(232,160,32,0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle at bottom right, rgba(251,211,1,0.3) 0%, transparent 70%)',
         }}
         aria-hidden="true"
       />
 
       {/* Ghost city code */}
       <span
-        className="absolute right-0 top-1/2 -translate-y-1/2 font-serif2 font-black text-[6rem] md:text-[10rem] leading-none opacity-[0.025] text-cream select-none pointer-events-none"
+        className="absolute right-0 top-1/2 -translate-y-1/2 font-serif2 font-bold text-[6rem] md:text-[10rem] leading-none opacity-[0.025] text-cream select-none pointer-events-none"
         aria-hidden="true"
       >
         {code}
@@ -49,7 +49,7 @@ export function CityCard({ name, code, coordinates, badge, description }: CityCa
         </div>
 
         {/* City name */}
-        <h3 className="font-serif2 font-black text-[2.8rem] md:text-[4rem] leading-none text-cream">
+        <h3 className="font-serif2 font-bold text-[2.8rem] md:text-[4rem] leading-none text-cream">
           {name}
         </h3>
 

@@ -14,8 +14,8 @@ const tooltipStyle = {
     boxShadow: '0 4px 20px rgba(0,0,0,0.6)',
   },
   labelStyle: { color: '#7D8A97', marginBottom: 4, letterSpacing: '0.1em' },
-  itemStyle: { color: '#E8A020', letterSpacing: '0.05em' },
-  cursor: { stroke: '#E8A020', strokeWidth: 1, strokeDasharray: '4 4' },
+  itemStyle: { color: '#fbd301', letterSpacing: '0.05em' },
+  cursor: { stroke: '#fbd301', strokeWidth: 1, strokeDasharray: '4 4' },
 }
 
 const axisStyle = { fill: '#3D5065', fontSize: 9, fontFamily: '"JetBrains Mono", monospace' }
@@ -38,7 +38,7 @@ export function TrendChart({ data, title }: TrendChartProps) {
         <div style={{ display: 'flex', gap: 16 }}>
           <div style={{ textAlign: 'right' }}>
             <div style={{ color: '#3D5065', fontSize: 8, letterSpacing: '0.1em' }}>PEAK</div>
-            <div style={{ color: '#E8A020', fontSize: 12, fontWeight: 700 }}>{max}</div>
+            <div style={{ color: '#fbd301', fontSize: 12, fontWeight: 700 }}>{max}</div>
           </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ color: '#3D5065', fontSize: 8, letterSpacing: '0.1em' }}>AVG/DAY</div>
@@ -54,8 +54,8 @@ export function TrendChart({ data, title }: TrendChartProps) {
           <YAxis tick={axisStyle} axisLine={false} tickLine={false} allowDecimals={false} />
           <Tooltip {...tooltipStyle} formatter={(v: number) => [v, 'SIGNUPS']} />
           <Line
-            type="monotone" dataKey="count" stroke="#E8A020" strokeWidth={1.5}
-            dot={false} activeDot={{ r: 4, fill: '#E8A020', stroke: '#060A0E', strokeWidth: 2 }}
+            type="monotone" dataKey="count" stroke="#fbd301" strokeWidth={1.5}
+            dot={false} activeDot={{ r: 4, fill: '#fbd301', stroke: '#060A0E', strokeWidth: 2 }}
             isAnimationActive
           />
         </LineChart>
@@ -72,7 +72,7 @@ interface BarProps {
   color?: string
 }
 
-export function BarChartPanel({ data, title, color = '#E8A020' }: BarProps) {
+export function BarChartPanel({ data, title, color = '#fbd301' }: BarProps) {
   return (
     <div style={{ background: '#0C1118', border: '1px solid #1C2936', padding: '20px 24px' }}>
       <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.2em', marginBottom: 20 }}>{title}</div>
@@ -83,7 +83,7 @@ export function BarChartPanel({ data, title, color = '#E8A020' }: BarProps) {
           <YAxis tick={axisStyle} axisLine={false} tickLine={false} allowDecimals={false} />
           <Tooltip
             {...tooltipStyle}
-            cursor={{ fill: 'rgba(232,160,32,0.06)' }}
+            cursor={{ fill: 'rgba(251,211,1,0.06)' }}
             formatter={(v: number) => [v, 'COUNT']}
           />
           <Bar dataKey="value" fill={color} radius={0} isAnimationActive maxBarSize={48}
@@ -97,7 +97,7 @@ export function BarChartPanel({ data, title, color = '#E8A020' }: BarProps) {
 
 // ── Donut chart ──────────────────────────────────────────────────────────────
 
-const PALETTE = ['#E8A020', '#2EA8FF', '#34D399', '#F05252', '#A78BFA', '#FB7185', '#6EE7B7', '#FCD34D']
+const PALETTE = ['#fbd301', '#2EA8FF', '#34D399', '#F05252', '#A78BFA', '#FB7185', '#6EE7B7', '#FCD34D']
 
 interface DonutProps {
   data: { label: string; value: number }[]

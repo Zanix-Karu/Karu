@@ -6,7 +6,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
       <body style={{ margin: 0, background: '#1C1208', fontFamily: 'system-ui, sans-serif' }}>
         <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
           <div style={{ textAlign: 'center', maxWidth: 400 }}>
-            <div style={{ color: '#E8A020', fontSize: 48, fontWeight: 'bold', marginBottom: 16 }}>Error</div>
+            <div style={{ color: '#fbd301', fontSize: 48, fontWeight: 'bold', marginBottom: 16 }}>Error</div>
             <p style={{ color: 'rgba(255,248,235,0.7)', fontSize: 16, lineHeight: 1.6, marginBottom: 24 }}>
               Something went wrong. Please try again.
             </p>
@@ -19,7 +19,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
               onClick={reset}
               style={{
                 padding: '12px 32px',
-                background: '#E8A020',
+                background: '#fbd301',
                 color: '#1C1208',
                 border: 'none',
                 fontWeight: 600,

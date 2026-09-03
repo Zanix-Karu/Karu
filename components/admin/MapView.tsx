@@ -90,7 +90,7 @@ export function MapView({ points }: Props) {
           .leaflet-bar a { background: #0C1118 !important; border: 1px solid #1C2936 !important;
             color: #7D8A97 !important; border-radius: 0 !important; width: 28px !important; height: 28px !important;
             line-height: 28px !important; }
-          .leaflet-bar a:hover { background: #1C2936 !important; color: #E8A020 !important; }
+          .leaflet-bar a:hover { background: #1C2936 !important; color: #fbd301 !important; }
           .leaflet-bar { border: none !important; box-shadow: none !important; }
           .leaflet-tile-pane { filter: brightness(0.85) contrast(1.1); }
         `
@@ -100,7 +100,7 @@ export function MapView({ points }: Props) {
         points.forEach(p => {
           if (!p.lat || !p.lng) return
           const isVendor = p.type === 'vendor'
-          const color = isVendor ? '#E8A020' : '#2EA8FF'
+          const color = isVendor ? '#fbd301' : '#2EA8FF'
           const size = isVendor ? 10 : 8
 
           const icon = L.divIcon({
@@ -154,10 +154,10 @@ export function MapView({ points }: Props) {
         {hovered && (
           <div style={{
             position: 'absolute', top: 16, left: 16, zIndex: 1000,
-            background: '#0C1118', border: `1px solid ${hovered.type === 'vendor' ? '#E8A020' : '#2EA8FF'}`,
+            background: '#0C1118', border: `1px solid ${hovered.type === 'vendor' ? '#fbd301' : '#2EA8FF'}`,
             padding: '12px 16px', minWidth: 200, pointerEvents: 'none',
           }}>
-            <div style={{ color: hovered.type === 'vendor' ? '#E8A020' : '#2EA8FF', fontSize: 9, letterSpacing: '0.2em', marginBottom: 8 }}>
+            <div style={{ color: hovered.type === 'vendor' ? '#fbd301' : '#2EA8FF', fontSize: 9, letterSpacing: '0.2em', marginBottom: 8 }}>
               {hovered.type.toUpperCase()} · {hovered.city?.toUpperCase()}
             </div>
             <div style={{ color: '#CDD6E0', fontSize: 11, marginBottom: 4 }}>{hovered.email}</div>
@@ -203,7 +203,7 @@ export function MapView({ points }: Props) {
         {/* Stats */}
         <div style={{ background: '#0C1118', border: '1px solid #1C2936', padding: '16px 20px' }}>
           <div style={{ color: '#3D5065', fontSize: 9, letterSpacing: '0.2em', marginBottom: 14 }}>SIGNAL TYPES</div>
-          {([['VENDOR', '#E8A020', vendorCount], ['CUSTOMER', '#2EA8FF', customerCount]] as const).map(([label, color, count]) => (
+          {([['VENDOR', '#fbd301', vendorCount], ['CUSTOMER', '#2EA8FF', customerCount]] as const).map(([label, color, count]) => (
             <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
               <div style={{ width: 8, height: 8, background: color, boxShadow: `0 0 6px ${color}` }} />
               <span style={{ color: '#7D8A97', fontSize: 10, flex: 1 }}>{label}</span>
@@ -212,7 +212,7 @@ export function MapView({ points }: Props) {
           ))}
           <div style={{ borderTop: '1px solid #1C2936', marginTop: 10, paddingTop: 10, display: 'flex', justifyContent: 'space-between' }}>
             <span style={{ color: '#3D5065', fontSize: 9 }}>TOTAL SIGNALS</span>
-            <span style={{ color: '#E8A020', fontSize: 10, fontWeight: 700 }}>{points.length}</span>
+            <span style={{ color: '#fbd301', fontSize: 10, fontWeight: 700 }}>{points.length}</span>
           </div>
         </div>
 
@@ -233,7 +233,7 @@ export function MapView({ points }: Props) {
                   <span style={{ color: '#CDD6E0', fontSize: 10 }}>{count} <span style={{ color: '#3D5065' }}>({pct}%)</span></span>
                 </div>
                 <div style={{ height: 2, background: '#1C2936' }}>
-                  <div style={{ height: '100%', width: `${pct}%`, background: '#E8A020', transition: 'width 0.6s ease' }} />
+                  <div style={{ height: '100%', width: `${pct}%`, background: '#fbd301', transition: 'width 0.6s ease' }} />
                 </div>
               </div>
             )

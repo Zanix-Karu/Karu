@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import { APP_URL } from '@/lib/site-url'
 
 interface FooterLink {
   label: string
@@ -7,6 +8,7 @@ interface FooterLink {
 }
 
 const LINK_HREFS: Record<string, string> = {
+  book: APP_URL,
   privacy: '/privacy',
   terms: '/terms',
   contact: '/contact',

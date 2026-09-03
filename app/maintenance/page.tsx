@@ -9,7 +9,7 @@ export default function MaintenancePage() {
       <motion.div
         className="absolute w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(232,160,32,0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(251,211,1,0.08) 0%, transparent 70%)',
         }}
         animate={{
           scale: [1, 1.2, 1],

@@ -28,7 +28,7 @@ export function StepCard({ number, title, description }: StepCardProps) {
         {/* Glow behind diamond */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ boxShadow: '0 0 20px rgba(232,160,32,0.4)', transform: 'scale(1.5)' }}
+          style={{ boxShadow: '0 0 20px rgba(251,211,1,0.4)', transform: 'scale(1.5)' }}
           aria-hidden="true"
         />
         <span

@@ -13,10 +13,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       primary:
-        'bg-amber text-espresso px-10 py-[15px] hover:-translate-y-[3px] hover:shadow-[0_18px_55px_rgba(232,160,32,0.4)] active:scale-[0.98]',
+        'bg-amber text-espresso px-10 py-[15px] hover:-translate-y-[3px] hover:shadow-[0_18px_55px_rgba(251,211,1,0.4)] active:scale-[0.98]',
       ghost:
         'bg-transparent text-cream border border-cream/20 px-10 py-[15px] font-medium hover:border-amber hover:text-amber hover:-translate-y-[3px] active:scale-[0.98]',
-      nav: 'bg-amber text-espresso px-7 py-[11px] hover:-translate-y-[2px] hover:shadow-[0_12px_35px_rgba(232,160,32,0.35)] active:scale-[0.98]',
+      nav: 'bg-amber text-espresso px-7 py-[11px] hover:-translate-y-[2px] hover:shadow-[0_12px_35px_rgba(251,211,1,0.35)] active:scale-[0.98]',
     }
 
     return (

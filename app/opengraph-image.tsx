@@ -27,7 +27,7 @@ export default function OgImage() {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: 'radial-gradient(circle, rgba(232,160,32,0.15) 1px, transparent 1px)',
+            backgroundImage: 'radial-gradient(circle, rgba(251,211,1,0.15) 1px, transparent 1px)',
             backgroundSize: '40px 40px',
           }}
         />
@@ -38,7 +38,7 @@ export default function OgImage() {
             position: 'absolute',
             width: '600px',
             height: '300px',
-            background: 'radial-gradient(ellipse, rgba(232,160,32,0.12) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse, rgba(251,211,1,0.12) 0%, transparent 70%)',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
@@ -51,7 +51,7 @@ export default function OgImage() {
             fontSize: '72px',
             fontWeight: 900,
             letterSpacing: '0.2em',
-            color: '#E8A020',
+            color: '#fbd301',
             marginBottom: '24px',
             display: 'flex',
           }}
@@ -64,7 +64,7 @@ export default function OgImage() {
           style={{
             width: '80px',
             height: '2px',
-            background: '#E8A020',
+            background: '#fbd301',
             marginBottom: '28px',
             display: 'flex',
           }}

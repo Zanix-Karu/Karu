@@ -7,6 +7,7 @@ import { createPrivacyToken, PrivacyRequestType } from '@/lib/privacy-token'
 import { wrapInKaruTemplate } from '@/lib/email-template'
 import { isAllowedOrigin } from '@/lib/origin'
 import { rateLimit, rateLimitKeyForIp } from '@/lib/rate-limit'
+import { SITE_URL } from '@/lib/site-url'
 
 /**
  * POST /api/privacy/request — Law 2024/017 data subject rights entry point.
@@ -25,8 +26,6 @@ const PrivacyRequestSchema = z.object({
   locale: z.enum(['en', 'fr']).optional().default('en'),
   turnstile_token: z.string().optional(),
 })
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://getkaru.io'
 
 const COPY = {
   en: {
@@ -241,7 +240,7 @@ export async function POST(request: NextRequest) {
       <p>${copy.intro[request_type]}</p>
       <p>${copy.action}</p>
       <p style="text-align:center;margin:28px 0;">
-        <a href="${confirmUrl}" style="display:inline-block;padding:14px 32px;background-color:#E8A020;color:#1C1208;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;text-decoration:none;border-radius:4px;letter-spacing:0.5px;">${copy.button}</a>
+        <a href="${confirmUrl}" style="display:inline-block;padding:14px 32px;background-color:#fbd301;color:#1C1208;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;text-decoration:none;border-radius:4px;letter-spacing:0.5px;">${copy.button}</a>
       </p>
       <p style="font-size:13px;color:#8B6A3E;">${copy.ignore}</p>
     `

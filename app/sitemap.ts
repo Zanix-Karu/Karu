@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/site-url'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://getkaru.io'
+  const baseUrl = SITE_URL
   const now = new Date()
 
   return [

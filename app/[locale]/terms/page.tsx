@@ -5,7 +5,7 @@ export default function TermsPage() {
   const t = useTranslations('terms')
 
   return (
-    <main className="min-h-screen bg-espresso text-cream">
+    <main id="main" className="min-h-screen bg-espresso text-cream">
       <div className="max-w-3xl mx-auto px-6 py-24">
         <Link
           href="/"
@@ -14,7 +14,7 @@ export default function TermsPage() {
           {t('back')}
         </Link>
 
-        <h1 className="font-serif2 font-black text-[clamp(2rem,5vw,3.5rem)] text-cream mb-4">
+        <h1 className="font-serif2 font-bold text-[clamp(2rem,5vw,3.5rem)] text-cream mb-4">
           {t('title')}
         </h1>
         <p className="text-cream/40 text-[0.78rem] mb-12">{t('updated')}</p>
