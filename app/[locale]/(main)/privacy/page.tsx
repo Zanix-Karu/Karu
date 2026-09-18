@@ -1,5 +1,25 @@
+import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
+import { siteUrl } from '@/lib/site-url'
+import type { Locale } from '@/i18n/routing'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'privacy' })
+  return {
+    title: t('title'),
+    alternates: {
+      canonical: siteUrl(`/${locale}/privacy`),
+      languages: { en: siteUrl('/en/privacy'), fr: siteUrl('/fr/privacy') },
+    },
+  }
+}
 
 export default function PrivacyPage() {
   const t = useTranslations('privacy')
