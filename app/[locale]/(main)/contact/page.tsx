@@ -1,5 +1,26 @@
+import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
+import { siteUrl } from '@/lib/site-url'
+import type { Locale } from '@/i18n/routing'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'contact' })
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: {
+      canonical: siteUrl(`/${locale}/contact`),
+      languages: { en: siteUrl('/en/contact'), fr: siteUrl('/fr/contact') },
+    },
+  }
+}
 
 export default function ContactPage() {
   const t = useTranslations('contact')
