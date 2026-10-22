@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { cardHover } from '@/lib/animations'
+import { cardHover, motionSlow } from '@/lib/animations'
 
 interface StepCardProps {
   number: string
@@ -22,12 +22,12 @@ export function StepCard({ number, title, description }: StepCardProps) {
       <motion.div
         className="relative w-[52px] h-[52px] border-2 border-amber flex items-center justify-center"
         style={{ rotate: 45 }}
-        whileHover={{ rotate: 90, scale: 1.1 }}
-        transition={{ duration: 0.35, ease: 'easeOut' }}
+        whileHover={{ rotate: 90, scale: 1.05 }}
+        transition={motionSlow}
       >
         {/* Glow behind diamond */}
         <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-slow ease-out"
           style={{ boxShadow: '0 0 20px rgba(251,211,1,0.4)', transform: 'scale(1.5)' }}
           aria-hidden="true"
         />
@@ -40,7 +40,7 @@ export function StepCard({ number, title, description }: StepCardProps) {
       </motion.div>
 
       {/* Title */}
-      <h3 className="font-serif text-[1.35rem] leading-[1.2] text-cream group-hover:text-amber transition-colors duration-300">
+      <h3 className="font-serif text-[1.35rem] leading-[1.2] text-cream group-hover:text-amber transition-colors duration-base ease-out">
         {title}
       </h3>
 

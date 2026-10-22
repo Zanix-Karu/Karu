@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { buttonClass } from '@/components/ui/button-styles'
 import { useTranslations } from 'next-intl'
 
 /**
@@ -23,7 +24,7 @@ export default function LocaleNotFound() {
         </p>
         <Link
           href="/"
-          className="inline-block px-8 py-3 bg-amber text-espresso font-semibold text-sm tracking-wide hover:bg-amber/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-espresso"
+          className={buttonClass('primary')}
         >
           {t('cta')}
         </Link>

@@ -36,9 +36,27 @@
 
   /* Typography — same families the app loads */
   --font-serif:  var(--font-cormorant), ui-serif, Georgia, serif;
-  --font-serif2: var(--font-cormorant), ui-serif, Georgia, serif;
   --font-sans:   var(--font-outfit), -apple-system, sans-serif;
-  --font-ui:     var(--font-outfit), -apple-system, sans-serif;
+  --font-ui:     var(--font-inter), -apple-system, sans-serif;
+
+  /* Radius — app scale (tokens.css). Tailwind's rounded-* read these. */
+  --radius-sm:   6px;   /* inputs, chips */
+  --radius-md:   10px;  /* buttons, cards */
+  --radius-lg:   14px;  /* sheets, modals */
+  --radius-pill: 999px; /* dots, badges, round icon buttons */
+
+  /* Shadows — app scale; card is deepened to read on espresso */
+  --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.35);
+  --shadow-md:   0 4px 7px 3px rgba(0, 0, 0, 0.25);
+  --shadow-lg:   0 12px 32px rgba(0, 0, 0, 0.2);
+
+  /* Motion — app system (motion.css): three durations, two curves */
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-slow: 320ms;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);   /* things arriving */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* things landing */
 }
 
 /* ─── Base Styles ────────────────────────────────────────────────────────── */
@@ -64,6 +82,45 @@
     outline-offset: 2px;
   }
 }
+
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
+/* Same states as the app's .karu-btn (karu-app/apps/web/src/ds/layout.css).
+   The focus ring stays amber rather than the app's gold-600, which is too
+   dark to see on espresso. */
+.karu-btn {
+  transition: filter var(--motion-fast) ease, transform 100ms ease, box-shadow var(--motion-fast) ease;
+}
+.karu-btn:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+.karu-btn:active:not(:disabled) {
+  transform: scale(0.985);
+  filter: brightness(0.92);
+}
+.karu-btn:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+}
+.karu-btn:disabled { pointer-events: none; }
+.karu-btn-spinner {
+  animation: karu-spin 700ms linear infinite;
+}
+@keyframes karu-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Entrances ──────────────────────────────────────────────────────────── */
+/* The app's reusable entrances (motion.css), same names and timings. */
+@keyframes karu-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes karu-rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.karu-fade-in { animation: karu-fade-in var(--motion-base) var(--ease-out) both; }
+.karu-rise-in { animation: karu-rise-in var(--motion-slow) var(--ease-out) both; }
 
 /* ─── Custom Cursor ──────────────────────────────────────────────────────── */
 body.custom-cursor-active {
@@ -178,16 +235,6 @@ body.hovering .cursor-circle {
   animation: scrollHint 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-/* ─── Nav CTA Pulse ──────────────────────────────────────────────────────── */
-@keyframes ctaPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 211, 1, 0.4); }
-  50%      { box-shadow: 0 0 0 6px rgba(251, 211, 1, 0); }
-}
-
-.nav-cta-pulse {
-  animation: ctaPulse 2.5s ease-in-out infinite;
-}
-
 /* ─── Mobile Nav Panel ───────────────────────────────────────────────────── */
 /* Entry only — the panel unmounts on close. The global reduced-motion block
    below neutralises this for anyone who asks for less movement. */
@@ -196,7 +243,7 @@ body.hovering .cursor-circle {
   to   { opacity: 1; transform: translateY(0); }
 }
 .nav-panel-in {
-  animation: navPanelIn 0.18s ease-out;
+  animation: navPanelIn var(--motion-base) var(--ease-out);
 }
 
 /* ─── Waitlist Glow ──────────────────────────────────────────────────────── */

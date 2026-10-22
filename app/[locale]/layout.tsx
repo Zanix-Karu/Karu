@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Outfit } from 'next/font/google'
+import { Cormorant_Garamond, Inter, Outfit } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { NextIntlClientProvider } from 'next-intl'
@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import { isLocale } from '@/i18n/routing'
 import '../globals.css'
 import { SITE_URL, siteUrl } from '@/lib/site-url'
+import { MotionProvider } from '@/components/ui/MotionProvider'
 
 const cormorant = Cormorant_Garamond({
   weight: ['600', '700'],
@@ -20,6 +21,14 @@ const outfit = Outfit({
   weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-outfit',
+  display: 'swap',
+})
+
+// Controls font, as in the app.
+const inter = Inter({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-inter',
   display: 'swap',
 })
 
@@ -98,7 +107,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   return (
     <html
       lang={locale}
-      className={`${cormorant.variable} ${outfit.variable}`}
+      className={`${cormorant.variable} ${outfit.variable} ${inter.variable}`}
     >
       <body>
         {/*
@@ -109,7 +118,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
           {locale === 'fr' ? 'Aller au contenu' : 'Skip to content'}
         </a>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <MotionProvider>{children}</MotionProvider>
         </NextIntlClientProvider>
         <SpeedInsights />
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (

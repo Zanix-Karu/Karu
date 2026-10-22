@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useCallback, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { motionSlow } from '@/lib/animations'
 import { useTranslations } from 'next-intl'
 import { APP_URL } from '@/lib/site-url'
+import { buttonClass } from '@/components/ui/button-styles'
 
 /** Stagger config: 120ms between items, 100ms initial delay */
 const heroContainer = {
@@ -18,7 +20,7 @@ const heroItem = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+    transition: motionSlow,
   },
 }
 
@@ -103,7 +105,7 @@ export function AnimatedHeroContent() {
         {/* ── Headline — Cormorant Garamond, matching the app ── */}
         <motion.h1
           variants={itemVariants}
-          className="font-serif2 font-bold leading-[0.95] tracking-tight text-white mb-4"
+          className="font-serif font-bold leading-[0.95] tracking-tight text-white mb-4"
           style={{ fontSize: 'clamp(3.4rem, 9vw, 8.5rem)' }}
         >
           <span className="block">{t('title_line1')}</span>
@@ -134,13 +136,13 @@ export function AnimatedHeroContent() {
         >
           <a
             href="#waitlist"
-            className="w-full sm:w-auto relative overflow-hidden inline-flex items-center justify-center font-sans text-[0.85rem] font-semibold tracking-[0.07em] uppercase transition-all duration-250 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-espresso bg-amber text-espresso px-8 py-[14px] hover:-translate-y-[3px] hover:shadow-[0_18px_55px_rgba(251,211,1,0.4)] active:scale-[0.98]"
+            className={`w-full sm:w-auto ${buttonClass('primary')}`}
           >
             {t('cta_primary')}
           </a>
           <a
             href="#waitlist"
-            className="w-full sm:w-auto relative overflow-hidden inline-flex items-center justify-center font-sans text-[0.85rem] font-medium tracking-[0.07em] uppercase transition-all duration-250 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-espresso bg-transparent text-cream border border-cream/20 px-8 py-[14px] hover:border-amber hover:text-amber hover:-translate-y-[3px] active:scale-[0.98]"
+            className={`w-full sm:w-auto ${buttonClass('ghost')}`}
             onClick={handleVendorCTA}
           >
             {t('cta_secondary')}
@@ -155,7 +157,7 @@ export function AnimatedHeroContent() {
         <motion.a
           variants={itemVariants}
           href={APP_URL}
-          className="font-sans text-[0.8rem] font-medium tracking-[0.08em] uppercase text-amber/90 hover:text-amber underline underline-offset-[6px] decoration-amber/30 hover:decoration-amber transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-espresso mb-6"
+          className="font-sans text-[0.8rem] font-medium tracking-[0.08em] uppercase text-amber/90 hover:text-amber underline underline-offset-[6px] decoration-amber/30 hover:decoration-amber transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-espresso mb-6"
         >
           {t('cta_browse')}
         </motion.a>
@@ -186,7 +188,7 @@ function HeroWaitlistCount() {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 1.2 }}
+      transition={{ ...motionSlow, delay: 1.2 }}
       className="flex items-center gap-2 text-cream/40 text-[0.78rem]"
     >
       <div className="flex -space-x-2">

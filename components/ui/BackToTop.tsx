@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { motionSlow } from '@/lib/animations'
 
 export function BackToTop() {
   const [show, setShow] = useState(false)
@@ -19,7 +20,7 @@ export function BackToTop() {
           initial={{ opacity: 0, y: 20, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.8 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          transition={motionSlow}
           whileHover={{ y: -4, boxShadow: '0 12px 30px rgba(251,211,1,0.3)' }}
           whileTap={{ scale: 0.9 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { motionSlow } from '@/lib/animations'
 
 export default function MaintenancePage() {
   return (
@@ -49,11 +50,11 @@ export default function MaintenancePage() {
         className="relative z-10 text-center max-w-md"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={motionSlow}
       >
         {/* Logo */}
         <motion.div
-          className="font-serif2 text-amber text-4xl font-bold tracking-widest mb-8"
+          className="font-serif text-amber text-4xl font-bold tracking-widest mb-8"
           animate={{ opacity: [0.7, 1, 0.7] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         >
@@ -65,7 +66,7 @@ export default function MaintenancePage() {
           className="w-16 h-[2px] bg-amber mx-auto mb-8"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ ...motionSlow, delay: 0.3 }}
         />
 
         {/* Heading */}

@@ -35,7 +35,7 @@ export default function ContactPage() {
           {t('back')}
         </Link>
 
-        <h1 className="font-serif2 font-bold text-[clamp(2rem,5vw,3.5rem)] text-cream mb-4">
+        <h1 className="font-serif font-bold text-[clamp(2rem,5vw,3.5rem)] text-cream mb-4">
           {t('title')}
         </h1>
         <p className="font-sans font-light text-cream/60 text-base leading-[1.8] mb-12">
@@ -43,21 +43,21 @@ export default function ContactPage() {
         </p>
 
         <div className="space-y-6">
-          <div className="bg-card-bg border border-card-border rounded-lg p-6">
+          <div className="bg-card-bg border border-card-border rounded-md shadow-card p-6">
             <p className="text-[0.72rem] font-semibold tracking-[0.2em] uppercase text-amber mb-2">{t('general_label')}</p>
             <a href="mailto:hello@getkaru.io" className="font-sans text-cream hover:text-amber transition-colors text-lg">
               hello@getkaru.io
             </a>
           </div>
 
-          <div className="bg-card-bg border border-card-border rounded-lg p-6">
+          <div className="bg-card-bg border border-card-border rounded-md shadow-card p-6">
             <p className="text-[0.72rem] font-semibold tracking-[0.2em] uppercase text-amber mb-2">{t('vendor_label')}</p>
             <a href="mailto:vendors@getkaru.io" className="font-sans text-cream hover:text-amber transition-colors text-lg">
               vendors@getkaru.io
             </a>
           </div>
 
-          <div className="bg-card-bg border border-card-border rounded-lg p-6">
+          <div className="bg-card-bg border border-card-border rounded-md shadow-card p-6">
             <p className="text-[0.72rem] font-semibold tracking-[0.2em] uppercase text-amber mb-2">{t('social_label')}</p>
             <a
               href="https://instagram.com/getkaru.io"

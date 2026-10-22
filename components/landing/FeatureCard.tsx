@@ -5,6 +5,7 @@ import {
   IconShield, IconCreditCard,
   IconPlane, IconStar, IconCar, IconChat,
 } from '@/components/ui/Icon'
+import { motionBase } from '@/lib/animations'
 
 interface FeatureCardProps {
   icon: string
@@ -21,16 +22,16 @@ export function FeatureCard({ label, description, index }: FeatureCardProps) {
 
   return (
     <motion.div
-      className="group relative overflow-hidden bg-card-bg border border-card-border px-6 py-10 md:px-10 md:py-[52px]"
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
+      className="group relative overflow-hidden rounded-md shadow-card bg-card-bg border border-card-border px-6 py-10 md:px-10 md:py-[52px]"
+      whileHover={{ y: -2 }}
+      transition={motionBase}
     >
       {/* Top amber bar — CSS-only so SSR renders it at scale-x-0 (no hydration flash) */}
-      <div className="absolute top-0 left-0 right-0 h-[3px] bg-amber origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-[450ms] ease-out" />
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-amber origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-slow ease-out" />
 
       {/* Hover gradient shift overlay */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-slow ease-out pointer-events-none"
         style={{
           background: 'linear-gradient(135deg, rgba(251,211,1,0.04) 0%, transparent 50%, rgba(251,211,1,0.02) 100%)',
         }}
@@ -39,7 +40,7 @@ export function FeatureCard({ label, description, index }: FeatureCardProps) {
 
       {/* Ghost number — scales up on hover */}
       <span
-        className="absolute bottom-0 right-2 font-serif2 text-[8rem] font-bold opacity-[0.05] text-cream select-none pointer-events-none leading-none transition-transform duration-500 ease-out group-hover:scale-110 origin-bottom-right"
+        className="absolute bottom-0 right-2 font-serif text-[8rem] font-bold opacity-[0.05] text-cream select-none pointer-events-none leading-none transition-transform duration-slow ease-out group-hover:scale-105 origin-bottom-right"
         aria-hidden="true"
       >
         {ghostNumber}
@@ -47,7 +48,7 @@ export function FeatureCard({ label, description, index }: FeatureCardProps) {
 
       {/* Icon */}
       <div className="relative z-10 mb-5">
-        <div className="w-11 h-11 rounded-lg bg-amber/10 flex items-center justify-center">
+        <div className="w-11 h-11 rounded-sm bg-amber/10 flex items-center justify-center">
           <IconComponent size={22} className="text-amber" />
         </div>
       </div>
