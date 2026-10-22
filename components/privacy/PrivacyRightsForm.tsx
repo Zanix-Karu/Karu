@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { z } from 'zod'
 import { Turnstile } from '@marsidev/react-turnstile'
-import { Input } from '@/components/ui/Input'
+import { Input, fieldClass, fieldLabelClass } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 
 const emailSchema = z.string().email().max(254).toLowerCase().trim()
@@ -91,11 +91,10 @@ export function PrivacyRightsForm({ status }: { status?: string }) {
           type="button"
           variant="primary"
           className="w-full"
-          disabled={confirmState === 'loading'}
-          aria-busy={confirmState === 'loading'}
+          loading={confirmState === 'loading'}
           onClick={handleConfirm}
         >
-          {confirmState === 'loading' ? '…' : t('confirm_button')}
+          {t('confirm_button')}
         </Button>
       </div>
     )
@@ -157,7 +156,7 @@ export function PrivacyRightsForm({ status }: { status?: string }) {
 
       <div className="space-y-5 text-left">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="rights-type" className="text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-cream/60">
+          <label htmlFor="rights-type" className={fieldLabelClass}>
             {t('type_label')}
           </label>
           <select
@@ -165,7 +164,7 @@ export function PrivacyRightsForm({ status }: { status?: string }) {
             disabled={state === 'loading'}
             value={requestType}
             onChange={(e) => setRequestType(e.target.value as RequestType)}
-            className="w-full px-4 py-3 bg-card-bg text-cream border border-cream/10 focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber/40 transition-colors duration-200 appearance-none cursor-pointer"
+            className={`${fieldClass()} appearance-none cursor-pointer`}
           >
             <option value="deletion">{t('type_deletion')}</option>
             <option value="export">{t('type_export')}</option>
@@ -204,10 +203,10 @@ export function PrivacyRightsForm({ status }: { status?: string }) {
           variant="primary"
           disabled={state === 'loading' || (!turnstileToken && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)}
           className="w-full"
-          aria-busy={state === 'loading'}
+          loading={state === 'loading'}
           onClick={handleSubmit}
         >
-          {state === 'loading' ? '…' : t('submit')}
+          {t('submit')}
         </Button>
       </div>
     </div>

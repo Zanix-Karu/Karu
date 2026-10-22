@@ -4,10 +4,11 @@ import { useReducer, useEffect, useState, useCallback, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
+import { motionSlow, motionBase } from '@/lib/animations'
 import useSWR from 'swr'
 import { z } from 'zod'
 import { Turnstile } from '@marsidev/react-turnstile'
-import { Input } from '@/components/ui/Input'
+import { Input, fieldClass, fieldLabelClass } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
@@ -53,14 +54,7 @@ function AmberCheckmark() {
   )
 }
 
-const selectClass = (hasError: boolean) => [
-  'w-full px-4 py-3 bg-card-bg text-cream border',
-  hasError ? 'border-red-400/60' : 'border-cream/10',
-  'focus:outline-none focus:border-amber focus:ring-1 focus:ring-amber/40',
-  'transition-colors duration-200',
-  'disabled:opacity-50 disabled:cursor-not-allowed',
-  'appearance-none cursor-pointer',
-].join(' ')
+const selectClass = (hasError: boolean) => `${fieldClass(hasError)} appearance-none cursor-pointer`
 
 export function WaitlistSection() {
   const t = useTranslations('waitlist')
@@ -304,7 +298,7 @@ export function WaitlistSection() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={motionSlow}
               className="flex flex-col items-center gap-5 py-8"
               role="status"
               aria-live="polite"
@@ -313,14 +307,14 @@ export function WaitlistSection() {
               <motion.div
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
-                transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ ...motionSlow, delay: 0.1 }}
               >
                 <AmberCheckmark />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
+                transition={{ ...motionSlow, delay: 0.3 }}
               >
                 <p className="font-sans font-semibold text-amber text-lg mb-1">{t('success_title')}</p>
                 <p className="font-sans font-light text-cream/70 text-base leading-[1.8]">{successMessage}</p>
@@ -330,7 +324,7 @@ export function WaitlistSection() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
                 onClick={handleReset}
-                className="text-[0.78rem] font-medium tracking-[0.08em] uppercase text-cream/40 hover:text-amber transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                className="text-[0.78rem] font-medium tracking-[0.08em] uppercase text-cream/40 hover:text-amber transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
               >
                 Register another
               </motion.button>
@@ -342,7 +336,7 @@ export function WaitlistSection() {
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              transition={motionSlow}
               className="text-left"
             >
               <div className="grid grid-cols-2 gap-3">
@@ -356,10 +350,10 @@ export function WaitlistSection() {
                     onClick={() => handleTypeSelect(value)}
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ ...motionSlow, delay: i * 0.1 }}
                     whileHover={{ scale: 1.03, y: -2 }}
                     whileTap={{ scale: 0.97 }}
-                    className="px-4 py-5 text-[0.85rem] font-semibold tracking-[0.06em] uppercase border border-cream/10 bg-card-bg text-cream/70 hover:border-amber hover:text-amber hover:shadow-[0_8px_30px_rgba(251,211,1,0.15)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                    className="rounded-md px-4 py-5 font-ui text-[15px] font-semibold border border-cream/10 bg-card-bg text-cream/70 hover:border-amber hover:text-amber transition-colors duration-base ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
                   >
                     {label}
                   </motion.button>
@@ -373,11 +367,11 @@ export function WaitlistSection() {
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              transition={motionSlow}
               className="text-left"
             >
               {/* Type indicator with back button */}
-              <div className="flex items-center justify-between mb-5 px-4 py-3 bg-card-bg border border-cream/10">
+              <div className="flex items-center justify-between mb-5 px-4 py-3 rounded-md bg-card-bg border border-cream/10">
                 <span className="text-cream text-[0.85rem] font-semibold uppercase tracking-[0.06em]">
                   {isVendor ? t('type_vendor') : t('type_customer')}
                 </span>
@@ -408,7 +402,7 @@ export function WaitlistSection() {
               {/* City */}
               <div className="mb-5">
                 <div className="flex flex-col gap-1.5 w-full">
-                  <label htmlFor="waitlist-city" className="text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-cream/60">
+                  <label htmlFor="waitlist-city" className={fieldLabelClass}>
                     City
                   </label>
                   <select
@@ -432,7 +426,7 @@ export function WaitlistSection() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
+                  transition={motionBase}
                   className="space-y-5 mb-5"
                 >
                   <Input
@@ -472,7 +466,7 @@ export function WaitlistSection() {
                   />
 
                   <div className="flex flex-col gap-1.5 w-full">
-                    <label htmlFor="waitlist-vehicle-count" className="text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-cream/60">
+                    <label htmlFor="waitlist-vehicle-count" className={fieldLabelClass}>
                       {t('vendor_vehicle_count')}
                     </label>
                     <select
@@ -503,7 +497,7 @@ export function WaitlistSection() {
                     onChange={(e) => { setConsent(e.target.checked); setConsentError('') }}
                     aria-invalid={!!consentError}
                     aria-describedby={consentError ? 'waitlist-consent-error' : undefined}
-                    className="mt-[3px] h-4 w-4 shrink-0 cursor-pointer appearance-none border border-cream/30 bg-card-bg checked:bg-amber checked:border-amber transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                    className="mt-[3px] h-4 w-4 shrink-0 cursor-pointer appearance-none rounded-[4px] border border-cream/30 bg-card-bg checked:bg-amber checked:border-amber transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
                   />
                   <span className="text-[0.78rem] font-light leading-[1.6] text-cream/60">
                     {t.rich('consent_label', {
@@ -542,20 +536,10 @@ export function WaitlistSection() {
                 variant="primary"
                 disabled={isLoading || (!turnstileToken && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)}
                 className="w-full"
-                aria-busy={isLoading}
+                loading={isLoading}
                 onClick={handleFormSubmit}
               >
-                {isLoading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                    </svg>
-                    <span>Submitting…</span>
-                  </span>
-                ) : (
-                  t('submit_cta')
-                )}
+                {isLoading ? 'Submitting…' : t('submit_cta')}
               </Button>
 
               <p className="font-sans text-[0.72rem] text-cream/30 text-center mt-3">{t('no_spam')}</p>

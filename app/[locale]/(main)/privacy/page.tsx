@@ -34,7 +34,7 @@ export default function PrivacyPage() {
           {t('back')}
         </Link>
 
-        <h1 className="font-serif2 font-bold text-[clamp(2rem,5vw,3.5rem)] text-cream mb-4">
+        <h1 className="font-serif font-bold text-[clamp(2rem,5vw,3.5rem)] text-cream mb-4">
           {t('title')}
         </h1>
         <p className="text-cream/40 text-[0.78rem] mb-12">{t('updated')}</p>
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
 
           <Link
             href="/privacy/rights"
-            className="inline-block text-amber text-[0.85rem] font-semibold tracking-[0.06em] uppercase border border-amber/40 px-6 py-3 hover:bg-amber/10 transition-colors duration-200"
+            className="inline-block text-amber text-[0.85rem] font-semibold tracking-[0.06em] uppercase border border-amber/40 px-6 py-3 hover:bg-amber/10 transition-colors duration-base"
           >
             {t('rights_cta')}
           </Link>

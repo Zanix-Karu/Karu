@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import typography from '@tailwindcss/typography'
 
 const config: Config = {
   content: [
@@ -7,6 +8,24 @@ const config: Config = {
     './lib/**/*.{ts,tsx}',
   ],
   theme: {
+    // Radius scale copied from the app (karu-app/apps/web/src/ds/tokens.css).
+    // The app collapses every Tailwind step onto three sizes plus round, so
+    // the same class gives the same corner on both sites:
+    //   6px   inputs, chips
+    //   10px  buttons, cards
+    //   14px  sheets, modals
+    //   999px avatars, status dots, badges, never cards or CTAs
+    borderRadius: {
+      none: '0',
+      DEFAULT: 'var(--radius-sm)',
+      sm: 'var(--radius-sm)',
+      md: 'var(--radius-md)',
+      lg: 'var(--radius-lg)',
+      xl: 'var(--radius-lg)',
+      '2xl': 'var(--radius-lg)',
+      '3xl': 'var(--radius-lg)',
+      full: 'var(--radius-pill)',
+    },
     extend: {
       // Brand values mirror the app's design tokens
       // (~/Developer/karu-app/apps/web/src/ds/tokens.css) so a visitor crossing
@@ -27,11 +46,30 @@ const config: Config = {
         cream: '#f4efe7',         // app --cream-200
         white: '#ffffff',         // app --white
       },
+      // Same three families as the app: Cormorant for display, Outfit for
+      // body copy, Inter for controls (buttons, inputs, labels).
       fontFamily: {
         serif: ['var(--font-cormorant)', 'ui-serif', 'Georgia', 'serif'],
-        serif2: ['var(--font-cormorant)', 'ui-serif', 'Georgia', 'serif'],
         sans: ['var(--font-outfit)', '-apple-system', 'sans-serif'],
-        ui: ['var(--font-outfit)', '-apple-system', 'sans-serif'],
+        ui: ['var(--font-inter)', '-apple-system', 'sans-serif'],
+      },
+      // App shadow scale. `card` is the app's resting card shadow, deepened
+      // for a dark background where 10% black would be invisible.
+      boxShadow: {
+        sm: 'var(--shadow-sm)',
+        card: 'var(--shadow-card)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
+      },
+      // App motion system (karu-app/apps/web/src/ds/motion.css).
+      transitionDuration: {
+        fast: 'var(--motion-fast)',
+        base: 'var(--motion-base)',
+        slow: 'var(--motion-slow)',
+      },
+      transitionTimingFunction: {
+        out: 'var(--ease-out)',
+        spring: 'var(--ease-spring)',
       },
       keyframes: {
         ticker: {
@@ -54,7 +92,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [typography],
 }
 
 export default config

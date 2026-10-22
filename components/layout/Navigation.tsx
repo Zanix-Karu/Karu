@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { LocaleSwitcher } from './LocaleSwitcher'
 import { APP_URL } from '@/lib/site-url'
+import { buttonClass } from '@/components/ui/button-styles'
 
 const NAV_LINKS = [
   { key: 'about', href: '#about' },
@@ -70,7 +71,7 @@ export function Navigation() {
     <>
       <header
         className={[
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-slow',
           stuck || open
             ? 'bg-espresso/90 backdrop-blur-md border-b border-cream/[0.06] py-3'
             : 'bg-transparent py-5',
@@ -83,7 +84,7 @@ export function Navigation() {
           {/* Logo */}
           <a
             href="#hero"
-            className="font-serif2 text-[1.35rem] font-bold text-amber tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+            className="font-serif text-[1.35rem] font-bold text-amber tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
             aria-label="Karu back to top"
           >
             Karu
@@ -95,7 +96,7 @@ export function Navigation() {
               <li key={key}>
                 <a
                   href={href}
-                  className="font-sans text-[0.78rem] font-medium tracking-[0.1em] uppercase text-cream/60 hover:text-cream transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                  className="font-sans text-[0.78rem] font-medium tracking-[0.1em] uppercase text-cream/60 hover:text-cream transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
                 >
                   {t(key)}
                 </a>
@@ -108,7 +109,7 @@ export function Navigation() {
             <li>
               <a
                 href={APP_URL}
-                className="font-sans text-[0.78rem] font-medium tracking-[0.1em] uppercase text-amber/90 hover:text-amber transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                className="font-sans text-[0.78rem] font-medium tracking-[0.1em] uppercase text-amber/90 hover:text-amber transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
               >
                 {t('browse_cars')}
               </a>
@@ -120,7 +121,7 @@ export function Navigation() {
             <LocaleSwitcher />
             <a
               href="#waitlist"
-              className="relative overflow-hidden inline-flex items-center justify-center font-sans text-[0.85rem] font-semibold tracking-[0.07em] uppercase transition-all duration-250 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-espresso bg-amber text-espresso px-4 min-[900px]:px-7 py-[11px] hover:-translate-y-[2px] hover:shadow-[0_12px_35px_rgba(251,211,1,0.35)] active:scale-[0.98] text-[0.75rem] nav-cta-pulse"
+              className={buttonClass('primary', 'sm')}
             >
               {t('cta')}
             </a>
@@ -132,7 +133,7 @@ export function Navigation() {
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? t('menu_close') : t('menu_open')}
-              className="min-[900px]:hidden inline-flex items-center justify-center w-11 h-11 -mr-3 text-cream/70 hover:text-cream transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+              className="min-[900px]:hidden inline-flex items-center justify-center w-11 h-11 -mr-3 text-cream/70 hover:text-cream transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
             >
               <svg
                 width="22"
@@ -178,7 +179,7 @@ export function Navigation() {
                   <a
                     href={href}
                     onClick={() => close()}
-                    className="block py-4 font-sans text-[0.82rem] font-medium tracking-[0.1em] uppercase text-cream/70 hover:text-cream transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                    className="block py-4 font-sans text-[0.82rem] font-medium tracking-[0.1em] uppercase text-cream/70 hover:text-cream transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
                   >
                     {t(key)}
                   </a>
@@ -188,7 +189,7 @@ export function Navigation() {
                 <a
                   href={APP_URL}
                   onClick={() => close()}
-                  className="block py-4 font-sans text-[0.82rem] font-medium tracking-[0.1em] uppercase text-amber hover:text-amber/80 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+                  className="block py-4 font-sans text-[0.82rem] font-medium tracking-[0.1em] uppercase text-amber hover:text-amber/80 transition-colors duration-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
                 >
                   {t('browse_cars')}
                 </a>

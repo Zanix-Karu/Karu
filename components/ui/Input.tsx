@@ -2,6 +2,25 @@
 
 import { InputHTMLAttributes, forwardRef } from 'react'
 
+// Mirrors the app's Field + Input (karu-app/apps/web/src/ds/index.tsx):
+// sentence-case Inter label above, 10px corners, Inter 16px text. Colours are
+// the app's on-dark versions since this site stays dark.
+
+/** Label style, shared with the hand-built <select> fields. */
+export const fieldLabelClass = 'block font-ui font-semibold text-[14px] text-cream/70'
+
+/** Input/select style, shared with the hand-built <select> fields. */
+export function fieldClass(hasError = false) {
+  return [
+    'w-full rounded-md bg-card-bg px-4 py-[13px] font-ui font-medium text-[16px] text-cream placeholder:text-cream/30',
+    'border outline-none transition-colors duration-base ease-out',
+    hasError
+      ? 'border-red-400/70 focus:border-red-400 focus:ring-2 focus:ring-red-400/30'
+      : 'border-cream/15 focus:border-gold focus:ring-2 focus:ring-amber/40',
+    'disabled:opacity-50 disabled:cursor-not-allowed',
+  ].join(' ')
+}
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   error?: string
@@ -13,44 +32,19 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="flex flex-col gap-1.5 w-full">
-        <label
-          htmlFor={inputId}
-          className="text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-cream/60"
-        >
+        <label htmlFor={inputId} className={fieldLabelClass}>
           {label}
         </label>
-        <div className="relative">
-          {/* Amber left-border on focus — via CSS sibling trick */}
-          <span
-            aria-hidden="true"
-            className="absolute left-0 top-0 h-full w-[2px] bg-amber scale-y-0 origin-bottom transition-transform duration-200 peer-focus:scale-y-100"
-          />
-          <input
-            ref={ref}
-            id={inputId}
-            className={[
-              'peer w-full bg-[var(--color-card-bg)] text-cream placeholder:text-cream/30',
-              'border border-[var(--color-card-border)] px-4 py-3.5 text-[0.95rem]',
-              'outline-none transition-all duration-200',
-              'focus:border-amber focus:shadow-[0_0_0_3px_rgba(251,211,1,0.15)]',
-              error
-                ? 'border-red-500/70 focus:border-red-500 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.15)]'
-                : '',
-              className,
-            ]
-              .filter(Boolean)
-              .join(' ')}
-            aria-invalid={error ? 'true' : undefined}
-            aria-describedby={error ? `${inputId}-error` : undefined}
-            {...props}
-          />
-        </div>
+        <input
+          ref={ref}
+          id={inputId}
+          className={`${fieldClass(!!error)} ${className}`.trim()}
+          aria-invalid={error ? 'true' : undefined}
+          aria-describedby={error ? `${inputId}-error` : undefined}
+          {...props}
+        />
         {error && (
-          <p
-            id={`${inputId}-error`}
-            role="alert"
-            className="text-[0.75rem] text-red-400 mt-0.5"
-          >
+          <p id={`${inputId}-error`} role="alert" className="font-ui text-[0.8rem] text-red-400 mt-0.5">
             {error}
           </p>
         )}
